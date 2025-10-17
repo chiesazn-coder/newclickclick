@@ -69,26 +69,32 @@ export const Navbar = () => {
 
       {/* Row 2: menu center + actions right */}
       <div className="menu-row">
-      <div className="menu-inner">
+        <Container className="menu-inner">
         <button
           className={`menu-toggle ${menuOpen ? 'is-open' : ''}`}
           onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
         >
           <span></span><span></span><span></span>
         </button>
 
-        <nav className={`nav-center ${menuOpen ? 'open' : ''}`}>
-          <a href="#">Home</a>
-          <a href="#">Product</a>
-          <a href="#">About Us</a>
-          <a href="#">Contact</a>
-        </nav>
 
-        <div className="actions-right">
-          <button className="icon-btn"><IconSearch /></button>
-          <button className="icon-btn"><ShoppingCart size={22} /></button>
-        </div>
-      </div>
+          <nav className={`nav-center ${menuOpen ? 'open' : ''}`}>
+            <a href="#">Home</a>
+            <a href="#">Product</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <a href="#" className="highlight">Super Sale ⚡</a>
+          </nav>
+
+          <div className="actions-right">
+            <button className="icon-btn" aria-label="Search"><IconSearch /></button>
+            <button className="icon-btn" aria-label="Cart">
+              <ShoppingCart size={22} strokeWidth={2} />
+              <span className="cart-count">0</span>
+            </button>
+          </div>
+        </Container>
       </div>
     </header>
   );
@@ -776,86 +782,6 @@ const css = `
   .actions-right{position:absolute;right:5%;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:14px}
   .icon-btn{background:transparent;border:0;padding:6px;cursor:pointer;position:relative}
   .cart-count{position:absolute;top:-4px;right:-6px;background:#000;color:#fff;border-radius:999px;font-size:10px;padding:2px 5px}
-
-  /* --- Mobile navbar: sejajarkan burger + ikon kanan --- */
-  @media (max-width: 920px){
-    .menu-inner{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 60px;
-      padding: 0 16px;
-    }
-  
-    /* Burger Button */
-    .menu-toggle{
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 40px;
-      height: 40px;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-    }
-  
-    .menu-toggle span{
-      display: block;
-      width: 22px;
-      height: 2px;
-      background: #111;
-      border-radius: 2px;
-      margin: 3px 0;
-      transition: transform 0.2s, opacity 0.2s;
-    }
-  
-    .menu-toggle.is-open span:nth-child(1){
-      transform: translateY(6px) rotate(45deg);
-    }
-    .menu-toggle.is-open span:nth-child(2){
-      opacity: 0;
-    }
-    .menu-toggle.is-open span:nth-child(3){
-      transform: translateY(-6px) rotate(-45deg);
-    }
-  
-    /* Right icons */
-    .actions-right{
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-  
-    .actions-right .icon-btn{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      padding: 0;
-      border: none;
-      background: transparent;
-    }
-  
-    /* Hide nav-center when closed */
-    .nav-center{
-      display: none;
-    }
-    .nav-center.open{
-      display: block;
-      width: 100%;
-      background: #fff;
-      border-top: 1px solid #eee;
-    }
-  
-    .nav-center a{
-      display: block;
-      padding: 14px 16px;
-      font-size: 16px;
-      border-bottom: 1px solid #f5f5f5;
-    }
-  }
   
   /* HERO */
   .hero {
