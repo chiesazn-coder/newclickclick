@@ -97,6 +97,7 @@ export const Navbar = () => {
 
 const Hero = () => {
   const [isMobile, setIsMobile] = React.useState(false);
+  const videoRef = React.useRef(null);
 
   React.useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -105,9 +106,17 @@ const Hero = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // 👉 Tambahkan ini: reload video saat source berubah
+  React.useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.load();
+    }
+  }, [isMobile]);
+
   return (
     <section className="hero">
       <video
+        ref={videoRef}
         className="hero-media"
         autoPlay
         muted
@@ -125,8 +134,7 @@ const Hero = () => {
   );
 };
 
-  
-  
+
 export default function LuxyLanding() {
   return (
     <>
