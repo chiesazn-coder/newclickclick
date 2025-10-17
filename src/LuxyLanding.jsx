@@ -95,7 +95,17 @@ export const Navbar = () => {
   );
 };
 
-const Hero = () => (
+const Hero = () => {
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return (
     <section className="hero">
       <video
         className="hero-media"
@@ -104,16 +114,17 @@ const Hero = () => (
         loop
         playsInline
         preload="auto"
-        poster="/assets/hero-poster.jpg"   // opsional, kalau ada
-        aria-hidden="true"
+        poster="/assets/hero-poster.jpg"
       >
-        {/* pakai webm kalau kamu punya */}
-        {/* <source src="/assets/hero.webm" type="video/webm" /> */}
-        <source src="/assets/catalog.mp4" type="video/mp4" />
+        <source
+          src={isMobile ? "/assets/snap/reels/reel-4,mp4" : "/assets/catalog.mp4"}
+          type="video/mp4"
+        />
       </video>
-  
     </section>
-);
+  );
+};
+
   
   
 export default function LuxyLanding() {
@@ -769,25 +780,95 @@ const css = `
   }
 
   /* HERO */
-  .hero{position:relative;
-    min-height:62vh;
-    display:grid;
-    place-items:center;
-    overflow:hidden}
-  .hero-media{position:absolute;
-    inset:0;width:100%;
-    height:100%;
-    object-fit:cover;
-    object-position:center 40%;
-    filter:brightness(.9)}
-  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.15),rgba(0,0,0,.15))}
-  .hero-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:18px;padding:40px}
-  .badge{background:#fff;padding:5px 10px;border-radius:999px;font-weight:800;font-size:12px}
-  h1{margin:0}
-  h1 span{display:block;font-size:56px;font-weight:900;background:rgba(255,255,255,.85);padding:10px 16px;border-radius:14px}
-  h1 span+span{background:rgba(255,255,255,.7)}
-  .cta{display:inline-block;background:#000;color:#fff;padding:14px 22px;border-radius:12px;font-weight:800;margin-top:6px}
-  @media (max-width:640px){ h1 span{font-size:36px} }
+  .hero {
+    position: relative;
+    min-height: 62vh;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: #000; /* fallback */
+  }
+  
+  .hero-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    filter: brightness(.9);
+    transition: filter 0.3s ease, object-position 0.3s ease;
+  }
+  
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0,0,0,.15), rgba(0,0,0,.15));
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 40px;
+  }
+  
+  .badge {
+    background: #fff;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 12px;
+  }
+  
+  h1 {
+    margin: 0;
+  }
+  
+  h1 span {
+    display: block;
+    font-size: 56px;
+    font-weight: 900;
+    background: rgba(255,255,255,.85);
+    padding: 10px 16px;
+    border-radius: 14px;
+  }
+  
+  h1 span + span {
+    background: rgba(255,255,255,.7);
+  }
+  
+  .cta {
+    display: inline-block;
+    background: #000;
+    color: #fff;
+    padding: 14px 22px;
+    border-radius: 12px;
+    font-weight: 800;
+    margin-top: 6px;
+  }
+  
+  @media (max-width: 640px) {
+    h1 span {
+      font-size: 36px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .hero {
+      min-height: 56vh;
+    }
+    .hero-media {
+      object-position: center 30%;
+      filter: brightness(1);
+    }
+  }
+  
+  
 
   /* PRODUCTS */
   .products { background:#ffff; padding:72px 0; }
