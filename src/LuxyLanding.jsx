@@ -868,7 +868,7 @@ const css = `
   
   @media (max-width: 768px) {
     .hero {
-      min-height: 56vh;
+      min-height: 72vh;
     }
     .hero-media {
       object-position: center 30%;
