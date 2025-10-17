@@ -783,68 +783,62 @@ const css = `
   .icon-btn{background:transparent;border:0;padding:6px;cursor:pointer;position:relative}
   .cart-count{position:absolute;top:-4px;right:-6px;background:#000;color:#fff;border-radius:999px;font-size:10px;padding:2px 5px}
 
-  /* --- Mobile navbar: rapi & vertikal --- */
+  /* --- Mobile navbar: sejajarkan burger + ikon kanan --- */
   @media (max-width: 920px){
     .menu-inner{
       display:grid;
-      grid-template-columns: 1fr auto;
-      grid-template-rows: 56px auto;
-      align-items:center;
+      grid-template-columns: 44px 1fr auto; /* burger | spacer | icons */
+      grid-template-rows: 56px auto;       /* row1=topbar, row2=dropdown */
+      align-items:center;                   /* vertikal center semua */
       height:auto;
-      padding:0 12px;                 /* ← padding kiri/kanan baris atas */
+      padding:0 12px;
     }
   
-    /* Burger selalu di baris atas kiri dan DI ATAS menu (z-index) */
+    /* Burger: kolom 1, baris 1, pusat vertikal */
     .menu-toggle{
       display:block;
       grid-column:1; grid-row:1;
-      position:relative;              /* jangan absolute */
-      z-index:3;                      /* ← penting: agar tidak ketutup dropdown */
-      width:36px; height:36px;        /* area klik nyaman */
-      padding:6px;
+      place-self:center start;
+      width:36px; height:36px; padding:6px;
+      position:relative; z-index:3;
     }
     .menu-toggle span{
       position:absolute; left:8px; right:8px;
       height:2px; background:#111; border-radius:2px;
-      transition:transform .2s ease, opacity .2s ease, top .2s ease;
+      transition:transform .2s, opacity .2s, top .2s;
     }
     .menu-toggle span:nth-child(1){ top:11px; }
     .menu-toggle span:nth-child(2){ top:17px; }
     .menu-toggle span:nth-child(3){ top:23px; }
+    .menu-toggle.is-open span:nth-child(1){ top:17px; transform:rotate(45deg); }
+    .menu-toggle.is-open span:nth-child(2){ opacity:0; }
+    .menu-toggle.is-open span:nth-child(3){ top:17px; transform:rotate(-45deg); }
   
-    /* Saat menu terbuka, ubah jadi ikon X */
-    .menu-toggle.is-open span:nth-child(1){
-      top:17px; transform:rotate(45deg);
-    }
-    .menu-toggle.is-open span:nth-child(2){
-      opacity:0;
-    }
-    .menu-toggle.is-open span:nth-child(3){
-      top:17px; transform:rotate(-45deg);
-    }
-  
-    /* Ikon kanan di baris atas kanan, kasih jarak */
+    /* Ikon kanan: kolom 3, baris 1, center & ada jarak kanan */
     .actions-right{
-      grid-column:2; grid-row:1;
+      grid-column:3; grid-row:1;
+      place-self:center end;
       position:static; transform:none;
-      justify-self:end;
       display:flex; gap:14px;
-      padding-right:6px;              /* ← biar gak nempel pinggir */
+      padding-right:6px;              /* biar gak nempel tepi */
+    }
+    .actions-right .icon-btn{
+      width:36px; height:36px;        /* tinggi sama dg burger */
+      display:grid; place-items:center;
     }
   
-    /* Dropdown vertikal di baris kedua */
+    /* Dropdown vertikal: baris 2 full width */
     .nav-center{
       grid-column:1 / -1; grid-row:2;
       position:static; transform:none; width:100%;
       display:block; overflow:hidden;
-      max-height:0;                   /* tertutup default */
-      background:#fff;
+      max-height:0; background:#fff;
       border-top:1px solid #eee;
       box-shadow:0 6px 18px rgba(0,0,0,.04);
-      transition:max-height .25s ease;
-      z-index:2;
+      transition:max-height .25s ease; z-index:2;
     }
-    .nav-center.open{ max-height: 420px; }
+    .nav-center.open{ max-height:420px; }
+  
     .nav-center a{
       display:block; padding:14px 16px;
       font-size:16px; line-height:1.25;
