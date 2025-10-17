@@ -802,89 +802,10 @@ const css = `
   .nav-center a:hover{color:#ff007a}
   .nav-center a.highlight{color:#ff007a}
 
-  /* ===== MOBILE NAV (≤ 980px) ===== */
-  @media (max-width: 980px){
-    /* Tampilkan burger, ubah layout baris 2 jadi flex: kiri burger, kanan actions */
-    .menu-inner{
-      position: relative;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between; 
-    }
-    .menu-toggle{
-      display: inline-block;
-      position: static;     
-      transform: none;         
-      padding: 10px;  
-    }
-
-    /* Sembunyikan gaya menu center desktop */
-    .nav-center{
-      position: fixed;
-      inset: 0;                       /* full viewport */
-      top: calc(60px + 56px);         /* tinggi baris2 + baris1 (sesuaikan jika beda) */
-      left: 0; right: 0; bottom: 0;
-      background:#fff;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      padding: 18px 24px 32px;
-      transform: translateY(-100%);
-      transition: transform .28s ease;
-      overflow-y: auto;
-    }
-
-    /* Panel muncul */
-    .nav-center.open{
-      transform: translateY(0);
-    }
-
-    /* Teks menu lebih besar & mudah tap */
-    .nav-center a{
-      font-size: 16px;
-      padding: 12px 2px;
-      gap: 8px;
-    }
-
-    /* Overlay di belakang panel */
-    .nav-overlay{
-      position: fixed;
-      inset: 0;
-      top: calc(60px + 56px); /* sama seperti nav-center */
-      background: rgba(0,0,0,.38);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .2s ease;
-      border: 0;
-    }
-    .nav-overlay.show{
-      opacity: 1;
-      pointer-events: auto;
-      z-index: 40;
-    }
-
-    /* Rapikan posisi actions kanan biar sejajar burger */
-    .menu-row .menu-inner .actions-right{
-      position: static;        /* override absolute global */
-      transform: none;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    /* Animasi burger jadi X saat open (opsional) */
-    .menu-toggle.is-open span:nth-child(1){ transform: translateY(5px) rotate(45deg); }
-    .menu-toggle.is-open span:nth-child(2){ opacity: 0; }
-    .menu-toggle.is-open span:nth-child(3){ transform: translateY(-5px) rotate(-45deg); }
-    .menu-toggle span{
-      transition: transform .2s ease, opacity .2s ease;
-    }
-
-    /* Sembunyikan posisi tengah absolut versi desktop */
-    .nav-center{ left: 0; top: auto; transform: translateY(-100%); z-index: 41;}
-  }
-
+  /* Actions kanan */
+  .actions-right{position:absolute;right:5%;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:14px}
+  .icon-btn{background:transparent;border:0;padding:6px;cursor:pointer;position:relative}
+  .cart-count{position:absolute;top:-4px;right:-6px;background:#000;color:#fff;border-radius:999px;font-size:10px;padding:2px 5px}
   
   /* HERO */
   .hero {
