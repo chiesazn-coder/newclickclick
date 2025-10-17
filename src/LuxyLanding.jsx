@@ -69,32 +69,26 @@ export const Navbar = () => {
 
       {/* Row 2: menu center + actions right */}
       <div className="menu-row">
-        <Container className="menu-inner">
+      <div className="menu-inner">
         <button
           className={`menu-toggle ${menuOpen ? 'is-open' : ''}`}
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
         >
           <span></span><span></span><span></span>
         </button>
 
+        <nav className={`nav-center ${menuOpen ? 'open' : ''}`}>
+          <a href="#">Home</a>
+          <a href="#">Product</a>
+          <a href="#">About Us</a>
+          <a href="#">Contact</a>
+        </nav>
 
-          <nav className={`nav-center ${menuOpen ? 'open' : ''}`}>
-            <a href="#">Home</a>
-            <a href="#">Product</a>
-            <a href="#">About Us</a>
-            <a href="#">Contact</a>
-            <a href="#" className="highlight">Super Sale ⚡</a>
-          </nav>
-
-          <div className="actions-right">
-            <button className="icon-btn" aria-label="Search"><IconSearch /></button>
-            <button className="icon-btn" aria-label="Cart">
-              <ShoppingCart size={22} strokeWidth={2} />
-              <span className="cart-count">0</span>
-            </button>
-          </div>
-        </Container>
+        <div className="actions-right">
+          <button className="icon-btn"><IconSearch /></button>
+          <button className="icon-btn"><ShoppingCart size={22} /></button>
+        </div>
+      </div>
       </div>
     </header>
   );
@@ -786,68 +780,82 @@ const css = `
   /* --- Mobile navbar: sejajarkan burger + ikon kanan --- */
   @media (max-width: 920px){
     .menu-inner{
-      display:grid;
-      grid-template-columns: 44px 1fr auto; /* burger | spacer | icons */
-      grid-template-rows: 56px auto;       /* row1=topbar, row2=dropdown */
-      align-items:center;                   /* vertikal center semua */
-      height:auto;
-      padding:0 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      padding: 0 16px;
     }
   
-    /* Burger: kolom 1, baris 1, pusat vertikal */
+    /* Burger Button */
     .menu-toggle{
-      display:block;
-      grid-column:1; grid-row:1;
-      place-self:center start;
-      width:36px; height:36px; padding:6px;
-      position:relative; z-index:3;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
     }
+  
     .menu-toggle span{
-      position:absolute; left:8px; right:8px;
-      height:2px; background:#111; border-radius:2px;
-      transition:transform .2s, opacity .2s, top .2s;
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #111;
+      border-radius: 2px;
+      margin: 3px 0;
+      transition: transform 0.2s, opacity 0.2s;
     }
-    .menu-toggle span:nth-child(1){ top:11px; }
-    .menu-toggle span:nth-child(2){ top:17px; }
-    .menu-toggle span:nth-child(3){ top:23px; }
-    .menu-toggle.is-open span:nth-child(1){ top:17px; transform:rotate(45deg); }
-    .menu-toggle.is-open span:nth-child(2){ opacity:0; }
-    .menu-toggle.is-open span:nth-child(3){ top:17px; transform:rotate(-45deg); }
   
-    /* Ikon kanan: kolom 3, baris 1, center & ada jarak kanan */
+    .menu-toggle.is-open span:nth-child(1){
+      transform: translateY(6px) rotate(45deg);
+    }
+    .menu-toggle.is-open span:nth-child(2){
+      opacity: 0;
+    }
+    .menu-toggle.is-open span:nth-child(3){
+      transform: translateY(-6px) rotate(-45deg);
+    }
+  
+    /* Right icons */
     .actions-right{
-      grid-column:3; grid-row:1;
-      place-self:center end;
-      position:static; transform:none;
-      display:flex; gap:14px;
-      padding-right:6px;              /* biar gak nempel tepi */
-    }
-    .actions-right .icon-btn{
-      width:36px; height:36px;        /* tinggi sama dg burger */
-      display:grid; place-items:center;
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
   
-    /* Dropdown vertikal: baris 2 full width */
-    .nav-center{
-      grid-column:1 / -1; grid-row:2;
-      position:static; transform:none; width:100%;
-      display:block; overflow:hidden;
-      max-height:0; background:#fff;
-      border-top:1px solid #eee;
-      box-shadow:0 6px 18px rgba(0,0,0,.04);
-      transition:max-height .25s ease; z-index:2;
+    .actions-right .icon-btn{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: none;
+      background: transparent;
     }
-    .nav-center.open{ max-height:420px; }
+  
+    /* Hide nav-center when closed */
+    .nav-center{
+      display: none;
+    }
+    .nav-center.open{
+      display: block;
+      width: 100%;
+      background: #fff;
+      border-top: 1px solid #eee;
+    }
   
     .nav-center a{
-      display:block; padding:14px 16px;
-      font-size:16px; line-height:1.25;
-      border-bottom:1px solid #f5f5f5;
+      display: block;
+      padding: 14px 16px;
+      font-size: 16px;
+      border-bottom: 1px solid #f5f5f5;
     }
-    .nav-center a:last-child{ border-bottom:none; }
-    .nav-center a.highlight{ color:#ff007a; font-weight:600; }
   }
-  
   
   /* HERO */
   .hero {
