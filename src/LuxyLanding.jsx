@@ -807,6 +807,74 @@ const css = `
   .icon-btn{background:transparent;border:0;padding:6px;cursor:pointer;position:relative}
   .cart-count{position:absolute;top:-4px;right:-6px;background:#000;color:#fff;border-radius:999px;font-size:10px;padding:2px 5px}
   
+  /* ==== MOBILE NAV like reference ==== */
+  @media (max-width: 980px){
+    /* Tampilkan burger */
+    .menu-toggle{ display:block; z-index: 60; }
+    .menu-toggle span{
+      width:22px;height:2px;background:#111;border-radius:2px;margin:4px 0;transition:.2s;
+    }
+    /* Animasi burger -> X saat open */
+    .menu-toggle.is-open span:nth-child(1){
+      transform: translateY(6px) rotate(45deg);
+    }
+    .menu-toggle.is-open span:nth-child(2){ opacity:0; }
+    .menu-toggle.is-open span:nth-child(3){
+      transform: translateY(-6px) rotate(-45deg);
+    }
+
+    /* Panel menu penuh layar yang slide-in dari kanan */
+    .nav-center{
+      position: fixed;
+      inset: 66px 0 0 0;                 /* mulai di bawah bar menu kedua */
+      transform: translateX(100%);       /* hidden */
+      display: flex; flex-direction: column;
+      background: #fff;
+      padding: 18px 20px 28px;
+      gap: 0;                             /* kita atur jarak via padding item */
+      transition: transform .25s ease;
+      z-index: 55;
+    }
+    .nav-center.open{ transform: translateX(0); }
+
+    /* Overlay gelap di belakang panel */
+    .nav-overlay{
+      position: fixed; inset:0; background: rgba(0,0,0,.35);
+      opacity:0; pointer-events:none; transition: opacity .2s ease;
+      z-index: 50;
+    }
+    .nav-overlay.show{ opacity:1; pointer-events:auto; }
+
+    /* Item menu tampil vertikal, tebal & besar */
+    .nav-center a{
+      width:100%;
+      display:flex; align-items:center; justify-content:space-between;
+      font-size: 22px; font-weight: 400; letter-spacing:.01em;
+      padding: 18px 4px;
+      color:#111;
+      border-bottom: 1px solid #eee;
+    }
+    /* Hilangkan garis untuk item terakhir jika mau */
+    .nav-center a:last-child{ border-bottom: 0; }
+
+    /* Chevron panah kanan tanpa mengubah isi anchor */
+    .nav-center a::after{
+      content: "›";
+      font-size: 22px;
+      line-height: 1;
+      opacity: .7;
+    }
+    /* Sorot khusus untuk "Super Sale ⚡" tetap jalan */
+    .nav-center a.highlight{ color:#111; }
+    .nav-center a.highlight::after{ color:#111; }
+
+    /* Pastikan bar aksi kanan dan logo tetap seperti referensi */
+    .actions-right{ right: 16px; }
+    .logo-row .logo{ padding: 16px 0; }
+    .menu-inner{ height: 56px; } /* sedikit lebih pendek seperti contoh */
+  }
+
+
   /* HERO */
   .hero {
     position: relative;
