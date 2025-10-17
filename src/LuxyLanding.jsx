@@ -117,7 +117,7 @@ const Hero = () => {
         poster="/assets/hero-poster.jpg"
       >
         <source
-          src={isMobile ? "/assets/snap/reels/reel-4,mp4" : "/assets/catalog.mp4"}
+          src={isMobile ? "/assets/snap/reels/reel-4.mp4" : "/assets/catalog.mp4"}
           type="video/mp4"
         />
       </video>
