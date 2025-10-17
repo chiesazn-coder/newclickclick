@@ -820,27 +820,31 @@ const css = `
     .nav-overlay{ display:none !important; }
 
     /* Tinggi bar kedua sedikit lebih pendek seperti referensi */
-    .menu-inner{ height:56px; }
+    .menu-inner{ height:56px; position:relative; }
     .actions-right{ right:16px; }
     .logo-row .logo{ padding:16px 0; }
 
     /* MENU sebagai dropdown (bukan panel fixed slide-in) */
     .nav-center{
-      position: relative; left:auto; top:auto; transform:none;
-      width:100%;
-      display:flex; flex-direction:column;
-      padding:0; margin-top:56px;             /* muncul tepat di bawah bar ikon */
-      background:#fff; border-top:1px solid #eee;
-      box-shadow:0 10px 20px rgba(0,0,0,.06);
-      overflow:hidden;
-
-      /* efek dropdown */
-      max-height:0; opacity:0; visibility:hidden;
+      position: absolute;     /* tadinya relative */
+      top: 100%;              /* tepat di bawah .menu-inner */
+      left: 0; right: 0;
+      margin-top: 0;          /* HAPUS jarak ekstra */
+      border-top: 1px solid #eee;
+      box-shadow: 0 10px 20px rgba(0,0,0,.06);
+  
+      /* dropdown effect tetap */
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      visibility: hidden;
       transition: max-height .28s ease, opacity .2s ease, visibility 0s linear .28s;
+      z-index: 40;            /* cukup di atas konten, tetap di bawah ikon */
     }
     .nav-center.open{
-      max-height:80vh; opacity:1; visibility:visible;
-      transition: max-height .32s ease, opacity .2s ease;
+      max-height: 75vh;
+      opacity: 1;
+      visibility: visible;
     }
 
     /* Item vertikal + garis + chevron kanan */
