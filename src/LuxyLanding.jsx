@@ -778,61 +778,69 @@ const css = `
   .icon-btn{background:transparent;border:0;padding:6px;cursor:pointer;position:relative}
   .cart-count{position:absolute;top:-4px;right:-6px;background:#000;color:#fff;border-radius:999px;font-size:10px;padding:2px 5px}
 
-  /* --- Mobile navbar: vertical menu --- */
+  /* --- Mobile navbar: rapi & vertikal --- */
   @media (max-width: 920px){
-    /* TAMPILKAN burger di mobile */
-    .menu-toggle{
-      display:block;            /* <- penting, sebelumnya hidden */
-      left:12px;                /* opsional: beri sedikit jarak */
-    }
-  
-    /* baris menu boleh tinggi dinamis */
+    /* Susun jadi GRID: baris 1 = topbar, baris 2 = menu */
     .menu-inner{
+      display:grid;
+      grid-template-columns: 1fr auto;    /* kiri: burger, kanan: icons */
+      grid-template-rows: 56px auto;      /* tinggi baris atas tetap */
+      align-items:center;
       height:auto;
-      padding:10px 0 8px;
+      padding:0;                           /* hapus tinggi fix */
     }
   
-    /* menu default: tertutup (tinggi 0), siap slide-down */
-    .nav-center{
+    /* Burger muncul di kiri baris atas */
+    .menu-toggle{
       display:block;
-      position:static;
+      grid-column:1;
+      grid-row:1;
+      left:auto; top:auto; transform:none; /* buang absolute */
+      padding:12px;
+    }
+  
+    /* Ikon kanan di kanan baris atas */
+    .actions-right{
+      grid-column:2;
+      grid-row:1;
+      position:static;                     /* buang absolute */
+      transform:none;
+      justify-self:end;
+      display:flex; gap:14px;
+    }
+  
+    /* Dropdown: baris ke-2, vertikal, slide-down */
+    .nav-center{
+      grid-column:1 / -1;
+      grid-row:2;
+      position:static;                     /* penting: jangan absolute */
       transform:none;
       width:100%;
+      display:block;
       overflow:hidden;
-      max-height:0;             /* tertutup */
+      max-height:0;                        /* tertutup default */
+      background:#fff;                     /* biar tidak “tembus” ke video */
       border-top:1px solid #eee;
-      background:#fff;          /* biar tidak "menyatu" dengan hero */
+      box-shadow:0 6px 18px rgba(0,0,0,.04);/* separasi lembut dari hero */
       transition:max-height .25s ease;
+      z-index:2;
     }
+    .nav-center.open{ max-height: 420px; } /* sesuaikan panjang */
   
-    /* saat dibuka oleh state .open dari React */
-    .nav-center.open{
-      max-height:420px;         /* sesuaikan; pastikan > total tinggi item */
-    }
-  
-    /* item vertikal full-width */
+    /* Item menu vertikal full width */
     .nav-center a{
       display:block;
-      padding:14px 12px;
-      font-size:16px;
-      line-height:1.2;
+      padding:14px 16px;
+      font-size:16px; line-height:1.25;
       border-bottom:1px solid #f5f5f5;
+      text-decoration:none;
+      color:#111;
     }
-  
-    .nav-center a.highlight{
-      color:#ff007a;
-      font-weight:600;
-    }
-  
-    /* ikon kanan tetap di kanan atas */
-    .actions-right{
-      right:12px;
-      top:50%;
-      transform:translateY(-50%);
-    }
+    .nav-center a:last-child{ border-bottom:none; }
+    .nav-center a.highlight{ color:#ff007a; font-weight:600; }
   }
   
-
+  
   /* HERO */
   .hero {
     position: relative;
