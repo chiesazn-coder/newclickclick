@@ -780,49 +780,55 @@ const css = `
 
   /* --- Mobile navbar: vertical menu --- */
   @media (max-width: 920px){
-    /* biar baris menu bisa bertambah tinggi saat menu dibuka */
+    /* TAMPILKAN burger di mobile */
+    .menu-toggle{
+      display:block;            /* <- penting, sebelumnya hidden */
+      left:12px;                /* opsional: beri sedikit jarak */
+    }
+  
+    /* baris menu boleh tinggi dinamis */
     .menu-inner{
-      height: auto;
-      padding-bottom: 8px; /* beri ruang di bawah menu */
+      height:auto;
+      padding:10px 0 8px;
     }
   
-    /* default: menu disembunyikan/tinggi 0 agar bisa animasi slide-down */
+    /* menu default: tertutup (tinggi 0), siap slide-down */
     .nav-center{
-      display: block;            /* ganti dari none → block untuk bisa diukur tinggi */
-      position: static;
-      transform: none;
-      width: 100%;
-      overflow: hidden;
-      max-height: 0;
-      border-top: 1px solid #eee;
-      transition: max-height .25s ease;
+      display:block;
+      position:static;
+      transform:none;
+      width:100%;
+      overflow:hidden;
+      max-height:0;             /* tertutup */
+      border-top:1px solid #eee;
+      background:#fff;          /* biar tidak "menyatu" dengan hero */
+      transition:max-height .25s ease;
     }
   
-    /* saat open: tampil vertikal */
+    /* saat dibuka oleh state .open dari React */
     .nav-center.open{
-      max-height: 420px;         /* sesuaikan jika item banyak */
+      max-height:420px;         /* sesuaikan; pastikan > total tinggi item */
     }
   
-    /* item menu jadi block full-width, bertumpuk ke bawah */
+    /* item vertikal full-width */
     .nav-center a{
-      display: block;
-      padding: 14px 4px;
-      font-size: 16px;
-      line-height: 1.2;
-      border-bottom: 1px solid #f5f5f5;
+      display:block;
+      padding:14px 12px;
+      font-size:16px;
+      line-height:1.2;
+      border-bottom:1px solid #f5f5f5;
     }
   
-    /* highlight tetap beda tapi tetap block */
     .nav-center a.highlight{
       color:#ff007a;
-      font-weight: 600;
+      font-weight:600;
     }
   
-    /* tombol ikon kanan tetap di kanan atas */
+    /* ikon kanan tetap di kanan atas */
     .actions-right{
       right:12px;
       top:50%;
-      transform: translateY(-50%);
+      transform:translateY(-50%);
     }
   }
   
