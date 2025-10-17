@@ -778,14 +778,54 @@ const css = `
   .icon-btn{background:transparent;border:0;padding:6px;cursor:pointer;position:relative}
   .cart-count{position:absolute;top:-4px;right:-6px;background:#000;color:#fff;border-radius:999px;font-size:10px;padding:2px 5px}
 
-  /* Mobile */
+  /* --- Mobile navbar: vertical menu --- */
   @media (max-width: 920px){
-    .menu-row{border-bottom:0}
-    .menu-toggle{display:block}
-    .nav-center{display:none}
-    .nav-center.open{display:flex;position:static;transform:none;padding:14px 0;border-top:1px solid #eee;border-bottom:1px solid #eee;flex-wrap:wrap;gap:16px;justify-content:flex-start}
-    .actions-right{right:12px}
+    /* biar baris menu bisa bertambah tinggi saat menu dibuka */
+    .menu-inner{
+      height: auto;
+      padding-bottom: 8px; /* beri ruang di bawah menu */
+    }
+  
+    /* default: menu disembunyikan/tinggi 0 agar bisa animasi slide-down */
+    .nav-center{
+      display: block;            /* ganti dari none → block untuk bisa diukur tinggi */
+      position: static;
+      transform: none;
+      width: 100%;
+      overflow: hidden;
+      max-height: 0;
+      border-top: 1px solid #eee;
+      transition: max-height .25s ease;
+    }
+  
+    /* saat open: tampil vertikal */
+    .nav-center.open{
+      max-height: 420px;         /* sesuaikan jika item banyak */
+    }
+  
+    /* item menu jadi block full-width, bertumpuk ke bawah */
+    .nav-center a{
+      display: block;
+      padding: 14px 4px;
+      font-size: 16px;
+      line-height: 1.2;
+      border-bottom: 1px solid #f5f5f5;
+    }
+  
+    /* highlight tetap beda tapi tetap block */
+    .nav-center a.highlight{
+      color:#ff007a;
+      font-weight: 600;
+    }
+  
+    /* tombol ikon kanan tetap di kanan atas */
+    .actions-right{
+      right:12px;
+      top:50%;
+      transform: translateY(-50%);
+    }
   }
+  
 
   /* HERO */
   .hero {
