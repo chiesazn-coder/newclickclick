@@ -70,9 +70,14 @@ export const Navbar = () => {
       {/* Row 2: menu center + actions right */}
       <div className="menu-row">
         <Container className="menu-inner">
-          <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
-            <span></span><span></span><span></span>
-          </button>
+        <button
+          className={`menu-toggle ${menuOpen ? 'is-open' : ''}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span></span><span></span><span></span>
+        </button>
+
 
           <nav className={`nav-center ${menuOpen ? 'open' : ''}`}>
             <a href="#">Home</a>
@@ -780,61 +785,70 @@ const css = `
 
   /* --- Mobile navbar: rapi & vertikal --- */
   @media (max-width: 920px){
-    /* Susun jadi GRID: baris 1 = topbar, baris 2 = menu */
     .menu-inner{
       display:grid;
-      grid-template-columns: 1fr auto;    /* kiri: burger, kanan: icons */
-      grid-template-rows: 56px auto;      /* tinggi baris atas tetap */
+      grid-template-columns: 1fr auto;
+      grid-template-rows: 56px auto;
       align-items:center;
       height:auto;
-      padding:0;                           /* hapus tinggi fix */
+      padding:0 12px;                 /* ← padding kiri/kanan baris atas */
     }
   
-    /* Burger muncul di kiri baris atas */
+    /* Burger selalu di baris atas kiri dan DI ATAS menu (z-index) */
     .menu-toggle{
       display:block;
-      grid-column:1;
-      grid-row:1;
-      left:auto; top:auto; transform:none; /* buang absolute */
-      padding:12px;
+      grid-column:1; grid-row:1;
+      position:relative;              /* jangan absolute */
+      z-index:3;                      /* ← penting: agar tidak ketutup dropdown */
+      width:36px; height:36px;        /* area klik nyaman */
+      padding:6px;
+    }
+    .menu-toggle span{
+      position:absolute; left:8px; right:8px;
+      height:2px; background:#111; border-radius:2px;
+      transition:transform .2s ease, opacity .2s ease, top .2s ease;
+    }
+    .menu-toggle span:nth-child(1){ top:11px; }
+    .menu-toggle span:nth-child(2){ top:17px; }
+    .menu-toggle span:nth-child(3){ top:23px; }
+  
+    /* Saat menu terbuka, ubah jadi ikon X */
+    .menu-toggle.is-open span:nth-child(1){
+      top:17px; transform:rotate(45deg);
+    }
+    .menu-toggle.is-open span:nth-child(2){
+      opacity:0;
+    }
+    .menu-toggle.is-open span:nth-child(3){
+      top:17px; transform:rotate(-45deg);
     }
   
-    /* Ikon kanan di kanan baris atas */
+    /* Ikon kanan di baris atas kanan, kasih jarak */
     .actions-right{
-      grid-column:2;
-      grid-row:1;
-      position:static;                     /* buang absolute */
-      transform:none;
+      grid-column:2; grid-row:1;
+      position:static; transform:none;
       justify-self:end;
       display:flex; gap:14px;
+      padding-right:6px;              /* ← biar gak nempel pinggir */
     }
   
-    /* Dropdown: baris ke-2, vertikal, slide-down */
+    /* Dropdown vertikal di baris kedua */
     .nav-center{
-      grid-column:1 / -1;
-      grid-row:2;
-      position:static;                     /* penting: jangan absolute */
-      transform:none;
-      width:100%;
-      display:block;
-      overflow:hidden;
-      max-height:0;                        /* tertutup default */
-      background:#fff;                     /* biar tidak “tembus” ke video */
+      grid-column:1 / -1; grid-row:2;
+      position:static; transform:none; width:100%;
+      display:block; overflow:hidden;
+      max-height:0;                   /* tertutup default */
+      background:#fff;
       border-top:1px solid #eee;
-      box-shadow:0 6px 18px rgba(0,0,0,.04);/* separasi lembut dari hero */
+      box-shadow:0 6px 18px rgba(0,0,0,.04);
       transition:max-height .25s ease;
       z-index:2;
     }
-    .nav-center.open{ max-height: 420px; } /* sesuaikan panjang */
-  
-    /* Item menu vertikal full width */
+    .nav-center.open{ max-height: 420px; }
     .nav-center a{
-      display:block;
-      padding:14px 16px;
+      display:block; padding:14px 16px;
       font-size:16px; line-height:1.25;
       border-bottom:1px solid #f5f5f5;
-      text-decoration:none;
-      color:#111;
     }
     .nav-center a:last-child{ border-bottom:none; }
     .nav-center a.highlight{ color:#ff007a; font-weight:600; }
