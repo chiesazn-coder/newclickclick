@@ -809,58 +809,61 @@ const css = `
   
   /* ==== MOBILE NAV like reference ==== */
   @media (max-width: 980px){
-    /* Tampilkan burger + animasi X */
-    .menu-toggle{ display:block; z-index:5; }
+    /* anchor bar kedua */
+    .menu-inner{ height:56px; position:relative; }
+  
+    /* tombol burger + animasi X */
+    .menu-toggle{ display:block; z-index:110; }
     .menu-toggle span{ width:22px; height:2px; background:#111; border-radius:2px; margin:4px 0; transition:.2s; }
     .menu-toggle.is-open span:nth-child(1){ transform: translateY(6px) rotate(45deg); }
     .menu-toggle.is-open span:nth-child(2){ opacity:0; }
     .menu-toggle.is-open span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
-
-    /* Tidak pakai overlay pada dropdown */
-    .nav-overlay{ display:none !important; }
-
-    /* Tinggi bar kedua sedikit lebih pendek seperti referensi */
-    .menu-inner{ height:56px; position:relative; }
-    .actions-right{ right:16px; }
-    .logo-row .logo{ padding:16px 0; }
-
-    /* MENU sebagai dropdown (bukan panel fixed slide-in) */
-    .nav-center{
-      position: absolute;     /* tadinya relative */
-      top: 100%;              /* tepat di bawah .menu-inner */
-      left: 0; right: 0;
-      margin-top: 0;          /* HAPUS jarak ekstra */
-      border-top: 1px solid #eee;
-      box-shadow: 0 10px 20px rgba(0,0,0,.06);
   
-      /* dropdown effect tetap */
-      overflow: hidden;
-      max-height: 0;
-      opacity: 0;
-      visibility: hidden;
+    /* tidak butuh overlay untuk dropdown */
+    .nav-overlay{ display:none !important; }
+  
+    /* RESET total style desktop pada nav-center */
+    .nav-center{
+      position: absolute !important;   /* bukan absolute+center */
+      top: 100% !important;            /* nempel di bawah .menu-inner */
+      left: 0 !important; right: 0 !important;
+      transform: none !important;      /* matikan translate(-50%, -50%) */
+      display: block !important;       /* jangan flex baris */
+      background:#fff;
+      border-top:1px solid #eee;
+      box-shadow:0 10px 20px rgba(0,0,0,.06);
+      overflow:hidden;
+      z-index:100;
+  
+      /* efek dropdown */
+      max-height:0;
+      opacity:0;
+      visibility:hidden;
       transition: max-height .28s ease, opacity .2s ease, visibility 0s linear .28s;
-      z-index: 40;            /* cukup di atas konten, tetap di bawah ikon */
     }
     .nav-center.open{
-      max-height: 75vh;
-      opacity: 1;
-      visibility: visible;
+      max-height:75vh;
+      opacity:1;
+      visibility:visible;
+      transition: max-height .32s ease, opacity .2s ease;
     }
-
-    /* Item vertikal + garis + chevron kanan */
+  
+    /* item jadi kolom + garis + chevron */
     .nav-center a{
-      width:100%;
       display:flex; align-items:center; justify-content:space-between;
-      font-size:20px; font-weight:400; letter-spacing:.01em;
-      padding:18px 16px; color:#111;
+      width:100%;
+      padding:18px 16px;
+      font-size:20px; font-weight:400; color:#111;
       border-bottom:1px solid #eee;
     }
     .nav-center a:last-child{ border-bottom:0; }
     .nav-center a::after{ content:"›"; font-size:20px; opacity:.6; }
     .nav-center a.highlight{ color:#111; }
+  
+    /* posisi ikon kanan & logo lebih rapat */
+    .actions-right{ right:16px; }
+    .logo-row .logo{ padding:16px 0; }
   }
-
-
 
   /* HERO */
   .hero {
