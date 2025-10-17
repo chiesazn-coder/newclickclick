@@ -809,70 +809,53 @@ const css = `
   
   /* ==== MOBILE NAV like reference ==== */
   @media (max-width: 980px){
-    /* Tampilkan burger */
-    .menu-toggle{ display:block; z-index: 60; }
-    .menu-toggle span{
-      width:22px;height:2px;background:#111;border-radius:2px;margin:4px 0;transition:.2s;
-    }
-    /* Animasi burger -> X saat open */
-    .menu-toggle.is-open span:nth-child(1){
-      transform: translateY(6px) rotate(45deg);
-    }
+    /* Tampilkan burger + animasi X */
+    .menu-toggle{ display:block; z-index:5; }
+    .menu-toggle span{ width:22px; height:2px; background:#111; border-radius:2px; margin:4px 0; transition:.2s; }
+    .menu-toggle.is-open span:nth-child(1){ transform: translateY(6px) rotate(45deg); }
     .menu-toggle.is-open span:nth-child(2){ opacity:0; }
-    .menu-toggle.is-open span:nth-child(3){
-      transform: translateY(-6px) rotate(-45deg);
-    }
+    .menu-toggle.is-open span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
 
-    /* Panel menu penuh layar yang slide-in dari kanan */
+    /* Tidak pakai overlay pada dropdown */
+    .nav-overlay{ display:none !important; }
+
+    /* Tinggi bar kedua sedikit lebih pendek seperti referensi */
+    .menu-inner{ height:56px; }
+    .actions-right{ right:16px; }
+    .logo-row .logo{ padding:16px 0; }
+
+    /* MENU sebagai dropdown (bukan panel fixed slide-in) */
     .nav-center{
-      position: fixed;
-      inset: 66px 0 0 0;                 /* mulai di bawah bar menu kedua */
-      transform: translateX(100%);       /* hidden */
-      display: flex; flex-direction: column;
-      background: #fff;
-      padding: 18px 20px 28px;
-      gap: 0;                             /* kita atur jarak via padding item */
-      transition: transform .25s ease;
-      z-index: 55;
-    }
-    .nav-center.open{ transform: translateX(0); }
+      position: relative; left:auto; top:auto; transform:none;
+      width:100%;
+      display:flex; flex-direction:column;
+      padding:0; margin-top:56px;             /* muncul tepat di bawah bar ikon */
+      background:#fff; border-top:1px solid #eee;
+      box-shadow:0 10px 20px rgba(0,0,0,.06);
+      overflow:hidden;
 
-    /* Overlay gelap di belakang panel */
-    .nav-overlay{
-      position: fixed; inset:0; background: rgba(0,0,0,.35);
-      opacity:0; pointer-events:none; transition: opacity .2s ease;
-      z-index: 50;
+      /* efek dropdown */
+      max-height:0; opacity:0; visibility:hidden;
+      transition: max-height .28s ease, opacity .2s ease, visibility 0s linear .28s;
     }
-    .nav-overlay.show{ opacity:1; pointer-events:auto; }
+    .nav-center.open{
+      max-height:80vh; opacity:1; visibility:visible;
+      transition: max-height .32s ease, opacity .2s ease;
+    }
 
-    /* Item menu tampil vertikal, tebal & besar */
+    /* Item vertikal + garis + chevron kanan */
     .nav-center a{
       width:100%;
       display:flex; align-items:center; justify-content:space-between;
-      font-size: 22px; font-weight: 400; letter-spacing:.01em;
-      padding: 18px 4px;
-      color:#111;
-      border-bottom: 1px solid #eee;
+      font-size:20px; font-weight:400; letter-spacing:.01em;
+      padding:18px 16px; color:#111;
+      border-bottom:1px solid #eee;
     }
-    /* Hilangkan garis untuk item terakhir jika mau */
-    .nav-center a:last-child{ border-bottom: 0; }
-
-    /* Chevron panah kanan tanpa mengubah isi anchor */
-    .nav-center a::after{
-      content: "›";
-      font-size: 22px;
-      line-height: 1;
-      opacity: .7;
-    }
-    /* Sorot khusus untuk "Super Sale ⚡" tetap jalan */
+    .nav-center a:last-child{ border-bottom:0; }
+    .nav-center a::after{ content:"›"; font-size:20px; opacity:.6; }
     .nav-center a.highlight{ color:#111; }
-    .nav-center a.highlight::after{ color:#111; }
-
-    /* Pastikan bar aksi kanan dan logo tetap seperti referensi */
-    .actions-right{ right: 16px; }
-    .logo-row .logo{ padding: 16px 0; }
-    .menu-inner{ height: 56px; } /* sedikit lebih pendek seperti contoh */
   }
+
 
 
   /* HERO */
