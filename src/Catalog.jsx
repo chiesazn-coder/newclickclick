@@ -33,29 +33,27 @@ export default function Catalog() {
             <h2 className="desc-title">Effortless fun. For faces that love the vibe.</h2>
 
             <p className="desc-meta">
-              <span>Scent Type:</span> <span>Oriental</span> | <span>Ambery</span> | <span>Intense</span>
+              <span>Device Type:</span> <span>Mirror</span> | <span>Screen</span> | <span>Magnetic</span>
             </p>
 
             <p className="desc-text">
-              This fragrance is a captivating invitation into an unseen world. The
-              spicy introduction gradually unfolds, leading you to a mysterious
-              path, alluding to the depths that are yet to be discovered. The robust
-              notes of cedar wood softened by the subtle warmth of sandalwood. The
-              fragrance finally settles into a seductive base of amber.
+            T8D itu buat kamu yang pengin tampil chill tapi tetep standout.
+            Desainnya bulat, ringan, dan pantulannya jernih kayak pagi yang baru mulai.
+            Cahayanya auto-nyesuain, jadi muka tetep enak dilihat di semua angle.
             </p>
 
             <p className="desc-notes">
-              <strong>TOP NOTES</strong> ORANGE BLOSSOM, APPLE, PEPPER |
-              <strong> MIDDLE NOTES</strong> CYPRIOL, CARAMEL, PATCHOULI |
-              <strong> BASE NOTES</strong> VANILLA BEANS, CEDARWOOD, AMBER, VETIVER
+              <strong>VISION</strong> CLEAN REFLECTION, SOFT GLOW |
+              <strong> LIGHT</strong> SMOOTH TONE, AUTO LIGHT |
+              <strong> CORE</strong> MAGNETIC HOLD, EASY TO CARRY
             </p>
 
             <p className="desc-spec">
-              <strong>GEN XX / 100 ML | EAU DE PARFUM</strong>
+              <strong>MATERIAL ALUMINUM ALLOY</strong>
             </p>
 
             <p className="desc-dur">
-              KETAHANAN 5–6 JAM | DAYA JEJAK SEDANG | PROYEKSI 1.5 METER
+              PENGGUNAAN 2.5–3 JAM | JARAK PAKAI 10-15 METER
             </p>
 
             <p className="desc-link">
