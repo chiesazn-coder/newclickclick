@@ -103,7 +103,7 @@ export const Navbar = () => {
             className={`nav-center ${menuOpen ? 'open' : ''}`}
             role="navigation"
           >
-            <a href="#" onClick={() => setMenuOpen(false)}>Home</a>
+            <a href="/luxylanding.jsx" onClick={() => setMenuOpen(false)}>Home</a>
             <a href="#" onClick={() => setMenuOpen(false)}>Product</a>
             <a href="#" onClick={() => setMenuOpen(false)}>About Us</a>
             <a href="#" onClick={() => setMenuOpen(false)}>Contact</a>
