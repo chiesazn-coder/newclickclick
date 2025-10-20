@@ -44,11 +44,9 @@ export default function Catalog() {
 
             <p className="desc-notes">
               <strong>VISION</strong> CLEAN REFLECTION, SOFT GLOW |
-              <strong> LIGHT</strong> SMOOTH TONE, AUTO LIGHT
-            </p>
-
-            <p className="desc-notes">
-              <strong>CORE</strong> MAGNETIC HOLD, EASY TO CARRY
+              <strong> LIGHT</strong> SMOOTH TONE, AUTO LIGHT |
+              <br />
+                <strong> CORE</strong> MAGNETIC HOLD, EASY TO CARRY
             </p>
 
             <p className="desc-spec">
