@@ -26,12 +26,11 @@ export default function Catalog() {
         <section className="catalog-desc">
           {/* Side rail kiri */}
           <aside className="desc-rail" aria-hidden="true">
-            <span className="rail-line">Darker Shade of ORGSM</span>
           </aside>
 
           {/* Konten kanan */}
           <div className="desc-body">
-            <h2 className="desc-title">Unleash the darker side of you</h2>
+            <h2 className="desc-title">Effortless fun. For faces that love the vibe.</h2>
 
             <p className="desc-meta">
               <span>Scent Type:</span> <span>Oriental</span> | <span>Ambery</span> | <span>Intense</span>
@@ -199,7 +198,7 @@ const css = `
     /* Geser keseluruhan section ke kanan */
     margin: 0 auto;
     padding: clamp(20px, 5vw, 60px) 24px 80px;
-    transform: translateX(clamp(60px, 10vw, 120px));
+    transform: translateX(clamp(60px, 10vw, 80px));
   
     /* Biar tetap halus */
     transition: transform 0.3s ease;
@@ -228,7 +227,7 @@ const css = `
 }
 
 /* right body */
-.desc-body{ max-width: 760px; padding-left: 80px;}
+.desc-body{ max-width: 760px;}
 .desc-title{
   margin:0 0 10px;
   font-size: clamp(14px, 2vw, 25px);
