@@ -58,7 +58,7 @@ export default function Catalog() {
             </p>
 
             <p className="desc-link">
-              <Link to="#" onClick={(e)=>{e.preventDefault(); goCheckout();}}>Go to Product</Link>
+              <Link to="/checkout" onClick={(e)=>{e.preventDefault(); goCheckout();}}>Go to Product</Link>
             </p>
           </div>
         </section>
