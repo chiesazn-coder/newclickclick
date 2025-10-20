@@ -232,7 +232,7 @@ const css = `
   margin:0 0 10px;
   font-size: clamp(14px, 2vw, 25px);
   line-height:1.06;
-  font-weight:500;
+  font-weight:560;
 }
 .desc-meta{
   margin:0 0 18px;
