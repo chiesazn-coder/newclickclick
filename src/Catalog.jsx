@@ -348,4 +348,100 @@ const css = `
     rotate:0deg; display:inline-block; margin-right:18px;
   }
 }
+
+/* === MOBILE POLISH === */
+@media (max-width: 820px){
+  /* Hero lebih rapih & proporsional */
+  .catalog-hero{
+    padding: 28px 0 16px;
+  }
+  .catalog-image{
+    width: 92%;
+    max-width: 360px;
+  }
+
+  /* Hapus geser kanan & rapihkan padding */
+  .catalog-desc{
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 16px 16px 40px;
+    margin: 0 auto;
+    transform: none;                /* <— penting: hilangkan geser */
+    max-width: 680px;
+  }
+
+  /* Rail dipadatkan (atau disembunyikan kalau tak dipakai) */
+  .desc-rail{
+    order: 2;
+    min-height: 0;
+    height: auto;
+    margin: 0;
+    padding-top: 6px;
+  }
+  .desc-rail .rail-line,
+  .desc-rail .rail-price{
+    position: static;
+    transform: none;
+    rotate: 0deg;
+    display: inline-block;
+    margin-right: 12px;
+    font-size: 16px;
+  }
+
+  /* Body full width + tipografi lebih terbaca */
+  .desc-body{ max-width: 100%; }
+  .desc-title{
+    font-size: 22px;                /* naikkan minimum supaya tajuk jelas */
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+  .desc-meta{
+    font-size: 14px;
+    line-height: 1.6;
+    color: #374151;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    white-space: normal;
+  }
+  .desc-text{
+    font-size: 15px;
+    line-height: 1.9;
+    color: #1f2937;
+    margin-bottom: 14px;
+  }
+  .desc-notes{
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 12px 0;
+  }
+  .desc-spec{
+    font-size: 14px;
+    margin: 8px 0 4px;
+  }
+  .desc-dur{
+    font-size: 14px;
+    color: #4b5563;
+    margin: 0 0 12px;
+  }
+
+  /* Link jadi tombol agar enak di-tap */
+  .desc-link a{
+    display: inline-block;
+    text-decoration: none;
+    border: 1px solid #111;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+  .desc-link a:active{ transform: translateY(1px); }
+}
+
+/* Breakpoint kecil: rapikan lagi untuk layar mungil */
+@media (max-width: 480px){
+  .catalog-desc{ padding: 14px 14px 34px; }
+  .desc-title{ font-size: 20px; }
+  .desc-text, .desc-notes, .desc-meta, .desc-spec, .desc-dur{ font-size: 14px; }
+  .desc-link a{ width: 100%; text-align: center; }
+}
+
 `;

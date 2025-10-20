@@ -734,9 +734,9 @@ export const FooterSection = () => {
           <div className="f-col">
             <h4 className="f-title">FOLLOW US</h4>
             <ul className="f-list">
-              <li><a href="#" aria-label="Instagram">Instagram</a></li>
-              <li><a href="#" aria-label="TikTok">TikTok</a></li>
-              <li><a href="#" aria-label="Shopee">Shopee</a></li>
+              <li><a href="https://www.instagram.com/clickclickofficial.id/" aria-label="Instagram">Instagram</a></li>
+              <li><a href="https://www.tiktok.com/@clickclick.id?_t=ZS-8zDr2pMwNhI&_r=1" aria-label="TikTok">TikTok</a></li>
+              <li><a href="https://shopee.co.id/shop/1556220986" aria-label="Shopee">Shopee</a></li>
             </ul>
           </div>
         </div>

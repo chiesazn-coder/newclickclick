@@ -67,7 +67,10 @@ const AccordionInfo = ({ product }) => {
             {it.title}
             <span className="co__plus" aria-hidden>＋</span>
           </summary>
-          <div className="co__accBody">{it.body}</div>
+          <div
+            className="co__accBody"
+            dangerouslySetInnerHTML={{ __html: it.body }}
+        />
         </details>
       ))}
     </div>
@@ -102,7 +105,10 @@ export default function Checkout() {
         "/assets/selfie/product/m4-3.png",
         "/assets/selfie/product/m4-4.png",
       ],
-      desc: "For the ones who love the quiet. Kadang yang paling kuat itu bukan yang paling rame. M4 hadir buat kamu yang kerja diam-diam, tapi hasilnya tetap on point.",
+      desc: "For the ones who live in color. <br /><br /> Kadang yang paling kuat itu bukan yang paling rame. M4 hadir buat kamu yang kerja diam-diam, tapi hasilnya tetap on point." +
+            "<br /><br /> Finishing metal-nya ngasih kesan cool dan tenang. Cahayanya soft, pantulannya stabil bikin kamu lebih fokus ke vibe, bukan alatnya."+
+            "Nggak perlu tampil rame. M4 tuh bukti kalau calm juga power."+
+            "<br /><br />Do less. Look better.",
       notes: "",
     },
     {
@@ -288,7 +294,16 @@ const checkoutCSS = `
     transform:scale(0.9);        
     transform-origin:top center;
 }
-.co__grid{display:grid;grid-template-columns:1.2fr .9fr;gap:78px}
+.co__grid{display:grid;
+  grid-template-columns:1.2fr .9fr;
+  gap:78px;
+  align-items: start; 
+}
+
+.co__gallery,
+.co__details {
+  align-self: start;
+}
 
 
 @media (max-width: 980px){ .co__grid{grid-template-columns:1fr;gap:28px} }
