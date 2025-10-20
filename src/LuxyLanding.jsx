@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ShoppingCart } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 
@@ -103,11 +103,11 @@ export const Navbar = () => {
             className={`nav-center ${menuOpen ? 'open' : ''}`}
             role="navigation"
           >
-            <a href="/luxylanding.jsx" onClick={() => setMenuOpen(false)}>Home</a>
-            <a href="#" onClick={() => setMenuOpen(false)}>Product</a>
-            <a href="#" onClick={() => setMenuOpen(false)}>About Us</a>
-            <a href="#" onClick={() => setMenuOpen(false)}>Contact</a>
-            <a href="/catalog" className="highlight" onClick={() => setMenuOpen(false)}>Catalog</a>
+            <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+            <Link to="/product" onClick={() => setMenuOpen(false)}>Product</Link>
+            <Link to="/about" onClick={() => setMenuOpen(false)}>About Us</Link>
+            <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+            <Link to="/catalog" className="highlight" onClick={() => setMenuOpen(false)}>Catalog</Link>
           </nav>
 
           <div className="actions-right">
