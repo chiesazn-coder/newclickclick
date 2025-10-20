@@ -15,7 +15,7 @@ export default function Catalog() {
         {/* HERO: satu gambar besar di tengah */}
         <section className="catalog-hero">
           <img
-            src="/assets/selfie/prod-m4.png"
+            src="/assets/selfie/prod-t8d.png"
             alt="Featured product - HMNS Alpha"
             className="catalog-image"
             loading="eager"
