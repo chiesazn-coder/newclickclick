@@ -699,7 +699,7 @@ const VideoCarousel = () => {
 /* ======================================================
    FooterSection: 4 kolom + payment logos + bottom bar
    ====================================================== */
-const FooterSection = () => {
+export const FooterSection = () => {
   return (
     <footer className="site-footer">
       <Container>

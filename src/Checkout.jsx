@@ -1,7 +1,7 @@
 // src/Checkout.jsx
 import React, { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Navbar } from "./LuxyLanding";
+import { Navbar, FooterSection } from "./LuxyLanding";
 
 
 /* =======================
@@ -51,7 +51,7 @@ const AccordionInfo = ({ product }) => {
   const items = useMemo(
     () => [
       { title: "Story Behind", body: product.desc },
-      { title: "Notes Description", body: "Top: citrus. Heart: floral. Base: woody musk." },
+      { title: "Notes Description", body: product.notes },
       { title: "Product Performance", body: "Longevity 6–8 hours, projection moderate." },
       { title: "What Do They Say", body: "4.8/5 from 1,200+ reviews." },
       { title: "Shipping Information", body: "Ships in 1–2 business days from ID." },
@@ -103,6 +103,7 @@ export default function Checkout() {
         "/assets/selfie/product/m4-4.png",
       ],
       desc: "For the ones who love the quiet. Kadang yang paling kuat itu bukan yang paling rame. M4 hadir buat kamu yang kerja diam-diam, tapi hasilnya tetap on point.",
+      notes: "",
     },
     {
       id: 2,
@@ -156,10 +157,7 @@ export default function Checkout() {
           </div>
         </div>
       </section>
-
-      {/* Section-section tambahan tinggal ditaruh di sini */}
-      <RecommendedSection />
-
+      <FooterSection />
       <style>{checkoutCSS}</style>
     </>
   );
@@ -220,12 +218,16 @@ const checkoutCSS = `
 }
 :root{--co-text:#111;--co-muted:#6b7280;--co-border:#eee;--co-black:#0b0b0b;}
 *{box-sizing:border-box}
+
 .co{max-width:1200px;margin:0 auto;
     padding:32px 24px;color:var(--co-text);
     font-family: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
     transform:scale(0.9);        
     transform-origin:top center;
+}
 .co__grid{display:grid;grid-template-columns:1.2fr .9fr;gap:78px}
+
+
 @media (max-width: 980px){ .co__grid{grid-template-columns:1fr;gap:28px} }
 
 .co__gallery{display:grid;grid-template-columns:1fr 1fr;gap:20px}
@@ -253,4 +255,67 @@ const checkoutCSS = `
 
 .co__reco{max-width:1200px;margin:0 auto;padding:10px 24px 60px}
 .co__reco h2{margin:24px 0 0;font-size:clamp(18px,2.4vw,24px);font-weight:600}
+
+/* ===== Footer ===== */
+.site-footer{
+  background:#fff; color:#0f172a;
+  border-top:1px solid #eef0f4;
+  margin-top:50px;
+  font-family:"Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+  transform: none !important;
+  max-width: 98%;
+  padding-left: 24px;
+}
+.f-grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(24px, 3vw, 48px);
+  padding: clamp(28px, 4vw, 48px) 0 24px;
+}
+@media (max-width: 1024px){
+  .f-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px){
+  .f-grid{ grid-template-columns: 1fr; }
+}
+
+.f-title{
+  margin:0 0 14px;
+  font-size: clamp(18px, 4vw, 20px);
+  letter-spacing:.04em;
+  font-weight:500;
+  color:#0f172a;     /* hampir hitam, seperti referensi */
+}
+.f-list{ list-style:none; margin:0; padding:0; }
+.f-list li{ margin: 14px 0; }
+.f-list a{
+  color:#334155; text-decoration:none; font-size:14px;
+}
+.f-list a:hover{ color:#111; }
+
+.f-payments{
+  display:flex; align-items:center; gap:18px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.f-payments img{
+  height: 28px; width:auto; display:block;
+  filter: none;
+}
+
+.f-bottom{
+  border-top:1px solid #eef0f4;
+  background:#fff;
+}
+.f-bottom-inner{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:16px; padding: 14px 0;
+  color:#0f172a;
+}
+.f-copy, .f-right{
+  margin:0; font-size:14px; color:#0f172a;
+}
+@media (max-width: 640px){
+  .f-bottom-inner{ flex-direction:column; align-items:flex-start; gap:6px; }
+}
 `;
