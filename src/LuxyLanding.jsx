@@ -107,7 +107,7 @@ export const Navbar = () => {
             <a href="#" onClick={() => setMenuOpen(false)}>Product</a>
             <a href="#" onClick={() => setMenuOpen(false)}>About Us</a>
             <a href="#" onClick={() => setMenuOpen(false)}>Contact</a>
-            <a href="#" className="highlight" onClick={() => setMenuOpen(false)}>Catalog</a>
+            <a href="/catalog" className="highlight" onClick={() => setMenuOpen(false)}>Catalog</a>
           </nav>
 
           <div className="actions-right">
