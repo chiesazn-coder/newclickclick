@@ -116,6 +116,30 @@ export default function Checkout() {
       ],
       desc: "Sparkly, fresh, and playful.",
     },
+    {
+      id: 3,
+      title: "CLICK CLICK T3B Selfie",
+      price: 369000,
+      images: [
+        "/assets/selfie/prod-t3b.png",
+        "/assets/selfie/product/t3b-2.png",
+        "/assets/selfie/product/t3b-3.png",
+        "/assets/selfie/product/t3b-4.png",
+      ],
+      desc: "Sparkly, fresh, and playful.",
+    },
+    {
+      id: 4,
+      title: "CLICK CLICK T1M Selfie",
+      price: 369000,
+      images: [
+        "/assets/selfie/prod-t1m.png",
+        "/assets/selfie/product/t1m-2.png",
+        "/assets/selfie/product/t1m-3.png",
+        "/assets/selfie/product/t1m-4.png",
+      ],
+      desc: "Sparkly, fresh, and playful.",
+    },
   ];
 
   const product = products.find((p) => p.id === Number(productId)) ?? products[0];

@@ -3,72 +3,154 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "./LuxyLanding";
 
+function ProductSection({
+    imageSrc,
+    imageAlt,
+    title,
+    meta,
+    text,
+    notes,
+    spec,
+    dur,
+    checkoutSlug,
+  }) {
+    const navigate = useNavigate();
+    const goCheckout = () => navigate(`/checkout/${checkoutSlug}`);
+  
+    return (
+      <>
+        {/* Hero image: di luar .catalog-desc agar tidak kena transform */}
+        <section className="catalog-hero">
+          <img
+            src={imageSrc}
+            alt={imageAlt}
+            className="catalog-image"
+            loading="lazy"
+          />
+        </section>
+  
+        {/* Deskripsi: tetap pakai grid & transform bawaan CSS */}
+        <section className="catalog-desc">
+          <aside className="desc-rail" aria-hidden="true" />
+          <div className="desc-body">
+            <h2 className="desc-title">{title}</h2>
+  
+            <p className="desc-meta">
+              <span>Device Type:</span>{" "}
+              {meta.map((m, i) => (
+                <span key={i}>
+                  {m}
+                  {i < meta.length - 1 ? " | " : ""}
+                </span>
+              ))}
+            </p>
+  
+            <p className="desc-text">{text}</p>
+  
+            {notes && (
+              <p
+                className="desc-notes"
+                dangerouslySetInnerHTML={{ __html: notes }}
+              />
+            )}
+  
+            {spec && (
+              <p className="desc-spec">
+                <strong>{spec}</strong>
+              </p>
+            )}
+            {dur && <p className="desc-dur">{dur}</p>}
+  
+            <p className="desc-link">
+              <Link
+                to={`/checkout/${checkoutSlug}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  goCheckout();
+                }}
+              >
+                Go to Product
+              </Link>
+            </p>
+          </div>
+        </section>
+      </>
+    );
+  }
+  
+
 export default function Catalog() {
-  const navigate = useNavigate();
-  const goCheckout = () => navigate("/checkout/alpha"); // ganti id sesuai data kamu
+  // DATA 4 PRODUK — tinggal ganti sesuai kebutuhanmu
+  const products = [
+    {
+      checkoutSlug: "1",
+      imageSrc: "/assets/selfie/prod-m4.png",
+      imageAlt: "m4",
+      title: "Clean design. Real focus.",
+      meta: ["Mirror", "Screen", "Magnetic"],
+      text:
+        "M4 nggak butuh banyak gaya — dia nunjukin versi paling chill dari kamu. Metal body-nya halus, pantulannya jernih, dan cahaya nyebar rata. Buat kamu yang suka vibe minimal tapi tetep classy.",
+      notes:
+        "<strong>VISION</strong> CLEAR FRAME, SHARP DETAIL | <strong>LIGHT</strong> SOFT TONE, BALANCED LIGHT | <br /><strong>CORE</strong> MAGNETIC GRIP, CLEAN METAL FINISH",
+      spec: "MATERIAL ALUMINUM ALLOY",
+      dur: "PENGGUNAAN 2.5–3 JAM | JARAK PAKAI 10–15 METER",
+    },
+    {
+      checkoutSlug: "2",
+      imageSrc: "/assets/selfie/prod-t8d.png",
+      imageAlt: "t8d",
+      title: "Effortless fun. For faces that love the vibe.",
+      meta: ["Mirror", "Screen", "Magnetic"],
+      text:
+        "T8D itu buat kamu yang pengin tampil chill tapi tetep standout. Desainnya bulat, ringan, dan pantulannya jernih kayak pagi yang baru mulai. Cahayanya auto-nyesuain, jadi muka tetep enak dilihat di semua angle.",
+      notes:
+        "<strong>VISION</strong> CLEAN REFLECTION, SOFT GLOW | <strong>LIGHT</strong> SMOOTH TONE, AUTO LIGHT | <br /><strong>CORE</strong> MAGNETIC HOLD, EASY TO CARRY",
+      spec: "MATERIAL ALUMINUM ALLOY",
+      dur: "PENGGUNAAN 3 JAM | JARAK PAKAI 10 METER",
+    },
+    {
+      checkoutSlug: "3",
+      imageSrc: "/assets/selfie/prod-t3b.png",
+      imageAlt: "t3b",
+      title: "For days that never stop",
+      meta: ["Mirror", "Screen", "Magnetic"],
+      text:
+        "Kadang kerjaan, konten, dan cerita nggak bisa berhenti. Dan T3B dibuat buat momen itu. Baterainya kuat banget (2500 mAh), layarnya lega (4.7 inch) dan cahayanya tetap soft walau lighting berubah. Buat kamu yang nggak mau ribet ganti-ganti posisi atau nyari angle tiap jam, T3B selalu siap — stabil, tenang, dan real. Bukan soal power aja, tapi soal rasa tenang saat tau alat kamu selalu siap nemenin.",
+      notes:
+        "<strong>VISION</strong> WIDE 4.7 INCH FRAME, CLEAN TONE | <strong>LIGHT</strong> BALANCED LIGHT, NATURAL COLOR |<br /><strong>CORE</strong> 2500 mAh BATTERY, SPEAKER ACTIVE, MAGNETIC LOOK",
+      spec: "MATERIAL ALUMINUM ALLOY",
+      dur: "PENGGUNAAN 2 JAM | JARAK PAKAI 12 METER",
+    },
+    {
+      checkoutSlug: "4",
+      imageSrc: "/assets/selfie/prod-t1m.png",
+      imageAlt: "t1m",
+      title: "For the ones who keep it real.",
+      meta: ["Mirror", "Screen", "Magnetic"],
+      text:
+        "T1M nggak dirancang buat semua orang. Dia buat kamu yang pengen tampil apa adanya — tanpa takut diliat dari dekat. Refleksinya jernih banget, setiap detail di wajah lo nggak disembunyiin. Dan justru di situ keindahannya: real, simple, confident. Bingkai kaca yang solid bikin pantulannya terasa tegas. Cahaya natural-nya ngasih tone warna yang pas di kamera. T1M itu statement. Nggak perlu perfect, yang penting real.",
+      notes:
+      "<strong>VISION</strong> GLASS CLARITY, SHARP TONE | <strong>LIGHT</strong> NATURAL LIGHT, HONEST COLOR |<br /><strong>CORE</strong> MAGNETIC POWER, SOLID GLASS BODY",
+      spec: "MATERIAL ALUMINUM ALLOY",
+      dur: "PENGGUNAAN 2.5 JAM | JARAK PAKAI 8–10 METER",
+    },
+  ];
 
   return (
     <>
       <Navbar />
 
       <main className="catalog">
-        {/* HERO: satu gambar besar di tengah */}
-        <section className="catalog-hero">
-          <img
-            src="/assets/selfie/prod-t8d.png"
-            alt="Featured product - HMNS Alpha"
-            className="catalog-image"
-            loading="eager"
-          />
-        </section>
-
-        {/* DESCRIPTION: seperti gambar referensi */}
-        <section className="catalog-desc">
-          {/* Side rail kiri */}
-          <aside className="desc-rail" aria-hidden="true">
-          </aside>
-
-          {/* Konten kanan */}
-          <div className="desc-body">
-            <h2 className="desc-title">Effortless fun. For faces that love the vibe.</h2>
-
-            <p className="desc-meta">
-              <span>Device Type:</span> <span>Mirror</span> | <span>Screen</span> | <span>Magnetic</span>
-            </p>
-
-            <p className="desc-text">
-            T8D itu buat kamu yang pengin tampil chill tapi tetep standout.
-            Desainnya bulat, ringan, dan pantulannya jernih kayak pagi yang baru mulai.
-            Cahayanya auto-nyesuain, jadi muka tetep enak dilihat di semua angle.
-            </p>
-
-            <p className="desc-notes">
-              <strong>VISION</strong> CLEAN REFLECTION, SOFT GLOW |
-              <strong> LIGHT</strong> SMOOTH TONE, AUTO LIGHT |
-              <br />
-                <strong> CORE</strong> MAGNETIC HOLD, EASY TO CARRY
-            </p>
-
-            <p className="desc-spec">
-              <strong>MATERIAL ALUMINUM ALLOY</strong>
-            </p>
-
-            <p className="desc-dur">
-              PENGGUNAAN 2.5–3 JAM | JARAK PAKAI 10-15 METER
-            </p>
-
-            <p className="desc-link">
-              <Link to="/checkout" onClick={(e)=>{e.preventDefault(); goCheckout();}}>Go to Product</Link>
-            </p>
-          </div>
-        </section>
+        {/* 4 SECTION dengan layout serupa */}
+        {products.map((p) => (
+          <ProductSection key={p.checkoutSlug} {...p} />
+        ))}
       </main>
 
       <style>{css}</style>
     </>
   );
 }
-
 const css = `
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;900&display=swap');
 
@@ -179,7 +261,7 @@ const css = `
   padding: clamp(40px, 8vw, 100px) 0 40px;
 }
 .catalog-image{
-  width:min(92%, 460px);
+  width:min(92%, 420px);
   height:auto; object-fit:contain;
   border-radius:12px;
   transition:transform .35s ease;
