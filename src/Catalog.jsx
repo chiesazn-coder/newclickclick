@@ -152,7 +152,7 @@ export default function Catalog() {
   );
 }
 const css = `
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap');
 
 /* HEADER */
 .navbar{position:sticky;top:0;z-index:50;background:#fff;transition:box-shadow .25s ease}
@@ -313,7 +313,7 @@ const css = `
   margin:0 0 10px;
   font-size: clamp(14px, 2vw, 25px);
   line-height:1.06;
-  font-weight:560;
+  font-weight:550;
 }
 .desc-meta{
   margin:0 0 18px;

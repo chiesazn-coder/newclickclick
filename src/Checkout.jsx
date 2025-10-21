@@ -1,7 +1,8 @@
 // src/Checkout.jsx
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Navbar, FooterSection } from "./LuxyLanding";
+
 
 
 /* =======================
@@ -93,17 +94,22 @@ const RecommendedSection = () => (
 export default function Checkout() {
   const { productId } = useParams();
 
+  useEffect(() => {
+    // pastikan benar-benar ke atas saat masuk halaman
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, []);
+
   // Samakan id & images dengan ProductsSection agar nyambung
   const products = [
     {
       id: 1,
-      title: "CLICK CLICK M4 Selfie",
-      price: 369000,
+      title: "CLICK CLICK M4 MIRROR SELFIE",
+      price: 1990000,
       images: [
         "/assets/selfie/prod-m4.png",
-        "/assets/selfie/product/m4-2.png",
-        "/assets/selfie/product/m4-3.png",
-        "/assets/selfie/product/m4-4.png",
+        "/assets/selfie/product/m4/m4-1.png",
+        "/assets/selfie/product/m4/m4-2.png",
+        "/assets/selfie/product/m4/m4-4.png",
       ],
       desc: "For the ones who live in color. <br /><br /> Kadang yang paling kuat itu bukan yang paling rame. M4 hadir buat kamu yang kerja diam-diam, tapi hasilnya tetap on point." +
             "<br /><br /> Finishing metal-nya ngasih kesan cool dan tenang. Cahayanya soft, pantulannya stabil bikin kamu lebih fokus ke vibe, bukan alatnya."+
@@ -113,39 +119,53 @@ export default function Checkout() {
     },
     {
       id: 2,
-      title: "CLICK CLICK T8D Selfie",
-      price: 369000,
+      title: "CLICK CLICK T8D MIRROR SELFIE",
+      price: 1850000,
       images: [
         "/assets/selfie/prod-t8d.png",
-        "/assets/selfie/product/t8d-2.png",
-        "/assets/selfie/product/t8d-3.png",
-        "/assets/selfie/prod-t8d.png",
+        "/assets/selfie/product/t8d/t8d-1.png",
+        "/assets/selfie/product/t8d/t8d-2.png",
+        "/assets/selfie/product/t8d/t8d-3.png",
       ],
-      desc: "Sparkly, fresh, and playful.",
+      desc: "For the ones who live in color."+
+            "<br /><br /> Ambil napas bentar. Bayangin pagi yang rame, tapi kamu tetep punya waktu buat senyum di depan kamera. T8D nyalain mood kamu, nggak cuma pantulanmu."+
+            "<br /><br /> Desain bulatnya ngasih vibe hangat, cahayanya nyatu sama kulit, dan semua terlihat effortless tanpa filter berlebih."+ 
+            "<br /><br /> T8D cocok buat yang pengin tampil real tapi fun, buat kamu yang percaya glow up terbaik itu yang datang dari rasa nyaman."+
+            "<br /><br /> Keep your glow up real.",
     },
     {
       id: 3,
-      title: "CLICK CLICK T3B Selfie",
-      price: 369000,
+      title: "CLICK CLICK T3B MIRROR SELFIE",
+      price: 1690000,
       images: [
         "/assets/selfie/prod-t3b.png",
-        "/assets/selfie/product/t3b-2.png",
-        "/assets/selfie/product/t3b-3.png",
-        "/assets/selfie/product/t3b-4.png",
+        "/assets/selfie/product/t3b/t3b-1.png",
+        "/assets/selfie/product/t3b/t3b-2.png",
+        "/assets/selfie/product/t3b/t3b-3.png",
       ],
-      desc: "Sparkly, fresh, and playful.",
+      desc: "For days that never stop."+
+            "<br /><br /> Kadang kerjaan, konten, dan cerita nggak bisa berhenti. Dan T3B dibuat buat momen itu."+
+            "<br /><br /> Baterainya kuat banget (2500 mAh), layarnya lega (4.7 inch), dan cahayanya tetap soft walau lighting berubah."+ 
+            "<br /><br /> Buat kamu yang nggak mau ribet ganti-ganti posisi atau nyari angle tiap jam, T3B selalu siap — stabil, tenang, dan real."+ 
+            "Bukan soal power aja, tapi soal rasa tenang saat tau alat kamu selalu siap nemenin."+
+            "<br /><br /> Never off. Just like you.",
     },
     {
       id: 4,
-      title: "CLICK CLICK T1M Selfie",
-      price: 369000,
+      title: "CLICK CLICK T1M MIRROR SELFIE",
+      price: 1690000,
       images: [
         "/assets/selfie/prod-t1m.png",
-        "/assets/selfie/product/t1m-2.png",
-        "/assets/selfie/product/t1m-3.png",
-        "/assets/selfie/product/t1m-4.png",
+        "/assets/selfie/product/t1m/t1m-1.png",
+        "/assets/selfie/product/t1m/t1m-2.png",
+        "/assets/selfie/product/t1m/t1m-3.png",
       ],
-      desc: "Sparkly, fresh, and playful.",
+      desc: "For the ones who keep it real."+
+            "<br /><br /> T1M nggak dirancang buat semua orang. Dia buat kamu yang pengen tampil apa adanya — tanpa takut diliat dari dekat."+
+            "<br /><br /> Refleksinya jernih banget, setiap detail di wajah lo nggak disembunyiin. Dan justru di situ keindahannya: real, simple, confident."+ 
+            "<br /><br /> Bingkai kaca yang solid bikin pantulannya terasa tegas. Cahaya natural-nya ngasih tone warna yang pas di kamera."+ 
+            "T1M itu statement. Nggak perlu perfect, yang penting real."+
+            "<br /><br /> Be seen. Be you.",
     },
   ];
 
@@ -173,7 +193,12 @@ export default function Checkout() {
    CSS khusus halaman ini
    ======================= */
 const checkoutCSS = `
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap');
+
+.desc-title {
+  font-weight: 500;
+}
+
 
 /* HEADER */
 .navbar{position:sticky;top:0;z-index:50;background:#fff;transition:box-shadow .25s ease}
@@ -288,11 +313,13 @@ const checkoutCSS = `
 :root{--co-text:#111;--co-muted:#6b7280;--co-border:#eee;--co-black:#0b0b0b;}
 *{box-sizing:border-box}
 
-.co{max-width:1200px;margin:0 auto;
+.co{
+    max-width:1400px;
+    margin:0 auto;
     padding:32px 24px;color:var(--co-text);
-    font-family: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
-    transform:scale(0.9);        
+    font-family: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;   
     transform-origin:top center;
+    transform: scale(0.9);
 }
 .co__grid{display:grid;
   grid-template-columns:1.2fr .9fr;

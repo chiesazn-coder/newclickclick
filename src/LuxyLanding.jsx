@@ -278,8 +278,8 @@ const ProductsSection = () => {
   const products = [
     {
       id: 1,
-      title: "CLICK CLICK M4 Selfie",
-      price: 28,
+      title: "CLICK CLICK M4 MIRROR SELFIE",
+      price: 1990000,
       isNew: true,
       colors: ["#5C7EAB", "#E8DAC6", "#F4E98E"],
       images: [
@@ -291,8 +291,8 @@ const ProductsSection = () => {
     },
     {
       id: 2,
-      title: "CLICK CLICK T8D Selfie",
-      price: 28,
+      title: "CLICK CLICK T8D MIRROR SELFIE",
+      price: 1850000,
       isNew: true,
       colors: ["#E9E0D4", "#5C7EAB", "#6C846E"],
       images: [
@@ -304,8 +304,8 @@ const ProductsSection = () => {
     },
     {
       id: 3,
-      title: "CLICK CLICK T3B Selfie",
-      price: 28,
+      title: "CLICK CLICK T3B MIRROR SELFIE",
+      price: 1690000,
       isNew: true,
       colors: ["#6C846E", "#5C7EAB", "#E9E0D4"],
       images: [
@@ -317,8 +317,8 @@ const ProductsSection = () => {
     },
     {
       id: 4,
-      title: "CLICK CLICK T1M Selfie",
-      price: 28,
+      title: "CLICK CLICK T1M MIRROR SELFIE",
+      price: 1690000,
       isNew: true,
       colors: ["#6C846E", "#5C7EAB", "#E9E0D4"],
       images: [
@@ -330,8 +330,8 @@ const ProductsSection = () => {
     },
     {
       id: 5,
-      title: "CLICK CLICK Robotic Massagers",
-      price: 28,
+      title: "CLICK CLICK ROBOTIC MASSAGER",
+      price: 1823695,
       isNew: true,
       colors: ["#6C846E", "#5C7EAB", "#E9E0D4"],
       images: [
@@ -758,7 +758,7 @@ export const FooterSection = () => {
 
 
 const css = `
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap');
 
   :root{ --text:#111; --muted:#6b7280; --pink:#ff3aa0; }
   *{box-sizing:border-box}
@@ -954,14 +954,12 @@ const css = `
     }
   }
   
-  
-
   /* PRODUCTS */
   .products { background:#ffff; padding:72px 0; }
   .products-title{
-    text-align:center; font-size:36px; line-height:1.2; margin:0 0 36px;
+    text-align:center; font-size:36px; line-height:1.2; margin:0 0 80px;
     font-family: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
-    font-weight:300; color:#151515;
+    font-weight:400; color:#151515;
   }
 
   /* horizontal track (snap on mobile) */
@@ -991,7 +989,7 @@ const css = `
   .product-card .name {
     font-family: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 400;
     margin-bottom: 4px;
   }
   
@@ -1041,7 +1039,7 @@ const css = `
     grid-template-columns: 1.15fr 1fr; /* kiri sedikit lebih lebar sesuai referensi */
     gap:0;
     align-items:stretch;
-    margin:60px 0;
+    margin:40px 0;
     background:#fff;
   }
   @media (max-width: 980px){
@@ -1128,7 +1126,7 @@ const css = `
     width: 100%;
     background: #000;          /* hitam agar transisi mulus saat buffer */
     overflow: hidden;
-    margin: 56px 0;            /* jarak atas/bawah — sesuaikan */
+    margin: 60px 0;            /* jarak atas/bawah — sesuaikan */
   }
   .video-strip_media{
     display: block;
