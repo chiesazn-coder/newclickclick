@@ -115,9 +115,9 @@ export default function Catalog() {
       title: "For days that never stop",
       meta: ["Mirror", "Screen", "Magnetic"],
       text:
-        "Kadang kerjaan, konten, dan cerita nggak bisa berhenti. Dan T3B dibuat buat momen itu. Baterainya kuat banget (2500 mAh), layarnya lega (4.7 inch) dan cahayanya tetap soft walau lighting berubah. Buat kamu yang nggak mau ribet ganti-ganti posisi atau nyari angle tiap jam, T3B selalu siap — stabil, tenang, dan real. Bukan soal power aja, tapi soal rasa tenang saat tau alat kamu selalu siap nemenin.",
+        "Kadang kerjaan, konten, dan cerita nggak bisa berhenti. Dan T3B dibuat buat momen itu. Baterainya kuat banget (2500 mAh), layarnya lega (4.7 IPS) dan cahayanya tetap soft walau lighting berubah. Buat kamu yang nggak mau ribet ganti-ganti posisi atau nyari angle tiap jam, T3B selalu siap — stabil, tenang, dan real. Bukan soal power aja, tapi soal rasa tenang saat tau alat kamu selalu siap nemenin.",
       notes:
-        "<strong>VISION</strong> WIDE 4.7 INCH FRAME, CLEAN TONE | <strong>LIGHT</strong> BALANCED LIGHT, NATURAL COLOR |<br /><strong>CORE</strong> 2500 mAh BATTERY, SPEAKER ACTIVE, MAGNETIC LOOK",
+        "<strong>VISION</strong> WIDE 4.7 IPS FRAME, CLEAN TONE | <strong>LIGHT</strong> BALANCED LIGHT, NATURAL COLOR |<br /><strong>CORE</strong> 2500 mAh BATTERY, SPEAKER ACTIVE, MAGNETIC LOOK",
       spec: "MATERIAL ALUMINUM ALLOY",
       dur: "PENGGUNAAN 2 JAM | JARAK PAKAI 12 METER",
     },
