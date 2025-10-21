@@ -104,10 +104,9 @@ export const Navbar = () => {
             role="navigation"
           >
             <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
-            <Link to="/product" onClick={() => setMenuOpen(false)}>Product</Link>
+            <Link to="/catalog" className="highlight" onClick={() => setMenuOpen(false)}>Catalog</Link>
             <Link to="/about" onClick={() => setMenuOpen(false)}>About Us</Link>
             <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
-            <Link to="/catalog" className="highlight" onClick={() => setMenuOpen(false)}>Catalog</Link>
           </nav>
 
           <div className="actions-right">
@@ -659,7 +658,7 @@ const VideoCarousel = () => {
       <Container>
         <div className="reels-head">
           <h2>CLICK CLICK in action</h2>
-          <a className="reels-follow" href="#" aria-label="Follow us">FOLLOW US</a>
+          <a className="reels-follow" href="https://www.instagram.com/clickclickofficial.id/" aria-label="Follow us">FOLLOW US</a>
         </div>
       </Container>
 
@@ -769,7 +768,12 @@ const css = `
   .promo{background:#ffeaf5;text-align:center;padding:8px 0;font-weight:700;font-size:13px;}
 
   /* HEADER */
-  .navbar{position:sticky;top:0;z-index:50;background:#fff;transition:box-shadow .25s ease}
+  .navbar{
+    position:sticky;
+    top:0;z-index:50;
+    background:#fff;
+    transition:box-shadow .25s ease;
+  }
   .navbar.scrolled{box-shadow:0 8px 24px rgba(0,0,0,.06)}
 
   /* Row 1: Logo (Poppins Light) */
@@ -795,7 +799,7 @@ const css = `
   .nav-center a{
     display:inline-flex;align-items:center;gap:6px;padding:0 6px;
     font-family:"Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
-    font-weight:300; font-size:14px; line-height:1; white-space:nowrap; color:#111; text-decoration:none;
+    font-weight:400; font-size:14px; line-height:1; white-space:nowrap; color:#111; text-decoration:none;
     -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
   }
   .nav-center a svg{margin-top:1px;opacity:.7}

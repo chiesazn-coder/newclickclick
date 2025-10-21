@@ -52,10 +52,9 @@ const AccordionInfo = ({ product }) => {
   const items = useMemo(
     () => [
       { title: "Story Behind", body: product.desc },
-      { title: "Notes Description", body: product.notes },
-      { title: "Product Performance", body: "Longevity 6–8 hours, projection moderate." },
-      { title: "What Do They Say", body: "4.8/5 from 1,200+ reviews." },
-      { title: "Shipping Information", body: "Ships in 1–2 business days from ID." },
+      { title: "Product Performance", body: product.performs },
+      { title: "What Do They Say",  },
+      { title: "Shipping Information", body: product.shipinfo },
     ],
     [product.desc]
   );
@@ -115,7 +114,21 @@ export default function Checkout() {
             "<br /><br /> Finishing metal-nya ngasih kesan cool dan tenang. Cahayanya soft, pantulannya stabil bikin kamu lebih fokus ke vibe, bukan alatnya."+
             "Nggak perlu tampil rame. M4 tuh bukti kalau calm juga power."+
             "<br /><br />Do less. Look better.",
-      notes: "",
+      performs: "Type: M4"+
+                "<br />Screen Size: 4,0 IPS"+
+                "<br />Resolution: 720×1280P"+
+                "<br />Longevity: 3 Hours"+
+                "Distance: 10-15 meters",
+      shipinfo: `
+                <ul class="shipinfo-list">
+                  <li>Pengiriman produk dilaksanakan dari Senin hingga Jumat.</li>
+                  <li>Pesan sebelum jam 15 sore untuk pengiriman di hari yang sama.</li>
+                  <li>Pesanan setelah jam 15 sore akan dikirim esok hari.</li>
+                  <li>Tidak ada pengiriman di hari libur dan akhir pekan.</li>
+                  <li>Kami mengirim dari Jogja, dan waktu pengiriman bergantung pada jarak dan efisiensi kurir.</li>
+                </ul>
+                <p>Jika ada masalah, silakan hubungi Customer Service Click Click.</p>
+              `,
     },
     {
       id: 2,
@@ -132,6 +145,21 @@ export default function Checkout() {
             "<br /><br /> Desain bulatnya ngasih vibe hangat, cahayanya nyatu sama kulit, dan semua terlihat effortless tanpa filter berlebih."+ 
             "<br /><br /> T8D cocok buat yang pengin tampil real tapi fun, buat kamu yang percaya glow up terbaik itu yang datang dari rasa nyaman."+
             "<br /><br /> Keep your glow up real.",
+      performs: "Type: T8D"+
+                "<br />Screen Size: 2,1 IPS"+
+                "<br />Resolution: 480×480P"+
+                "<br />Longevity: 4 Hours"+
+                "Distance: 10-15 meters",
+      shipinfo: `
+                <ul class="shipinfo-list">
+                  <li>Pengiriman produk dilaksanakan dari Senin hingga Jumat.</li>
+                  <li>Pesan sebelum jam 15 sore untuk pengiriman di hari yang sama.</li>
+                  <li>Pesanan setelah jam 15 sore akan dikirim esok hari.</li>
+                  <li>Tidak ada pengiriman di hari libur dan akhir pekan.</li>
+                  <li>Kami mengirim dari Jogja, dan waktu pengiriman bergantung pada jarak dan efisiensi kurir.</li>
+                </ul>
+                <p>Jika ada masalah, silakan hubungi Customer Service Click Click.</p>
+              `,
     },
     {
       id: 3,
@@ -149,6 +177,21 @@ export default function Checkout() {
             "<br /><br /> Buat kamu yang nggak mau ribet ganti-ganti posisi atau nyari angle tiap jam, T3B selalu siap — stabil, tenang, dan real."+ 
             "Bukan soal power aja, tapi soal rasa tenang saat tau alat kamu selalu siap nemenin."+
             "<br /><br /> Never off. Just like you.",
+      performs: "Type: T3B"+
+                "<br />Screen Size: 4,7 IPS"+
+                "<br />Resolution: 720×1080P"+
+                "<br />Longevity: 5 Hours"+
+                "Distance: 10-15 meters",
+      shipinfo: `
+                <ul class="shipinfo-list">
+                  <li>Pengiriman produk dilaksanakan dari Senin hingga Jumat.</li>
+                  <li>Pesan sebelum jam 15 sore untuk pengiriman di hari yang sama.</li>
+                  <li>Pesanan setelah jam 15 sore akan dikirim esok hari.</li>
+                  <li>Tidak ada pengiriman di hari libur dan akhir pekan.</li>
+                  <li>Kami mengirim dari Jogja, dan waktu pengiriman bergantung pada jarak dan efisiensi kurir.</li>
+                </ul>
+                <p>Jika ada masalah, silakan hubungi Customer Service Click Click.</p>
+              `,
     },
     {
       id: 4,
@@ -166,6 +209,21 @@ export default function Checkout() {
             "<br /><br /> Bingkai kaca yang solid bikin pantulannya terasa tegas. Cahaya natural-nya ngasih tone warna yang pas di kamera."+ 
             "T1M itu statement. Nggak perlu perfect, yang penting real."+
             "<br /><br /> Be seen. Be you.",
+      performs: "Type: T1M"+
+                "<br />Screen Size: 3,97 IPS"+
+                "<br />Resolution: 480×800P"+
+                "<br />Longevity: 3 Hours"+
+                "Distance: 10-15 meters",
+      shipinfo: `
+                <ul class="shipinfo-list">
+                  <li>Pengiriman produk dilaksanakan dari Senin hingga Jumat.</li>
+                  <li>Pesan sebelum jam 15 sore untuk pengiriman di hari yang sama.</li>
+                  <li>Pesanan setelah jam 15 sore akan dikirim esok hari.</li>
+                  <li>Tidak ada pengiriman di hari libur dan akhir pekan.</li>
+                  <li>Kami mengirim dari Jogja, dan waktu pengiriman bergantung pada jarak dan efisiensi kurir.</li>
+                </ul>
+                <p>Jika ada masalah, silakan hubungi Customer Service Click Click.</p>
+              `,
     },
   ];
 
@@ -360,6 +418,19 @@ const checkoutCSS = `
 
 .co__reco{max-width:1200px;margin:0 auto;padding:10px 24px 60px}
 .co__reco h2{margin:24px 0 0;font-size:clamp(18px,2.4vw,24px);font-weight:600}
+
+/* Bullet list styling for shipping info */
+.shipinfo-list {
+  list-style-type: disc;     /* bentuk bullet bulat hitam */
+  margin: 0 0 12px 22px;     /* jarak kiri supaya titik terlihat */
+  line-height: 1.7;          /* jarak antarbaris */
+  color: #111;               /* warna teks */
+  font-size: 15px;
+}
+
+.shipinfo-list li {
+  margin-bottom: 6px;        /* jarak antar poin */
+}
 
 /* ===== Footer ===== */
 .site-footer{
