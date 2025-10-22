@@ -105,7 +105,6 @@ export const Navbar = () => {
           >
             <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
             <Link to="/catalog" className="highlight" onClick={() => setMenuOpen(false)}>Catalog</Link>
-            <Link to="/about" onClick={() => setMenuOpen(false)}>About Us</Link>
             <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
           </nav>
 
@@ -513,37 +512,37 @@ const Testimonials = () => {
   const reviews = [
     {
       id: 1,
-      name: "Kim G.",
-      title: "Love the color and the",
-      body: "Love the color and the bubbles on back for gripping.",
-      product: "CLICK CLICK M4 Selfie Screen",
+      name: "Zakaria",
+      title: "Bikin Ngonten Jadi Lebih Mudah!",
+      body: "Bisa mirroring dari iPhone langsung ke layar, jadi aku bisa ngatur pose tanpa pegang HP 😭",
+      product: "CLICK CLICK M4 MIRROR SELFIE SCREEN",
       productImg: "/assets/selfie/prod-m4.png",
       rating: 5
     },
     {
       id: 2,
-      name: "Celina F.",
-      title: "Purple MagSafe ring!!!!",
-      body: "I love the color and all that sparkle! The stones make it pop! Highly recommended 💜",
-      product: "CLICK CLICK T8D Selfie Screen",
+      name: "Miss Lubby",
+      title: "Setup Wajib Buat Konten",
+      body: "Bentuknya bulat lucu banget! T8D tuh literally teman setia pas bikin video. Plug, mirror, and glow ✨ simple tapi powerful! 💜",
+      product: "CLICK CLICK T8D MIRROR SELFIE SCREEN",
       productImg: "/assets/selfie/prod-t8d.png",
       rating: 5
     },
     {
       id: 3,
-      name: "Ava L.",
-      title: "Cute and durability",
-      body: "Great colors and design. Dropped my phone many times—no damage, so also durable.",
-      product: "CLICK CLICK T1M Selfie Screen",
+      name: "Cipaa",
+      title: "Layarnya Lega, Mirroring Cepet",
+      body: "Baterainya awet banget. Layarnya besar, jelas, dan mantap buat liat angle pas take video.",
+      product: "CLICK CLICK T1M MIRROR SELFIE SCREEN",
       productImg: "/assets/selfie/prod-t1m.png",
       rating: 5
     },
     {
       id: 4,
-      name: "Stiven.",
-      title: "Cute and durability",
-      body: "Great colors and design. Dropped my phone many times—no damage, so also durable.",
-      product: "CLICK CLICK T3B Selfie Screen",
+      name: "Wava",
+      title: "Simple Tapi Powerful 💪",
+      body: "Layarnya responsif dan connect ke iPhone-nya cepet banget. Bentuknya juga solid, berasa premium.",
+      product: "CLICK CLICK T3B MIRROR SELFIE SCREEN",
       productImg: "/assets/selfie/prod-t3b.png",
       rating: 5
     },
@@ -558,7 +557,7 @@ const Testimonials = () => {
           <div className="t-stars">
             <Star /><Star /><Star /><Star /><Star />
           </div>
-          <span className="t-count">11060 reviews</span>
+          <span className="t-count">1000 reviews</span>
         </div>
 
         <div className="t-wrap">
@@ -587,8 +586,10 @@ const Testimonials = () => {
                 <p className="t-card-body">{r.body}</p>
 
                 <footer className="t-foot">
-                  {r.productImg && <img src={r.productImg} alt="" />}
-                  <a href="#" className="t-product">{r.product}</a>
+                  {r.productImg && <img src={r.productImg} alt={r.product} />}
+                  <Link to={`/checkout/${r.id}`} className="t-product">
+                    {r.product}
+                  </Link>
                 </footer>
               </article>
             ))}
@@ -1304,7 +1305,7 @@ const css = `
   .t-foot img{ width:28px; height:28px; object-fit:cover; border-radius:6px; }
   .t-product{
     font-family:"Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
-    color:#6b5cff; text-decoration:none; font-weight:500;
+    color:#6b5cff; text-decoration:none; font-weight:500; font-size:15px;
   }
   .t-product:hover{ text-decoration:underline; }
 

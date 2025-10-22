@@ -1,6 +1,6 @@
 // Catalog.jsx
 import React from "react";
-import { Link, useNavigate, useEffect} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { Navbar } from "./LuxyLanding";
 
 function ProductSection({
@@ -80,11 +80,7 @@ function ProductSection({
   
 
 export default function Catalog() {
-  // DATA 4 PRODUK — tinggal ganti sesuai kebutuhanmu
-  useEffect(() => {
-    // pastikan benar-benar ke atas saat masuk halaman
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  }, []);
+
 
   const products = [
     {
