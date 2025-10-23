@@ -368,6 +368,7 @@ const checkoutCSS = `
   .nav-center.open{display:flex;position:static;transform:none;padding:14px 0;border-top:1px solid #eee;border-bottom:1px solid #eee;flex-wrap:wrap;gap:16px;justify-content:flex-start}
   .actions-right{right:12px}
 }
+
 :root{--co-text:#111;--co-muted:#6b7280;--co-border:#eee;--co-black:#0b0b0b;}
 *{box-sizing:border-box}
 

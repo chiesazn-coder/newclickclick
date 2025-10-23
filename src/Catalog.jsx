@@ -1,7 +1,7 @@
 // Catalog.jsx
 import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Navbar } from "./LuxyLanding";
+import { Navbar, FooterSection } from "./LuxyLanding";
 
 
 function ProductSection({
@@ -412,6 +412,7 @@ export default function Catalog() {
 
     return (
       <>
+
         <Navbar />
     
         {/* MOBILE: selalu render, default tersembunyi; akan tampil di ≤820px */}
@@ -464,7 +465,7 @@ export default function Catalog() {
             setActive={setActive}
           />
         </main>
-    
+        <FooterSection />
         <style>{css + spotlightCss + mobileCss}</style>
       </>
     );
@@ -794,6 +795,69 @@ const css = `
   .mobile-stack .mb-hero img{ width: 92%; max-height: 36vh; }
   .mobile-stack .tp-title{ font-size: 18px; }
   .mobile-stack .tp-text{ font-size: 13.5px; line-height: 1.7; }
+}
+
+/* ===== Footer ===== */
+.site-footer{
+  background:#fff; color:#0f172a;
+  border-top:1px solid #eef0f4;
+  margin-top:50px;
+  font-family:"Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+  transform: none !important;
+  max-width: 98%;
+  padding-left: 24px;
+}
+.f-grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(24px, 3vw, 48px);
+  padding: clamp(28px, 4vw, 48px) 0 24px;
+}
+@media (max-width: 1024px){
+  .f-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px){
+  .f-grid{ grid-template-columns: 1fr; }
+}
+
+.f-title{
+  margin:0 0 14px;
+  font-size: clamp(18px, 4vw, 20px);
+  letter-spacing:.04em;
+  font-weight:500;
+  color:#0f172a;     /* hampir hitam, seperti referensi */
+}
+.f-list{ list-style:none; margin:0; padding:0; }
+.f-list li{ margin: 14px 0; }
+.f-list a{
+  color:#334155; text-decoration:none; font-size:14px;
+}
+.f-list a:hover{ color:#111; }
+
+.f-payments{
+  display:flex; align-items:center; gap:18px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.f-payments img{
+  height: 28px; width:auto; display:block;
+  filter: none;
+}
+
+.f-bottom{
+  border-top:1px solid #eef0f4;
+  background:#fff;
+}
+.f-bottom-inner{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:16px; padding: 14px 0;
+  color:#0f172a;
+}
+.f-copy, .f-right{
+  margin:0; font-size:14px; color:#0f172a;
+}
+@media (max-width: 640px){
+  .f-bottom-inner{ flex-direction:column; align-items:flex-start; gap:6px; }
 }
 
 `;

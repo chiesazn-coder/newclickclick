@@ -106,6 +106,7 @@ export const Navbar = () => {
             <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
             <Link to="/catalog" className="highlight" onClick={() => setMenuOpen(false)}>Catalog</Link>
             <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+            <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
           </nav>
 
           <div className="actions-right">
@@ -704,61 +705,62 @@ const VideoCarousel = () => {
 /* ======================================================
    FooterSection: 4 kolom + payment logos + bottom bar
    ====================================================== */
-export const FooterSection = () => {
-  return (
-    <footer className="site-footer">
-      <Container>
-        {/* 4 Columns */}
-        <div className="f-grid">
-          <div className="f-col">
-            <h4 className="f-title">CUSTOMER CARE</h4>
-            <ul className="f-list">
-              <li><a href="#">Shipping & Delivery</a></li>
-              <li><a href="#">Returns & Exchanges</a></li>
-              <li><a href="#">FAQ</a></li>
-            </ul>
-          </div>
-
-          <div className="f-col">
-            <h4 className="f-title">ABOUT US</h4>
-            <ul className="f-list">
-              <li><a href="#">Our Story</a></li>
-              <li><a href="#">Wholesale</a></li>
-            </ul>
-          </div>
-
-          <div className="f-col">
-            <h4 className="f-title">HELP & LEGAL</h4>
-            <ul className="f-list">
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Terms of Service</a></li>
-              <li><a href="#">Contact Us</a></li>
-            </ul>
-          </div>
-
-          <div className="f-col">
-            <h4 className="f-title">FOLLOW US</h4>
-            <ul className="f-list">
-              <li><a href="https://www.instagram.com/clickclickofficial.id/" aria-label="Instagram">Instagram</a></li>
-              <li><a href="https://www.tiktok.com/@clickclick.id?_t=ZS-8zDr2pMwNhI&_r=1" aria-label="TikTok">TikTok</a></li>
-              <li><a href="https://shopee.co.id/shop/1556220986" aria-label="Shopee">Shopee</a></li>
-            </ul>
-          </div>
-        </div>
-      </Container>
-
-      {/* Bottom bar */}
-      <div className="f-bottom">
+   export const FooterSection = () => {
+    return (
+      <footer className="site-footer">
         <Container>
-          <div className="f-bottom-inner">
-            <p className="f-copy">© 2025 Clickclick, All rights reserved.</p>
-            <p className="f-right">Secured Checkout • Trusted Payments</p>
+          {/* 4 Columns */}
+          <div className="f-grid">
+            <div className="f-col">
+              <h4 className="f-title">CUSTOMER CARE</h4>
+              <ul className="f-list">
+                <li><Link to="/shipping">Shipping & Delivery</Link></li>
+                <li><Link to="/returns">Returns & Exchanges</Link></li>
+                <li><Link to="/faq">FAQ</Link></li>
+              </ul>
+            </div>
+  
+            <div className="f-col">
+              <h4 className="f-title">ABOUT US</h4>
+              <ul className="f-list">
+                <li><Link to="/about">Our Story</Link></li>
+                <li><Link to="/wholesale">Wholesale</Link></li>
+              </ul>
+            </div>
+  
+            <div className="f-col">
+              <h4 className="f-title">HELP & LEGAL</h4>
+              <ul className="f-list">
+                <li><Link to="/privacy">Privacy Policy</Link></li>
+                <li><Link to="/terms">Terms of Service</Link></li>
+                <li><Link to="/contact">Contact Us</Link></li>
+              </ul>
+            </div>
+  
+            <div className="f-col">
+              <h4 className="f-title">FOLLOW US</h4>
+              <ul className="f-list">
+                <li><a href="https://www.instagram.com/clickclickofficial.id/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">Instagram</a></li>
+                <li><a href="https://www.tiktok.com/@clickclick.id?_t=ZS-8zDr2pMwNhI&_r=1" target="_blank" rel="noopener noreferrer" aria-label="TikTok">TikTok</a></li>
+                <li><a href="https://shopee.co.id/shop/1556220986" target="_blank" rel="noopener noreferrer" aria-label="Shopee">Shopee</a></li>
+              </ul>
+            </div>
           </div>
         </Container>
-      </div>
-    </footer>
-  );
-};
+  
+        {/* Bottom bar */}
+        <div className="f-bottom">
+          <Container>
+            <div className="f-bottom-inner">
+              <p className="f-copy">© 2025 Clickclick, All rights reserved.</p>
+              <p className="f-right">Secured Checkout • Trusted Payments</p>
+            </div>
+          </Container>
+        </div>
+      </footer>
+    );
+  };
+  
 
 
 
