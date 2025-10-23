@@ -597,112 +597,81 @@ const css = `
 }
 .desc-link a:hover{ opacity:.8; }
 
-/* responsive */
+/* === MOBILE FIRST POLISH – perbaikan layout ≤ 820px === */
 @media (max-width: 820px){
-  .catalog-desc{ grid-template-columns: 1fr; }
-  .desc-rail{
-    order:2; min-height: 80px; height:80px; margin-top:8px;
-  }
-  .desc-rail .rail-line, .desc-rail .rail-price{
-    position:relative; transform:none; left:auto; top:auto; bottom:auto;
-    rotate:0deg; display:inline-block; margin-right:18px;
-  }
-}
+  /* Container lebih rapat dan konsisten */
+  .container{ padding: 0 14px; }
 
-/* === MOBILE POLISH === */
-@media (max-width: 820px){
-  /* Hero lebih rapih & proporsional */
-  .catalog-hero{
-    padding: 28px 0 16px;
+  /* Grid jadi 1 kolom: Carousel dulu, teks setelahnya (UX swipe dulu, baca setelahnya) */
+  .spotlight{
+    grid-template-columns: 1fr;
+    gap: 14px;
+    min-height: auto;
+    padding: 16px 0 28px;
   }
+  .slides{ order: 1; }
+  .textpanel{ order: 2; }
+
+  /* Hero lebih ringkas, gambar proporsional */
+  .catalog-hero{ padding: 16px 0 8px; }
   .catalog-image{
     width: 92%;
     max-width: 360px;
-  }
-
-  /* Hapus geser kanan & rapihkan padding */
-  .catalog-desc{
-    grid-template-columns: 1fr;
-    gap: 18px;
-    padding: 16px 16px 40px;
-    margin: 0 auto;
-    transform: none;                /* <— penting: hilangkan geser */
-    max-width: 680px;
-  }
-
-  /* Rail dipadatkan (atau disembunyikan kalau tak dipakai) */
-  .desc-rail{
-    order: 2;
-    min-height: 0;
     height: auto;
-    margin: 0;
-    padding-top: 6px;
-  }
-  .desc-rail .rail-line,
-  .desc-rail .rail-price{
-    position: static;
-    transform: none;
-    rotate: 0deg;
-    display: inline-block;
-    margin-right: 12px;
-    font-size: 16px;
   }
 
-  /* Body full width + tipografi lebih terbaca */
-  .desc-body{ max-width: 100%; }
-  .desc-title{
-    font-size: 22px;                /* naikkan minimum supaya tajuk jelas */
-    line-height: 1.25;
-    margin-bottom: 6px;
+  /* Tipografi panel teks lebih nyaman dibaca di mobile */
+  .tp-title{ font-size: 22px; line-height: 1.25; margin-bottom: 6px; }
+  .tp-meta{ font-size: 14px; line-height: 1.6; color: #374151; }
+  .tp-text{ font-size: 15px; line-height: 1.9; color:#1f2937; }
+  .tp-notes, .tp-spec, .tp-dur{ font-size: 14px; }
+
+  /* Jaga tinggi wrapper agar tidak ‘loncat’ saat ganti slide */
+  .tp-wrap{ transition: min-height .25s ease; }
+
+  /* Carousel: kartu sedikit lebih besar agar fokus ke slide aktif */
+  .slides-track{ gap: 14px; }
+  .slides-viewport{
+    /* pusatkan slide aktif dengan padding kiri/kanan yang sesuai lebar kartu */
+    padding-inline: calc((100% - 82%) / 2);
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 50%;
+    -webkit-overflow-scrolling: touch;
   }
-  .desc-meta{
-    font-size: 14px;
-    line-height: 1.6;
-    color: #374151;
-    margin-bottom: 10px;
-    word-wrap: break-word;
-    white-space: normal;
-  }
-  .desc-text{
-    font-size: 15px;
-    line-height: 1.9;
-    color: #1f2937;
-    margin-bottom: 14px;
-  }
-  .desc-notes{
-    font-size: 14px;
-    line-height: 1.8;
-    margin: 12px 0;
-  }
-  .desc-spec{
-    font-size: 14px;
-    margin: 8px 0 4px;
-  }
-  .desc-dur{
-    font-size: 14px;
-    color: #4b5563;
-    margin: 0 0 12px;
+  .card{
+    flex: 0 0 82%;
+    border-radius: 14px;
   }
 
-  /* Link jadi tombol agar enak di-tap */
-  .desc-link a{
-    display: inline-block;
-    text-decoration: none;
-    border: 1px solid #111;
-    padding: 10px 14px;
-    border-radius: 10px;
-    font-weight: 600;
-  }
-  .desc-link a:active{ transform: translateY(1px); }
+  /* Gradien tepi diperkecil agar tidak menggelap terlalu banyak */
+  .slides::before, .slides::after{ width: 72px; }
 }
 
-/* Breakpoint kecil: rapikan lagi untuk layar mungil */
-@media (max-width: 480px){
-  .catalog-desc{ padding: 14px 14px 34px; }
-  .desc-title{ font-size: 20px; }
-  .desc-text, .desc-notes, .desc-meta, .desc-spec, .desc-dur{ font-size: 14px; }
-  .desc-link a{ width: 100%; text-align: center; }
+/* === Tiny phones ≤ 520px: kartu lebih besar, tombol panah disembunyikan === */
+@media (max-width: 520px){
+  .tp-title{ font-size: 20px; }
+  .tp-text{ font-size: 14px; line-height: 1.85; }
+
+  .slides-viewport{
+    padding-inline: calc((100% - 88%) / 2);
+  }
+  .card{ flex-basis: 88%; border-radius: 16px; }
+
+  /* Sembunyikan panah, cukup swipe/dots */
+  .nav-btn{ display:none; }
+
+  /* Gradien tepi makin kecil supaya konten tidak ketutup */
+  .slides::before, .slides::after{ width: 48px; }
 }
+
+/* === Optional: halusin scroll + aksesibilitas === */
+@media (prefers-reduced-motion: reduce){
+  .slides-track,
+  .card,
+  .tp-wrap{ transition: none !important; }
+}
+
+
 
 `;
 
