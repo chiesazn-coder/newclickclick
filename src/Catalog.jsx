@@ -271,17 +271,25 @@ function ProductSection({
   // di atas export default function Catalog() { ... }, taruh setelah imports
   function useMedia(query) {
     const [matches, setMatches] = React.useState(false);
+  
     React.useEffect(() => {
+      if (typeof window === "undefined" || !window.matchMedia) return;
       const mq = window.matchMedia(query);
-      const handler = () => setMatches(mq.matches);
-      handler(); // initial
-      mq.addEventListener("change", handler);
-      return () => mq.removeEventListener("change", handler);
+      const onChange = (e) => setMatches(e.matches);
+      setMatches(mq.matches); // nilai awal
+  
+      if (mq.addEventListener) {
+        mq.addEventListener("change", onChange);
+        return () => mq.removeEventListener("change", onChange);
+      } else if (mq.addListener) {
+        mq.addListener(onChange);
+        return () => mq.removeListener(onChange);
+      }
     }, [query]);
+  
     return matches;
   }
-
-
+  
   
 export default function Catalog() {
 
@@ -381,51 +389,66 @@ export default function Catalog() {
       if (!wrapRef.current || !contentRef.current) return;
     }, [active, maxH]);
 
-
-  return (
-    <>
-      <Navbar />
-
-      {/* Hidden measurer: render semua panel untuk dihitung tingginya */}
-      <div
-        ref={measureRef}
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          visibility: "hidden",
-          inset: 0,
-          pointerEvents: "none",
-          // penting: samakan lebar dengan kolom TextPanel sebenarnya
-          width: "min(620px, 100%)",
-          // hindari reflow global
-          contain: "layout size"
-        }}
-      >
-        {products.map((p, i) => (
-          <div key={i} style={{ padding: 0, margin: 0 }}>
-            <TextPanel p={p} />
-          </div>
-        ))}
-      </div>
-
-      <main className="spotlight container">
-        
+    return (
+      <>
+        <Navbar />
+    
+        {/* MOBILE: selalu render, default tersembunyi; akan tampil di ≤820px */}
+        <main className="mobile-stack container">
+          {products.map((p) => (
+            <section key={p.checkoutSlug} className="mb-item">
+              <figure className="mb-hero">
+                <img src={p.imageSrc} alt={p.imageAlt} loading="lazy" />
+              </figure>
+              <TextPanel p={p} />
+            </section>
+          ))}
+        </main>
+    
+        {/* DESKTOP: selalu render; akan disembunyikan di ≤820px oleh CSS */}
+        {/* Hidden measurer (tetap aman walau ada di mobile karena visibility:hidden) */}
         <div
-          className="tp-wrap"
-          ref={wrapRef}
-          style={maxH ? { minHeight: `${maxH}px` } : undefined}
+          ref={measureRef}
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            visibility: "hidden",
+            inset: 0,
+            pointerEvents: "none",
+            width: "min(620px, 100%)",
+            contain: "layout size",
+          }}
         >
-          <div ref={contentRef}>
-            <TextPanel p={products[active]} />
-          </div>
+          {products.map((p, i) => (
+            <div key={i} style={{ padding: 0, margin: 0 }}>
+              <TextPanel p={p} />
+            </div>
+          ))}
         </div>
-
-        <ImageCarousel products={products} active={active} setActive={setActive}/>
-      </main>
-
-      <style>{css + spotlightCss + mobileCss}</style>
-    </>
-  );
+    
+        <main className="spotlight container">
+          <div
+            className="tp-wrap"
+            ref={wrapRef}
+            style={maxH ? { minHeight: `${maxH}px` } : undefined}
+          >
+            <div ref={contentRef}>
+              <TextPanel p={products[active]} />
+            </div>
+          </div>
+    
+          <ImageCarousel
+            products={products}
+            active={active}
+            setActive={setActive}
+          />
+        </main>
+    
+        <style>{css + spotlightCss + mobileCss}</style>
+      </>
+    );
+    
+    
 }
 
 const css = `
