@@ -348,11 +348,13 @@ const ProductsSection = () => {
         <h2 className="products-title">Tools for a Balanced Life</h2>
 
         <div className="products-wrap">
+          <div className="swipe-hint swipe-hint--left">‹</div>
           <div className="track" ref={trackRef}>
             {products.map((p) => (
               <ProductCard key={p.id} p={p} />
             ))}
           </div>
+          <div className="swipe-hint swipe-hint--right">›</div>
         </div>
       </Container>
     </section>
@@ -1040,6 +1042,33 @@ const css = `
     .track{ grid-auto-flow: column; grid-auto-columns: 78%; gap:20px; }
     .prod-nav{ display:none; }
   }
+
+  /* Indikator swipe (panah kiri/kanan) */
+  .swipe-hint {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 28px;
+    color: rgba(0,0,0,0.3);
+    pointer-events: none; /* biar tidak bisa diklik */
+    user-select: none;
+    transition: opacity 0.3s ease;
+    animation: pulseHint 1.8s infinite;
+    z-index: 2;
+  }
+
+  .swipe-hint--left { left: 10px; }
+  .swipe-hint--right { right: 10px; }
+
+  @keyframes pulseHint {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.9; }
+  }
+
+  @media (min-width: 781px) {
+    .swipe-hint { display: none; } /* hanya tampil di mobile */
+}
+
 
   /* ===== Split Feature (image left, copy right) ===== */
   .split-feature{
