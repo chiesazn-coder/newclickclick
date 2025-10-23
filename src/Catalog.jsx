@@ -1,7 +1,8 @@
 // Catalog.jsx
-import React from "react";
-import { Link, useNavigate} from "react-router-dom";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "./LuxyLanding";
+
 
 function ProductSection({
     imageSrc,
@@ -77,15 +78,212 @@ function ProductSection({
       </>
     );
   }
-  
 
+  function TextPanel({ p }) {
+    return (
+      <section className="textpanel" aria-live="polite">
+        <h2 className="tp-title">{p.title}</h2>
+  
+        <p className="tp-meta">
+          <span>Device Type:</span>{" "}
+          {p.meta.map((m, i) => (
+            <span key={i}>
+              {m}
+              {i < p.meta.length - 1 ? " | " : ""}
+            </span>
+          ))}
+        </p>
+  
+        <p className="tp-text">{p.text}</p>
+  
+        {p.notes && (
+          <p className="tp-notes" dangerouslySetInnerHTML={{ __html: p.notes }} />
+        )}
+        {p.spec && <p className="tp-spec"><strong>{p.spec}</strong></p>}
+        {p.dur && <p className="tp-dur">{p.dur}</p>}
+  
+        <div className="tp-cta">
+          <Link to={`/checkout/${p.checkoutSlug}`}>Go to Product</Link>
+        </div>
+      </section>
+    );
+  }
+
+
+  function ImageCarousel({ products, active, setActive }) {
+    const N = products.length;
+
+    // ——— 1) Gandakan list agar panjang (infinite buffer)
+    const REPEAT = 7; // ganjil, supaya ada "blok tengah"
+    const MID_BLOCK = Math.floor(REPEAT / 2); // index blok tengah
+    const items = Array.from({ length: REPEAT }, () => products).flat(); // N * REPEAT
+
+    // Virtual index awal dipusatkan ke blok tengah pada item ke-0
+    const initialVIndex = MID_BLOCK * N; // mis. N=4, REPEAT=7 → start di index 4*3=12
+
+    const viewportRef = useRef(null);
+    const cardRefs = useRef([]);
+    cardRefs.current = items.map((_, i) => cardRefs.current[i] || React.createRef());
+
+    // Pusatkan ke virtual index tertentu
+    const centerOnVIndex = useCallback((vIdx, behavior = "smooth") => {
+      const viewport = viewportRef.current;
+      const el = cardRefs.current[vIdx]?.current;
+      if (!viewport || !el) return;
+      const vpRect = viewport.getBoundingClientRect();
+      const rect = el.getBoundingClientRect();
+      const targetLeft =
+        (rect.left - vpRect.left) + viewport.scrollLeft
+        - (viewport.clientWidth / 2 - rect.width / 2);
+      viewport.scrollTo({ left: targetLeft, behavior });
+    }, []);
+
+    // Hitung virtual index terdekat ke pusat viewport
+    const getNearestVIndex = useCallback(() => {
+      const viewport = viewportRef.current;
+      if (!viewport) return initialVIndex;
+
+      const viewportCenter = viewport.scrollLeft + viewport.clientWidth / 2;
+      const vpRect = viewport.getBoundingClientRect();
+
+      let bestIdx = 0;
+      let bestDist = Infinity;
+
+      cardRefs.current.forEach((ref, idx) => {
+        const el = ref.current;
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const cardCenter =
+          (rect.left - vpRect.left) + viewport.scrollLeft + rect.width / 2;
+        const dist = Math.abs(cardCenter - viewportCenter);
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestIdx = idx;
+        }
+      });
+
+      return bestIdx;
+    }, [initialVIndex]);
+
+    // rAF throttling saat scroll
+    const rafId = useRef(0);
+    const onScroll = () => {
+      if (rafId.current) return;
+      rafId.current = requestAnimationFrame(() => {
+        const vIdx = getNearestVIndex();
+        // sinkronkan detail produk dengan real index (mod N)
+        const realIdx = ((vIdx % N) + N) % N;
+        if (realIdx !== active) setActive(realIdx);
+        rafId.current = 0;
+      });
+    };
+
+    // Rebase halus: kalau posisi virtual sudah terlalu dekat tepi,
+    // lompat ke posisi ekuivalen di blok tengah TANPA animasi (behavior: "auto")
+    const scrollEndTimer = useRef(0);
+    const onScrollEnd = () => {
+      clearTimeout(scrollEndTimer.current);
+      scrollEndTimer.current = setTimeout(() => {
+        const viewport = viewportRef.current;
+        if (!viewport) return;
+
+        const vIdx = getNearestVIndex();
+        const realIdx = ((vIdx % N) + N) % N;
+
+        const leftEdge = N;                      // threshold kiri
+        const rightEdge = (REPEAT - 1) * N - 1;  // threshold kanan
+
+        if (vIdx < leftEdge || vIdx > rightEdge) {
+          // Map vIdx saat ini ke blok tengah pada realIdx yang sama
+          const midVIdx = MID_BLOCK * N + realIdx;
+          centerOnVIndex(midVIdx, "auto"); // instant, tidak terasa "balik ke awal"
+        }
+      }, 120);
+    };
+
+    // Panah navigasi: geser 1 langkah virtual dari posisi terdekat saat ini
+    const go = (dir) => {
+      const curV = getNearestVIndex();
+      const nextV = dir === "next" ? curV + 1 : curV - 1;
+      centerOnVIndex(nextV, "smooth");
+    };
+
+    // Klik dot → langsung ke real index pada blok tengah
+    const goReal = (realIdx) => {
+      const midVIdx = MID_BLOCK * N + realIdx;
+      centerOnVIndex(midVIdx, "smooth");
+    };
+
+    // Inisialisasi: center di blok tengah
+    useEffect(() => {
+      centerOnVIndex(initialVIndex, "auto");
+      const onResize = () => centerOnVIndex(getNearestVIndex(), "auto");
+      window.addEventListener("resize", onResize);
+      return () => window.removeEventListener("resize", onResize);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return (
+      <section className="slides">
+        <div
+          className="slides-viewport"
+          ref={viewportRef}
+          onScroll={(e) => { onScroll(); onScrollEnd(); }}
+        >
+          <div className="slides-track">
+            {items.map((p, vIdx) => {
+              const realIdx = ((vIdx % N) + N) % N;
+              const isActive = realIdx === active;
+              return (
+                <figure
+                  key={`${p.checkoutSlug}-${vIdx}`}
+                  className={`card ${isActive ? "is-active" : ""}`}
+                  ref={cardRefs.current[vIdx]}
+                  onClick={() => centerOnVIndex(vIdx, "smooth")}
+                  aria-current={isActive ? "true" : "false"}
+                >
+                  <img src={p.imageSrc} alt={p.imageAlt} loading="lazy" />
+                </figure>
+              );
+            })}
+          </div>
+        </div>
+
+        <button className="nav-btn left" aria-label="Previous" onClick={() => go("prev")} />
+        <button className="nav-btn right" aria-label="Next" onClick={() => go("next")} />
+
+        <div className="nav-dots" role="tablist" aria-label="Product slides">
+          {products.map((_, i) => (
+            <button
+              key={i}
+              className={`dot ${i === active ? "on" : ""}`}
+              aria-label={`Go to slide ${i + 1}`}
+              aria-selected={i === active}
+              onClick={() => goReal(i)}
+              role="tab"
+            />
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  
 export default function Catalog() {
 
+  const [active, setActive] = useState(0);
+  
+  // buat ref untuk wrapper dan konten
+  const wrapRef = useRef(null);
+  const contentRef = useRef(null);
+
+  const measureRef = useRef(null);        // <— baru
+  const [maxH, setMaxH] = useState(null); // <— baru
 
   const products = [
     {
       checkoutSlug: "1",
-      imageSrc: "/assets/selfie/prod-m4.png",
+      imageSrc: "/assets/selfie/product/m4/m4-1.png",
       imageAlt: "m4",
       title: "Clean design. Real focus.",
       meta: ["Mirror", "Screen", "Magnetic"],
@@ -98,7 +296,7 @@ export default function Catalog() {
     },
     {
       checkoutSlug: "2",
-      imageSrc: "/assets/selfie/prod-t8d.png",
+      imageSrc: "/assets/selfie/product/t8d/t8d-1.png",
       imageAlt: "t8d",
       title: "Effortless fun. For faces that love the vibe.",
       meta: ["Mirror", "Screen", "Magnetic"],
@@ -111,47 +309,108 @@ export default function Catalog() {
     },
     {
       checkoutSlug: "3",
-      imageSrc: "/assets/selfie/prod-t3b.png",
+      imageSrc: "/assets/selfie/product/t3b/t3b-1.png",
       imageAlt: "t3b",
-      title: "For days that never stop",
+      title: "For days that never stop.",
       meta: ["Mirror", "Screen", "Magnetic"],
       text:
         "Kadang kerjaan, konten, dan cerita nggak bisa berhenti. Dan T3B dibuat buat momen itu. Baterainya kuat banget (2500 mAh), layarnya lega (4.7 IPS) dan cahayanya tetap soft walau lighting berubah. Buat kamu yang nggak mau ribet ganti-ganti posisi atau nyari angle tiap jam, T3B selalu siap — stabil, tenang, dan real. Bukan soal power aja, tapi soal rasa tenang saat tau alat kamu selalu siap nemenin.",
       notes:
-        "<strong>VISION</strong> WIDE 4.7 IPS FRAME, CLEAN TONE | <strong>LIGHT</strong> BALANCED LIGHT, NATURAL COLOR |<br /><strong>CORE</strong> 2500 mAh BATTERY, SPEAKER ACTIVE, MAGNETIC LOOK",
+        "<strong>VISION</strong> WIDE 4.7 IPS FRAME, CLEAN TONE | <strong>LIGHT</strong> BALANCED LIGHT, NATURAL COLOR"+
+        "<br /><strong>CORE</strong> 2500 mAh BATTERY, SPEAKER ACTIVE, MAGNETIC LOOK",
       spec: "MATERIAL ALUMINUM ALLOY",
       dur: "PENGGUNAAN 2 JAM | JARAK PAKAI 12 METER",
     },
     {
       checkoutSlug: "4",
-      imageSrc: "/assets/selfie/prod-t1m.png",
+      imageSrc: "/assets/selfie/product/t1m/t1m-1.png",
       imageAlt: "t1m",
       title: "For the ones who keep it real.",
       meta: ["Mirror", "Screen", "Magnetic"],
       text:
         "T1M nggak dirancang buat semua orang. Dia buat kamu yang pengen tampil apa adanya — tanpa takut diliat dari dekat. Refleksinya jernih banget, setiap detail di wajah lo nggak disembunyiin. Dan justru di situ keindahannya: real, simple, confident. Bingkai kaca yang solid bikin pantulannya terasa tegas. Cahaya natural-nya ngasih tone warna yang pas di kamera. T1M itu statement. Nggak perlu perfect, yang penting real.",
       notes:
-      "<strong>VISION</strong> GLASS CLARITY, SHARP TONE | <strong>LIGHT</strong> NATURAL LIGHT, HONEST COLOR |<br /><strong>CORE</strong> MAGNETIC POWER, SOLID GLASS BODY",
+      "<strong>VISION</strong> GLASS CLARITY, SHARP TONE | <strong>LIGHT</strong> NATURAL LIGHT, HONEST COLOR"+
+      "<br /><strong>CORE</strong> MAGNETIC POWER, SOLID GLASS BODY",
       spec: "MATERIAL ALUMINUM ALLOY",
       dur: "PENGGUNAAN 2.5 JAM | JARAK PAKAI 8–10 METER",
     },
   ];
+    // 1) Pre-measure semua TextPanel “offscreen”
+    useEffect(() => {
+      if (!measureRef.current) return;
+      // pastikan ukuran pengukuran sama dengan lebar TextPanel sebenarnya
+      const panelNodes = Array.from(measureRef.current.children);
+      const heights = panelNodes.map(n => n.offsetHeight || 0);
+      const tallest = Math.max(...heights, 0);
+      setMaxH(tallest);
+    }, [products]);
+  
+    // 2) Kalau lebar viewport berubah, re-measure (karena wrapping teks bisa beda)
+    useEffect(() => {
+      const onResize = () => {
+        if (!measureRef.current || !wrapRef.current) return;
+        const panelNodes = Array.from(measureRef.current.children);
+        const heights = panelNodes.map(n => n.offsetHeight || 0);
+        const tallest = Math.max(...heights, 0);
+        setMaxH(tallest);
+      };
+      window.addEventListener("resize", onResize);
+      return () => window.removeEventListener("resize", onResize);
+    }, []);
+  
+    // (opsional) tetap update saat active berganti jika kamu ingin animasi kecil
+    useEffect(() => {
+      if (!wrapRef.current || !contentRef.current) return;
+    }, [active, maxH]);
+
 
   return (
     <>
       <Navbar />
 
-      <main className="catalog">
-        {/* 4 SECTION dengan layout serupa */}
-        {products.map((p) => (
-          <ProductSection key={p.checkoutSlug} {...p} />
+      {/* Hidden measurer: render semua panel untuk dihitung tingginya */}
+      <div
+        ref={measureRef}
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          visibility: "hidden",
+          inset: 0,
+          pointerEvents: "none",
+          // penting: samakan lebar dengan kolom TextPanel sebenarnya
+          width: "min(620px, 100%)",
+          // hindari reflow global
+          contain: "layout size"
+        }}
+      >
+        {products.map((p, i) => (
+          <div key={i} style={{ padding: 0, margin: 0 }}>
+            <TextPanel p={p} />
+          </div>
         ))}
+      </div>
+
+      <main className="spotlight container">
+        
+        <div
+          className="tp-wrap"
+          ref={wrapRef}
+          style={maxH ? { minHeight: `${maxH}px` } : undefined}
+        >
+          <div ref={contentRef}>
+            <TextPanel p={products[active]} />
+          </div>
+        </div>
+
+        <ImageCarousel products={products} active={active} setActive={setActive}/>
       </main>
 
-      <style>{css}</style>
+      <style>{css + spotlightCss}</style>
     </>
   );
 }
+
 const css = `
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap');
 
@@ -446,3 +705,134 @@ const css = `
 }
 
 `;
+
+const spotlightCss = `
+.spotlight{
+  display:grid;
+  grid-template-columns: 1fr 1.25fr;
+  align-items:center;
+  gap: clamp(24px, 5vw, 56px);
+  min-height: clamp(520px, 70vh, 760px);
+  padding: clamp(24px, 5vw, 56px) 0;
+  transform: scale(0.9);
+}
+
+/* Text panel */
+.textpanel{ max-width: 620px; }
+.tp-title{ margin:0 0 10px; font-size: clamp(26px, 3.2vw, 42px); line-height:1.1; font-weight:700; }
+.tp-meta{ margin: 6px 0 16px; font-size:15px; color:#111; }
+.tp-meta span{ font-weight:500; }
+.tp-text{ margin:0 0 16px; color:#1f2937; line-height:1.9; font-size:15px; }
+.tp-notes{ margin:14px 0; font-size:14px; line-height:1.8; color:#111; }
+.tp-spec{ margin:8px 0 4px; }
+.tp-dur{ margin:0 0 16px; color:#374151; }
+.tp-cta a{ display:inline-block; border:1px solid #111; padding:12px 16px; border-radius:12px; font-weight:700; text-decoration:none; color:#111; }
+.tp-cta a:hover{ transform: translateY(-1px); }
+
+/* Carousel */
+.slides{ position:relative; }
+.slides-viewport{
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  /* Gutter simetris agar slide pertama & terakhir bisa benar2 center */
+  padding-inline: calc((100% - 68%) / 2);  /* 68% = lebar .card di desktop */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+.slides-viewport::-webkit-scrollbar{ display:none; }
+
+.slides-track{
+  display:flex; align-items:center;
+  gap: clamp(12px, 2.6vw, 24px);
+  transition: transform .55s cubic-bezier(.22,.61,.36,1);
+  will-change: transform;
+}
+.card{
+  flex: 0 0 68%;
+  scroll-snap-align: center;
+  transition: transform .45s ease, opacity .45s ease, box-shadow .3s ease;
+}
+/* Highlight tengah */
+.card.is-active{ transform: scale(1); opacity:1; box-shadow: 0 22px 60px rgba(0,0,0,.12); }
+.card:not(.is-active){ transform: scale(.92); opacity:.6; }
+
+.card img{ width:100%; height:100%; object-fit: cover; display:block; }
+.card.is-active{ transform: scale(1); opacity:1; box-shadow: 0 22px 60px rgba(0,0,0,.12); }
+
+/* arrows */
+.nav-btn{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:42px; height:42px; border-radius:999px; border:0;
+  background:#fff; box-shadow:0 10px 24px rgba(0,0,0,.10);
+  cursor:pointer; opacity:.9;
+}
+.nav-btn.left{ left:-10px; }
+.nav-btn.right{ right:-10px; }
+.nav-btn::before{
+  content:""; display:block; width:8px; height:8px;
+  border-right:2px solid #111; border-bottom:2px solid #111; margin:0 auto;
+  transform: rotate(225deg);
+}
+.nav-btn.right::before{ transform: rotate(45deg); }
+
+/* dots */
+.nav-dots{ display:flex; gap:8px; justify-content:center; margin-top:14px; }
+.dot{ width:8px; height:8px; border-radius:999px; background:#d1d5db; border:0; cursor:pointer; }
+.dot.on{ background:#111; }
+
+.slides::before,
+.slides::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 160px; /* Lebar fade diperbesar */
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(to right, rgba(255,255,255,0.95), rgba(255,255,255,0));
+  z-index: 2;
+}
+.slides::after {
+  right: 0;
+  transform: rotate(180deg);
+}
+
+.tp-wrap {
+  overflow: hidden;
+  transition: height .35s ease; /* animasi anti-loncat */
+  overflow: visible;
+  transition: min-height .35s ease;
+}
+
+.tp-wrap { padding-bottom: 1px; }
+
+
+/* Responsif */
+@media (max-width: 980px){
+  .spotlight{ grid-template-columns: 1fr; gap: 20px; min-height:auto; }
+  .textpanel{ order:2; }
+  .slides{ order:1; }
+  .slides-track{ gap:16px; }
+  .card{ flex: 0 0 78%; }
+}
+@media (max-width: 520px){
+  .tp-title{ font-size: 24px; }
+  .card{ flex: 0 0 86%; border-radius: 16px; }
+}
+@media (min-width: 1024px) {
+  .spotlight {
+    transform: scale(0.9);
+    transform-origin: top center;
+  }
+}
+
+/* (Opsional) di mobile lebar kartu sedikit lebih besar agar 3 terlihat rapat */
+@media (max-width: 980px){
+  .slides-viewport{ padding-inline: calc((100% - 78%) / 2); }
+  .card{ flex-basis: 78%; }
+}
+@media (max-width: 520px){
+  .slides-viewport{ padding-inline: calc((100% - 86%) / 2); }
+  .card{ flex-basis: 86%; }
+}
+`;
+

@@ -170,7 +170,7 @@ export default function LuxyLanding() {
       <Hero />
       <ProductsSection />
       <SplitFeature />
-      <VideoStrip />
+       {/* <VideoStrip />  */}
       <SplitFeatureSnap />
       <Testimonials />
       <VideoCarousel />
@@ -369,7 +369,7 @@ const SplitFeature = () => {
       {/* Kolom gambar */}
       <div className="split-media">
         <img
-          src="/assets/feature-planner.jpeg"   /* ganti sesuai asetmu */
+          src="/assets/clickclickip.png"   /* ganti sesuai asetmu */
           alt="Assorted self-care planners laid on a marble surface"
           className="split-img"
         />
@@ -378,13 +378,14 @@ const SplitFeature = () => {
       {/* Kolom teks */}
       <div className="split-copy">
         <p className="split-kicker">Bestseller</p>
-        <h3 className="split-title">The Self-Care Planner</h3>
+        <h3 className="split-title">SHOW YOURSELF BETTER</h3>
         <p className="split-desc">
-          The ultimate ‘all-in-one’ planner for work, life, and self-care.
-          Using our holistic planning system, you’ll learn to prioritize daily
-          self-care—putting you in the best position to achieve your goals.
+        A mirror designed for creators who love authenticity.
+        With ClickClick, your screen doesn’t just reflect your face, it captures your energy.
+        Soft, balanced lighting and real-time mirroring help you stay focused on your vibe, not your setup.
+        Look real. Feel ready. Every single click.
         </p>
-        <a href="#" className="split-btn" aria-label="Shop The Self-Care Planner">
+        <a href="/catalog" className="split-btn" aria-label="Shop The Self-Care Planner">
           SHOP NOW
         </a>
       </div>
@@ -458,19 +459,21 @@ const SplitFeatureSnap = () => {
     <section className="split-feature-snap">
       {/* Kolom teks */}
       <div className="split-copy-snap">
-        <p className="split-kicker-snap">Bestseller</p>
-        <h3 className="split-title-snap">The Self-Care Planner</h3>
+        <p className="split-kicker-snap">Upcoming Product</p>
+        <h3 className="split-title-snap">The Next Generation of Relaxation</h3>
         <p className="split-desc-snap">
-          The ultimate ‘all-in-one’ planner for work, life, and self-care.
-          Using our holistic planning system, you’ll learn to prioritize daily
-          self-care—putting you in the best position to achieve your goals.
+          Meet the future of relaxation.
+          This next-gen massager redefines comfort with smart vibration, sleek design, and full-body relief, anytime you need it.
         </p>
-        <a href="#" className="split-btn-snap" aria-label="Shop The Self-Care Planner">
+        {/* <a href="#" className="split-btn-snap" aria-label="Shop The Self-Care Planner">
           SHOP NOW
-        </a>
+        </a> */}
       </div>
       {/* Kolom gambar */}
       <div className="split-media-snap">
+        <div className="coming-badge-snap" aria-label="Produk yang akan datang">
+          Upcoming Product
+        </div>
         <img
           src="/assets/snap/features-pink.png"   /* ganti sesuai asetmu */
           alt="Assorted self-care planners laid on a marble surface"
@@ -1167,6 +1170,37 @@ const css = `
     min-height: 78vh;         /* tinggi seksi—atur sesuai selera */
     overflow:hidden;
   }
+
+  .coming-badge-snap{
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+
+  /* gaya visual */
+  background: rgba(17,17,17,.8);      /* hitam transparan */
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  backdrop-filter: saturate(120%) blur(2px);
+}
+
+@media (max-width: 780px){
+  .coming-badge-snap{
+    top: 10px;
+    left: 10px;
+    font-size: 11px;
+    padding: 7px 10px;
+  }
+}
+
   .split-img-snap{
     position:absolute; inset:0;
     width:100%; height:100%;
@@ -1234,7 +1268,7 @@ const css = `
   }
 
   /* ===== Testimonials ===== */
-  .testimonials{ padding: 50px 0; background:#fff; }
+  .testimonials{ padding: 20px 0; background:#fff; }
   .t-title{
     font-size: clamp(24px, 3.2vw, 40px);
     margin: 0 0 16px;
