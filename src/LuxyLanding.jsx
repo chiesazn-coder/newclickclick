@@ -986,7 +986,7 @@ const css = `
 
   @media (max-width: 780px){
     .track{ gap:20px; }
-    .product-card{ flex:0 0 78%; }
+    .product-card{ flex:0 0 90%; }
   }
 
   .product-card .meta {
