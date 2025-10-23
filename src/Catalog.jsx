@@ -722,7 +722,13 @@ const spotlightCss = `
 .tp-title{ margin:0 0 10px; font-size: clamp(26px, 3.2vw, 42px); line-height:1.1; font-weight:700; }
 .tp-meta{ margin: 6px 0 16px; font-size:15px; color:#111; }
 .tp-meta span{ font-weight:500; }
-.tp-text{ margin:0 0 16px; color:#1f2937; line-height:1.9; font-size:15px; }
+.tp-text{ 
+  margin:0 0 16px; 
+  color:#1f2937; 
+  line-height:1.9; 
+  font-size:15px; 
+  font-weight: 300;
+}
 .tp-notes{ margin:14px 0; font-size:14px; line-height:1.8; color:#111; }
 .tp-spec{ margin:8px 0 4px; }
 .tp-dur{ margin:0 0 16px; color:#374151; }

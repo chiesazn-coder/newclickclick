@@ -964,110 +964,144 @@ const css = `
     }
   }
   
-  /* PRODUCTS */
-  .products { background:#ffff; padding:72px 0; }
+  /* PRODUCTS (rapih & responsif) */
+  .products { background:#fff; padding:72px 0; }
+  
   .products-title{
-    text-align:center; font-size:36px; line-height:1.2; margin:0 0 80px;
-    font-family: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+    text-align:center;
+    font-size:36px;
+    line-height:1.2;
+    margin:0 0 80px;
+    font-family:"Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
     font-weight:400; color:#151515;
   }
-
-  /* horizontal track (snap on mobile) */
+  
+  /* Track horizontal (flex + snap) */
   .track{
-    display:flex; gap:32px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px;
+    display:flex;
+    gap:32px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    padding:4px;
+    -webkit-overflow-scrolling: touch;   /* momentum scrolling iOS */
+    overscroll-behavior-x: contain;      /* cegah body ikut geser */
     scrollbar-width:none;
   }
   .track::-webkit-scrollbar { display:none; }
-
+  
   /* 3 kartu terlihat di desktop */
   .product-card{
     flex:0 0 calc((100% - 2 * 32px) / 3);
     scroll-snap-align:start;
-    background:transparent; border:none; box-shadow:none; position:relative; overflow:visible;
+    background:transparent;
+    border:none; box-shadow:none;
+    position:relative; overflow:visible;
   }
-
-  @media (max-width: 780px){
-    .track{ gap:20px; }
-    .product-card{ flex:0 0 100%; }
-  }
-
+  
+  /* Meta */
   .product-card .meta {
-    text-align: center;       /* ⬅️ ini kunci agar teksnya di tengah */
-    margin-top: 8px;
+    text-align:center;
+    margin-top:8px;
   }
-  
   .product-card .name {
-    font-family: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
-    font-size: 14px;
-    font-weight: 400;
-    margin-bottom: 4px;
+    font-family:"Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+    font-size:14px; font-weight:400; margin-bottom:4px;
   }
-  
   .product-card .price {
-    font-family: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
-    font-size: 14px;
-    color: #111;
+    font-family:"Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+    font-size:14px; color:#111;
   }
   
-
+  /* Badge NEW */
   .product-card .new-badge{
     position:absolute; left:16px; top:16px;
     background:#fff; border-radius:4px; padding:6px 10px;
     font-size:12px; font-weight:700; color:#6b7280; letter-spacing:.06em;
     box-shadow:0 6px 18px rgba(0,0,0,.06);
   }
-
-  /* gambar tidak dipotong */
+  
+  /* Gambar tidak dipotong */
   .product-card .thumb{
-    aspect-ratio: 4 / 3;
+    aspect-ratio:4 / 3;
     display:flex; align-items:center; justify-content:center; background:none;
+    border-radius:12px; overflow:hidden;         /* tampilan lebih rapi di HP */
   }
   .product-card img{
     width:100%; height:100%; max-width:100%; max-height:100%;
     object-fit:contain; object-position:center; display:block;
   }
-
+  
+  /* Warna opsional */
   .colors{ display:flex; justify-content:center; gap:10px; margin-top:10px; }
   .color-dot{
     width:16px; height:16px; border-radius:999px; border:2px solid #fff;
     box-shadow:0 0 0 1px rgba(0,0,0,.12); display:inline-block;
   }
-
-  @media (max-width: 1100px){
-    .track{ grid-template-columns: repeat(3, 320px); }
+  
+  /* ====== RESPONSIVE ====== */
+  
+  /* Tablet ke bawah (≤1100px): hapus rule grid yang sempat tersisa */
+  @media (max-width:1100px){
+    /* .track tetap flex — jangan pakai grid-template-columns di sini */
   }
-  @media (max-width: 780px){
+  
+  /* Mobile (≤780px): layout swipe 1-kartu, judul lebih kecil */
+  @media (max-width:780px){
     .products{ padding:56px 0; }
     .products-title{ font-size:28px; margin-bottom:24px; }
-    .track{ grid-auto-flow: column; grid-auto-columns: 78%; gap:20px; }
+  
+    .track{
+      gap:20px;
+      padding:4px 8px 8px;            /* beri napas kiri-kanan */
+      scroll-padding-left:8px;        /* snap awal terasa pas */
+    }
+  
+    /* 1 kartu dominan per layar (mengajak swipe) */
+    .product-card{
+      flex:0 0 86vw;                  /* ~86% viewport — terlihat “peek” kartu berikutnya */
+      max-width:520px;
+    }
+  
+    /* sembunyikan navigasi lain jika ada */
     .prod-nav{ display:none; }
   }
-
-  /* Indikator swipe (panah kiri/kanan) */
+  
+  /* Very small phones (≤360px): kartu sedikit dilebarkan agar nyaman */
+  @media (max-width:360px){
+    .product-card{ flex-basis:92vw; }
+  }
+  
+  /* Desktop (≥781px): pastikan panah indikator tidak tampil */
+  @media (min-width:781px){
+    .track{ gap:32px; padding:4px; }
+  }
+  
+  /* ====== Panah indikator swipe (mobile only) ====== */
+  .products-wrap { position:relative; }  /* anchor posisi panah */
+  
   .swipe-hint {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 28px;
-    color: rgba(0,0,0,0.3);
-    pointer-events: none; /* biar tidak bisa diklik */
-    user-select: none;
-    transition: opacity 0.3s ease;
-    animation: pulseHint 1.8s infinite;
-    z-index: 2;
+    position:absolute;
+    top:50%; transform:translateY(-50%);
+    font-size:28px;
+    color:rgba(0,0,0,0.3);
+    pointer-events:none; user-select:none;
+    transition:opacity .3s ease;
+    animation:pulseHint 1.8s infinite;
+    z-index:10;
   }
-
-  .swipe-hint--left { left: 10px; }
-  .swipe-hint--right { right: 10px; }
-
+  .swipe-hint--left { left:10px; }
+  .swipe-hint--right { right:10px; }
+  
   @keyframes pulseHint {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.9; }
+    0%,100% { opacity:0.4; }
+    50% { opacity:0.9; }
   }
-
-  @media (min-width: 781px) {
-    .swipe-hint { display: none; } /* hanya tampil di mobile */
-}
+  
+  /* Panah hanya tampil di mobile */
+  @media (min-width:781px){
+    .swipe-hint{ display:none; }
+  }
+  
 
 
   /* ===== Split Feature (image left, copy right) ===== */
