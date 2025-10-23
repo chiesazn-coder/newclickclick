@@ -1,5 +1,5 @@
 // Catalog.jsx
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "./LuxyLanding";
 
@@ -112,20 +112,22 @@ function ProductSection({
 
   function ImageCarousel({ products, active, setActive }) {
     const N = products.length;
-
-    // ——— 1) Gandakan list agar panjang (infinite buffer)
-    const REPEAT = 7; // ganjil, supaya ada "blok tengah"
-    const MID_BLOCK = Math.floor(REPEAT / 2); // index blok tengah
-    const items = Array.from({ length: REPEAT }, () => products).flat(); // N * REPEAT
-
-    // Virtual index awal dipusatkan ke blok tengah pada item ke-0
-    const initialVIndex = MID_BLOCK * N; // mis. N=4, REPEAT=7 → start di index 4*3=12
-
+  
+    // 1) items jadi stabil (tidak bikin refs berubah2)
+    const REPEAT = 7; 
+    const MID_BLOCK = Math.floor(REPEAT / 2);
+    const items = React.useMemo(
+      () => Array.from({ length: REPEAT }, () => products).flat(),
+      [products]
+    );
+  
+    const initialVIndex = MID_BLOCK * N;
+  
     const viewportRef = useRef(null);
     const cardRefs = useRef([]);
     cardRefs.current = items.map((_, i) => cardRefs.current[i] || React.createRef());
-
-    // Pusatkan ke virtual index tertentu
+  
+    // 2) helper center (tetap)
     const centerOnVIndex = useCallback((vIdx, behavior = "smooth") => {
       const viewport = viewportRef.current;
       const el = cardRefs.current[vIdx]?.current;
@@ -137,18 +139,18 @@ function ProductSection({
         - (viewport.clientWidth / 2 - rect.width / 2);
       viewport.scrollTo({ left: targetLeft, behavior });
     }, []);
-
-    // Hitung virtual index terdekat ke pusat viewport
+  
+    // 3) cari vIndex terdekat (tetap)
     const getNearestVIndex = useCallback(() => {
       const viewport = viewportRef.current;
       if (!viewport) return initialVIndex;
-
+  
       const viewportCenter = viewport.scrollLeft + viewport.clientWidth / 2;
       const vpRect = viewport.getBoundingClientRect();
-
+  
       let bestIdx = 0;
       let bestDist = Infinity;
-
+  
       cardRefs.current.forEach((ref, idx) => {
         const el = ref.current;
         if (!el) return;
@@ -161,74 +163,92 @@ function ProductSection({
           bestIdx = idx;
         }
       });
-
+  
       return bestIdx;
     }, [initialVIndex]);
-
-    // rAF throttling saat scroll
+  
+    // 4) TUNGGU SEMUA IMG SIAP -> baru center (perbaiki “first swipe jump”)
+    const [imgsReady, setImgsReady] = useState(false);
+    useEffect(() => {
+      const vp = viewportRef.current;
+      if (!vp) return;
+      const imgs = Array.from(vp.querySelectorAll('img'));
+      if (imgs.length === 0) { setImgsReady(true); return; }
+  
+      let left = imgs.length;
+      const done = () => { left -= 1; if (left <= 0) setImgsReady(true); };
+  
+      imgs.forEach(img => {
+        if (img.complete) done();
+        else img.addEventListener('load', done, { once: true });
+      });
+  
+      return () => imgs.forEach(img => img.removeEventListener?.('load', done));
+    }, []);
+  
+    // 5) INIT: setelah gambar siap, center TANPA animasi, set active sinkron
+    useLayoutEffect(() => {
+      if (!imgsReady) return;
+      centerOnVIndex(initialVIndex, "auto");
+      const realIdx = ((initialVIndex % N) + N) % N;
+      if (realIdx !== active) setActive(realIdx);
+  
+      const onResize = () => centerOnVIndex(getNearestVIndex(), "auto");
+      window.addEventListener("resize", onResize);
+      return () => window.removeEventListener("resize", onResize);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [imgsReady]);
+  
+    // 6) rAF scroll sync (tetap)
     const rafId = useRef(0);
     const onScroll = () => {
       if (rafId.current) return;
       rafId.current = requestAnimationFrame(() => {
         const vIdx = getNearestVIndex();
-        // sinkronkan detail produk dengan real index (mod N)
         const realIdx = ((vIdx % N) + N) % N;
         if (realIdx !== active) setActive(realIdx);
         rafId.current = 0;
       });
     };
-
-    // Rebase halus: kalau posisi virtual sudah terlalu dekat tepi,
-    // lompat ke posisi ekuivalen di blok tengah TANPA animasi (behavior: "auto")
+  
+    // 7) rebase seamless (tetap)
     const scrollEndTimer = useRef(0);
     const onScrollEnd = () => {
       clearTimeout(scrollEndTimer.current);
       scrollEndTimer.current = setTimeout(() => {
         const viewport = viewportRef.current;
         if (!viewport) return;
-
+  
         const vIdx = getNearestVIndex();
         const realIdx = ((vIdx % N) + N) % N;
-
-        const leftEdge = N;                      // threshold kiri
-        const rightEdge = (REPEAT - 1) * N - 1;  // threshold kanan
-
+  
+        const leftEdge = N;
+        const rightEdge = (REPEAT - 1) * N - 1;
+  
         if (vIdx < leftEdge || vIdx > rightEdge) {
-          // Map vIdx saat ini ke blok tengah pada realIdx yang sama
           const midVIdx = MID_BLOCK * N + realIdx;
-          centerOnVIndex(midVIdx, "auto"); // instant, tidak terasa "balik ke awal"
+          centerOnVIndex(midVIdx, "auto");
         }
       }, 120);
     };
-
-    // Panah navigasi: geser 1 langkah virtual dari posisi terdekat saat ini
+  
     const go = (dir) => {
       const curV = getNearestVIndex();
       const nextV = dir === "next" ? curV + 1 : curV - 1;
       centerOnVIndex(nextV, "smooth");
     };
-
-    // Klik dot → langsung ke real index pada blok tengah
+  
     const goReal = (realIdx) => {
       const midVIdx = MID_BLOCK * N + realIdx;
       centerOnVIndex(midVIdx, "smooth");
     };
-
-    // Inisialisasi: center di blok tengah
-    useEffect(() => {
-      centerOnVIndex(initialVIndex, "auto");
-      const onResize = () => centerOnVIndex(getNearestVIndex(), "auto");
-      window.addEventListener("resize", onResize);
-      return () => window.removeEventListener("resize", onResize);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
+  
     return (
-      <section className="slides">
+      <section className={`slides ${imgsReady ? "is-ready" : "is-loading"}`}>
         <div
           className="slides-viewport"
           ref={viewportRef}
-          onScroll={(e) => { onScroll(); onScrollEnd(); }}
+          onScroll={() => { onScroll(); onScrollEnd(); }}
         >
           <div className="slides-track">
             {items.map((p, vIdx) => {
@@ -248,10 +268,10 @@ function ProductSection({
             })}
           </div>
         </div>
-
+  
         <button className="nav-btn left" aria-label="Previous" onClick={() => go("prev")} />
         <button className="nav-btn right" aria-label="Next" onClick={() => go("next")} />
-
+  
         <div className="nav-dots" role="tablist" aria-label="Product slides">
           {products.map((_, i) => (
             <button
@@ -267,6 +287,7 @@ function ProductSection({
       </section>
     );
   }
+  
 
   // di atas export default function Catalog() { ... }, taruh setelah imports
   function useMedia(query) {
@@ -567,6 +588,15 @@ const css = `
   transition:transform .35s ease;
 }
 
+/* Nonaktifkan transisi saat belum siap */
+.slides.is-loading .card,
+.slides.is-loading .slides-track { transition: none !important; }
+
+/* Efek depth: kartu tengah fokus, sisi kecil & agak blur */
+.card { transition: transform .45s ease, opacity .45s ease, filter .35s ease; }
+.card.is-active { transform: scale(1); opacity: 1; filter: none; }
+.card:not(.is-active) { transform: scale(.92); opacity: .65; filter: blur(1.2px); }
+
 
 /* DESCRIPTION SECTION */
 .catalog-desc{
@@ -711,7 +741,60 @@ const css = `
   .tp-wrap{ transition: none !important; }
 }
 
+/* ——— TWEAK SKALA MOBILE (≤820px) ——— */
+@media (max-width: 820px){
+  /* cegah iOS Safari auto-zoom text */
+  html, body { -webkit-text-size-adjust: 100%; }
 
+  /* kasih “napas” kiri–kanan biar gambar tak full-bleed */
+  .mobile-stack.container { padding-left: 12px; padding-right: 12px; }
+
+  /* Gambar lebih kecil & proporsional */
+  .mobile-stack .mb-hero img{
+    width: 94%;           /* dari 100% → 94% */
+    margin: 0 auto;       /* center */
+    max-height: 40vh;     /* dari 52vh → 40vh */
+    border-radius: 12px;  /* sedikit lebih kecil */
+    object-fit: cover;
+  }
+
+  /* Judul & teks diperkecil */
+  .mobile-stack .tp-title{
+    font-size: clamp(18px, 4.6vw, 20px); /* dari 22px */
+    line-height: 1.25;
+    font-weight: 600;                    /* dari 700 */
+    margin-bottom: 6px;
+  }
+  .mobile-stack .tp-meta{
+    font-size: 13px;     /* dari 14px */
+    line-height: 1.5;
+    color:#4b5563;
+  }
+  .mobile-stack .tp-text{
+    font-size: 14px;     /* dari 15px */
+    line-height: 1.75;   /* sedikit rapat */
+    color:#334155;
+  }
+  .mobile-stack .tp-notes,
+  .mobile-stack .tp-spec,
+  .mobile-stack .tp-dur{
+    font-size: 13px;     /* dari 14px */
+    line-height: 1.6;
+  }
+  .mobile-stack .tp-cta a{
+    padding: 9px 12px;   /* tombol lebih kecil */
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+}
+
+/* ——— Extra kecil (≤400px) ——— */
+@media (max-width: 400px){
+  .mobile-stack .mb-hero img{ width: 92%; max-height: 36vh; }
+  .mobile-stack .tp-title{ font-size: 18px; }
+  .mobile-stack .tp-text{ font-size: 13.5px; line-height: 1.7; }
+}
 
 `;
 
