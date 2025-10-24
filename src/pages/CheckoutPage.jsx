@@ -38,7 +38,7 @@ export default function CheckoutPage() {
   ========================== */
   const [withProtection, setWithProtection] = useState(false);
 
-  const CREATE_URL = "https://clickclick.id/api/create-transaction.php";
+  const CREATE_URL = "http://localhost:8000/create-transaction.php";
   const SHIP_URL = "https://clickclick.id/api/shipping-rates.php";
 
   // Subsidi ongkir Indonesia
@@ -96,7 +96,7 @@ export default function CheckoutPage() {
   /* ==========================
      MIDTRANS CONFIG
   ========================== */
-  const MIDTRANS_CLIENT_KEY = "Mid-client-MimywU4eu8Ro1e8b"; // sandbox vs prod
+  const MIDTRANS_CLIENT_KEY = "Mid-client-PrSR529Mau_EpIYA"; // sandbox vs prod
   const MID_ENV =
     MIDTRANS_CLIENT_KEY.indexOf("SB-") === 0 ? "sandbox" : "production";
 
