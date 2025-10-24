@@ -22,7 +22,7 @@ export default function About() {
 
           <section className="about-section">
             <p>
-              Founded in 2022 in Yogyakarta, Clickclick was built around one core belief:
+              Founded in 2025 in Yogyakarta, Clickclick was built around one core belief:
               thoughtful design can spark confidence and joy in everyday moments. 
               What started as a small team with a shared curiosity for innovation 
               has grown into a community that celebrates simplicity, authenticity, and self-expression.
@@ -96,7 +96,7 @@ const css = `
 .nav-center a{
   display:inline-flex;align-items:center;gap:6px;padding:0 6px;
   font-family:"Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
-  font-weight:400; font-size:14px; line-height:1; white-space:nowrap; color:#111; text-decoration:none;
+  font-weight:500; font-size:14px; line-height:1; white-space:nowrap; color:#111; text-decoration:none;
   -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
 }
 .nav-center a svg{margin-top:1px;opacity:.7}

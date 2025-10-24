@@ -1,3 +1,4 @@
+import ScrollToTop from "./ScrollToTop";
 import LuxyLanding from "./LuxyLanding";
 import Checkout from "./Checkout";
 import Catalog from "./Catalog"; // ⬅️ tambah ini
@@ -13,6 +14,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<LuxyLanding />} />
         <Route path="/catalog" element={<Catalog />} /> {/* ⬅️ rute baru */}

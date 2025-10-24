@@ -503,7 +503,7 @@ const css = `
 .nav-center a{
   display:inline-flex;align-items:center;gap:6px;padding:0 6px;
   font-family:"Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
-  font-weight:300; font-size:14px; line-height:1; white-space:nowrap; color:#111; text-decoration:none;
+  font-weight:500; font-size:14px; line-height:1; white-space:nowrap; color:#111; text-decoration:none;
   -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
 }
 .nav-center a svg{margin-top:1px;opacity:.7}

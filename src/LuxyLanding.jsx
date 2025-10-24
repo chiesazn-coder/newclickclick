@@ -346,7 +346,7 @@ const ProductsSection = () => {
   return (
     <section className="products">
       <Container>
-        <h2 className="products-title">Tools for a Balanced Life</h2>
+        <h2 className="products-title">ALL PRODUCTS</h2>
 
         <div className="products-wrap">
           <div className="swipe-hint swipe-hint--left">‹</div>
@@ -803,11 +803,16 @@ const css = `
   .menu-toggle span{display:block;width:22px;height:2px;background:#111;border-radius:2px;margin:3px 0}
 
   /* Centered menu (Poppins Light) */
-  .nav-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:42px}
+  .nav-center{
+    position:absolute;
+    left:50%;top:50%;
+    transform:translate(-50%,-50%);
+    display:flex;align-items:
+    center;gap:42px}
   .nav-center a{
     display:inline-flex;align-items:center;gap:6px;padding:0 6px;
     font-family:"Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
-    font-weight:400; font-size:14px; line-height:1; white-space:nowrap; color:#111; text-decoration:none;
+    font-weight:500; font-size:14px; line-height:1; white-space:nowrap; color:#111; text-decoration:none;
     -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
   }
   .nav-center a svg{margin-top:1px;opacity:.7}
