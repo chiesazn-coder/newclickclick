@@ -860,6 +860,72 @@ const css = `
   .f-bottom-inner{ flex-direction:column; align-items:flex-start; gap:6px; }
 }
 
+/* ===== Cart Drawer ===== */
+.cart-overlay{
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.42);
+  opacity: 0; visibility: hidden;
+  transition: opacity .2s ease, visibility 0s linear .2s;
+  z-index: 98;
+}
+.cart-overlay.show{
+  opacity: 1; visibility: visible;
+  transition: opacity .2s ease;
+}
+
+.cart-drawer{
+  position: fixed; top: 0; right: 0;
+  height: 100vh;
+  width: 35%;
+  max-width: 420px;
+  background: #fff;
+  box-shadow: -16px 0 32px rgba(0,0,0,.08);
+  transform: translateX(100%);
+  transition: transform .28s ease;
+  z-index: 99;
+  display: flex; flex-direction: column;
+}
+.cart-drawer.open{ transform: translateX(0); }
+
+.cart-head{
+  display:flex; justify-content:space-between; align-items:center;
+  padding: 18px 20px; border-bottom:1px solid #eee;
+}
+.cart-head h3{
+  margin:0; letter-spacing:.08em;
+  font-size:14px; font-weight:700;
+}
+.cart-close{
+  background:transparent; border:0; padding:6px; cursor:pointer;
+}
+
+.cart-body{ flex:1; overflow:auto; padding: 18px; }
+.cart-empty{
+  height: 100%;
+  display: grid; place-items: center;
+  text-align: center; gap: 16px;
+  color: #111;
+}
+.cart-empty p{ margin:0; color:#374151; }
+.cart-cta{
+  display:inline-block; background:#111; color:#fff;
+  padding:12px 18px; border-radius:999px;
+  font-weight:700; border:0; cursor:pointer;
+}
+
+/* Mobile: buat full-width agar nyaman */
+@media (max-width: 780px){
+  .cart-drawer{ width: 100vw; }
+}
+
+.cart-list { display:flex; flex-direction:column; gap:12px; }
+.cart-row { display:flex; gap:12px; align-items:center; border-bottom:1px solid #eee; padding-bottom:12px; }
+.cart-row img { width:56px; height:56px; object-fit:cover; border-radius:8px; }
+.cart-info { display:flex; flex-direction:column; gap:2px; font-size:13px; }
+.row-remove { margin-left:auto; border:0; background:transparent; font-size:22px; cursor:pointer; line-height:1; }
+.cart-total { display:flex; justify-content:space-between; align-items:center; margin-top:8px; padding-top:8px; }
+.cart-actions { display:flex; gap:10px; margin-top:12px; }
+
 `;
 
 const spotlightCss = `
