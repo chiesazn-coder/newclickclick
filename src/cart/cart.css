@@ -417,6 +417,40 @@
     }
   }
 
+  /* ==== FIX ALIGNMENT HARGA & ICON TRASH DI MOBILE ==== */
+  @media (max-width: 420px) {
+    .cart-right {
+      display: flex;
+      flex-direction: row;           /* jadikan sejajar horizontal */
+      align-items: center;           /* vertikal tengah */
+      justify-content: flex-end;     /* biar tetap di sisi kanan */
+      gap: 0.5rem;                   /* jarak antar ikon & harga */
+    }
+
+    .cart-price {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #111;
+      line-height: 1;                /* biar teks nggak tinggi */
+      margin: 0;
+    }
+
+    .row-remove {
+      order: 0;                      /* pastikan muncul di kiri harga */
+      font-size: 0.85rem;
+      padding: 0.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .cart-row {
+      align-items: center;           /* semua isi row rata tengah */
+      gap: 0.6rem;
+    }
+  }
+
   /* ============ SHIPPING PROTECTION CARD ============ */
   .cart-protect {
     display: flex;
