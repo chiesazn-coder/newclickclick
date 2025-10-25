@@ -1015,13 +1015,24 @@ export default function CheckoutPage() {
             {/* Submit */}
             <div className="mt-6">
               <button
-                className="h-12 rounded-xl bg-gray-900 text-white font-semibold hover:opacity-90 px-6 w-full md:w-auto disabled:opacity-60 disabled:cursor-not-allowed"
+                className="
+                  h-12 
+                  rounded-xl 
+                  bg-gray-900 
+                  text-white 
+                  font-semibold 
+                  hover:opacity-90 
+                  px-6 
+                  w-full 
+                  md:w-auto 
+                  disabled:opacity-60 
+                  disabled:cursor-not-allowed
+                  text-sm sm:text-base md:text-lg
+                "
                 disabled={submitting}
                 onClick={handlePlaceOrder}
               >
-                {submitting
-                  ? "Processing..."
-                  : "Pay now & Continue to Midtrans"}
+                {submitting ? "Processing..." : "Pay now & Continue to Midtrans"}
               </button>
 
               {errMsg ? (
