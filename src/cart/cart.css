@@ -560,53 +560,55 @@
       border-radius: 8px;
     }
   }
-
-  /* ==== MOBILE ALIGN FIX (≤420px) ==== */
-  /* pastikan blok ini PALING BAWAH di file */
+  
+  /* ==== MOBILE ALIGN FIX (≤420px) - FINAL, NO DUPLIKAT ==== */
   @media (max-width: 420px) {
-    /* baris produk masih fleksibel di mobile tapi rapat */
+
+    /* Row produk tetap agak rapat */
     .cart-row {
       align-items: flex-start;
       padding: .6rem .6rem .7rem;
       gap: .6rem;
     }
 
-    /* judul item jangan terlalu panjang ngedorong kanan turun */
     .cart-info .title {
       font-size: .8rem;
       line-height: 1.3;
       word-break: break-word;
     }
 
-    /* cluster kanan (harga + icon): jadi satu baris horizontal,
-      dan seluruh cluster didorong ke sisi kanan card */
+    /* === BAGIAN PENTING ===
+      Cluster kanan (harga + tombol hapus)
+      kita jadikan 1 baris horizontal,
+      dan kita dorong cluster ini ke kanan card
+    */
     .cart-right {
       display: flex;
-      flex-direction: row;
-      align-items: flex-start;   /* sejajarkan bagian atas */
-      justify-content: flex-end; /* mereka ngumpul kanan */
+      flex-direction: row;        /* kolom -> baris */
+      align-items: flex-start;    /* rata atas, bukan bawah */
+      justify-content: flex-end;  /* biar ngumpul di kanan */
       gap: .5rem;
-      margin-left: auto;         /* dorong keseluruhan cluster ke kanan */
-      width: auto;               /* jangan full width */
+      margin-left: auto;          /* dorong seluruh blok ini ke kanan */
+      width: auto;                /* JANGAN 100% */
     }
 
-    /* harga harus 1 baris aja */
+    /* Harga */
     .cart-price {
       font-size: .9rem;
       font-weight: 600;
       line-height: 1.2;
       color: #111;
       text-align: right;
-      white-space: nowrap;       /* JANGAN pecah jadi 2-3 baris */
+      white-space: nowrap;       /* cegah “Rp” dan angkanya pecah baris */
       margin: 0;
     }
 
-    /* just in case kita kasih inline fallback */
+    /* Just in case React render sesuatu yg inline-block aneh */
     .cart-price > * {
       display: inline;
     }
 
-    /* ikon trash */
+    /* Ikon hapus */
     .row-remove {
       display: flex;
       align-items: flex-start;
@@ -615,12 +617,11 @@
       line-height: 1;
       padding: .25rem;
       margin: 0;
-      flex-shrink: 0;            /* jangan ciut */
+      flex-shrink: 0;
       color: #999;
     }
   }
 
-  
   /* ============ ANIMASI HALUS ============ */
   @keyframes fadeIn {
     from {
