@@ -82,7 +82,10 @@ function ProductSection({
   function TextPanel({ p }) {
     return (
       <section className="textpanel" aria-live="polite">
-        <h2 className="tp-title">{p.title}</h2>
+        <h2
+          className="tp-title"
+          dangerouslySetInnerHTML={{ __html: p.title }}
+        />
   
         <p className="tp-meta">
           <span>Device Type:</span>{" "}
@@ -329,12 +332,12 @@ export default function Catalog() {
       checkoutSlug: "1",
       imageSrc: "/assets/selfie/product/m4/m4-1.png",
       imageAlt: "m4",
-      title: "Clean design. Real focus.",
+      title: "CLEAN DESIGN, REAL FOCUS.",
       meta: ["Mirror", "Screen", "Magnetic"],
       text:
-        "M4 nggak butuh banyak gaya — dia nunjukin versi paling chill dari kamu. Metal body-nya halus, pantulannya jernih, dan cahaya nyebar rata. Buat kamu yang suka vibe minimal tapi tetep classy.",
+        "M4 nggak butuh banyak gaya. Dia nunjukin versi paling chill dari kamu. Metal bodynya halus, pantulannya jernih, dan cahaya nyebar rata. Buat kamu yang suka vibe minimal tapi tetep classy.",
       notes:
-        "<strong>VISION</strong> CLEAR FRAME, SHARP DETAIL | <strong>LIGHT</strong> SOFT TONE, BALANCED LIGHT | <br /><strong>CORE</strong> MAGNETIC GRIP, CLEAN METAL FINISH",
+        "<strong>VISION</strong> CLEAR FRAME, SHARP DETAIL | <strong>LIGHT</strong> SOFT TONE, BALANCED LIGHT <br /><strong>CORE</strong> MAGNETIC GRIP, CLEAN METAL FINISH",
       spec: "MATERIAL ALUMINUM ALLOY",
       dur: "PENGGUNAAN 2.5–3 JAM | JARAK PAKAI 10–15 METER",
     },
@@ -342,7 +345,8 @@ export default function Catalog() {
       checkoutSlug: "2",
       imageSrc: "/assets/selfie/product/t8d/t8d-1.png",
       imageAlt: "t8d",
-      title: "Effortless fun. For faces that love the vibe.",
+      title: "EFFORTLESS FUN."+
+            "<br/><span class='tp-subtitle'>FOR FACES THAT LOVE THE VIBE.</span>",
       meta: ["Mirror", "Screen", "Magnetic"],
       text:
         "T8D itu buat kamu yang pengin tampil chill tapi tetep standout. Desainnya bulat, ringan, dan pantulannya jernih kayak pagi yang baru mulai. Cahayanya auto-nyesuain, jadi muka tetep enak dilihat di semua angle.",
@@ -355,12 +359,14 @@ export default function Catalog() {
       checkoutSlug: "3",
       imageSrc: "/assets/selfie/product/t3b/t3b-1.png",
       imageAlt: "t3b",
-      title: "For days that never stop.",
+      title: "FOR DAYS THAT NEVER STOP.",
       meta: ["Mirror", "Screen", "Magnetic"],
       text:
-        "Kadang kerjaan, konten, dan cerita nggak bisa berhenti. Dan T3B dibuat buat momen itu. Baterainya kuat banget (2500 mAh), layarnya lega (4.7 IPS) dan cahayanya tetap soft walau lighting berubah. Buat kamu yang nggak mau ribet ganti-ganti posisi atau nyari angle tiap jam, T3B selalu siap — stabil, tenang, dan real. Bukan soal power aja, tapi soal rasa tenang saat tau alat kamu selalu siap nemenin.",
+        "Kadang kerjaan, konten, dan cerita nggak bisa berhenti. Dan T3B dibuat buat momen itu. Baterainya kuat banget (2500 mAh), layarnya lega (4.7 IPS) dan cahayanya tetap soft walau lighting berubah."+
+        "Buat kamu yang nggak mau ribet ganti-ganti posisi atau nyari angle tiap jam,"+
+        " T3B selalu siap, stabil, tenang, dan real. Bukan soal power aja, tapi soal rasa tenang saat tau alat kamu selalu siap nemenin.",
       notes:
-        "<strong>VISION</strong> WIDE 4.7 IPS FRAME, CLEAN TONE | <strong>LIGHT</strong> BALANCED LIGHT, NATURAL COLOR"+
+        "<strong>VISION</strong> WIDE 4.7 IPS FRAME, CLEAN TONE <br /> <strong>LIGHT</strong> BALANCED LIGHT, NATURAL COLOR"+
         "<br /><strong>CORE</strong> 2500 mAh BATTERY, SPEAKER ACTIVE, MAGNETIC LOOK",
       spec: "MATERIAL ALUMINUM ALLOY",
       dur: "PENGGUNAAN 2 JAM | JARAK PAKAI 12 METER",
@@ -369,10 +375,12 @@ export default function Catalog() {
       checkoutSlug: "4",
       imageSrc: "/assets/selfie/product/t1m/t1m-1.png",
       imageAlt: "t1m",
-      title: "For the ones who keep it real.",
+      title: "FOR THE ONES WHO KEEP IT REAL.",
       meta: ["Mirror", "Screen", "Magnetic"],
       text:
-        "T1M nggak dirancang buat semua orang. Dia buat kamu yang pengen tampil apa adanya — tanpa takut diliat dari dekat. Refleksinya jernih banget, setiap detail di wajah lo nggak disembunyiin. Dan justru di situ keindahannya: real, simple, confident. Bingkai kaca yang solid bikin pantulannya terasa tegas. Cahaya natural-nya ngasih tone warna yang pas di kamera. T1M itu statement. Nggak perlu perfect, yang penting real.",
+        "T1M nggak dirancang buat semua orang. Dia buat kamu yang pengen tampil apa adanya,"+
+        " tanpa takut diliat dari dekat. Refleksinya jernih banget, setiap detail di wajah lo nggak disembunyiin. Dan justru di situ keindahannya: real, simple, confident."+
+        "Bingkai kaca yang solid bikin pantulannya terasa tegas. Cahaya naturalnya ngasih tone warna yang pas di kamera. T1M itu statement. Nggak perlu perfect, yang penting real.",
       notes:
       "<strong>VISION</strong> GLASS CLARITY, SHARP TONE | <strong>LIGHT</strong> NATURAL LIGHT, HONEST COLOR"+
       "<br /><strong>CORE</strong> MAGNETIC POWER, SOLID GLASS BODY",
@@ -642,7 +650,7 @@ const css = `
 .desc-body{ max-width: 760px;}
 .desc-title{
   margin:0 0 10px;
-  font-size: clamp(14px, 2vw, 25px);
+  font-size: clamp(12px, 2vw, 22px);
   line-height:1.06;
   font-weight:550;
 }
@@ -941,7 +949,21 @@ const spotlightCss = `
 
 /* Text panel */
 .textpanel{ max-width: 620px; }
-.tp-title{ margin:0 0 10px; font-size: clamp(26px, 3.2vw, 42px); line-height:1.1; font-weight:700; }
+.tp-title{ 
+  margin:0 0 10px; 
+  font-size: clamp(20px, 2.5vw, 32px); 
+  line-height:1.1; 
+  font-weight:700; 
+}
+
+.tp-title .tp-subtitle {
+  display: block;
+  font-size: 0.75em; /* 65% dari ukuran baris utama */
+  font-weight: 500;  /* lebih ringan */
+  margin-top: 4px;   /* jarak antarbaris */
+  letter-spacing: 0.02em;
+}
+
 .tp-meta{ margin: 6px 0 16px; font-size:15px; color:#111; }
 .tp-meta span{ font-weight:500; }
 .tp-text{ 
