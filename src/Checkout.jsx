@@ -4,8 +4,6 @@
   import { Navbar, FooterSection } from "./LuxyLanding";
   import { useCart } from "./cart/CartContext";
 
-
-
   /* =======================
     SECTION: ProductGallery
     ======================= */
@@ -63,7 +61,7 @@
       () => [
         { title: "Story Behind", body: product.desc },
         { title: "Product Performance", body: product.performs },
-        { title: "What Do They Say",  },
+        { title: "What Do They Say", body: product.reviews},
         { title: "Shipping Information", body: product.shipinfo },
       ],
       [product.desc]
@@ -138,6 +136,27 @@
                   </ul>
                   <p>Jika ada masalah, silakan hubungi Customer Service Click Click.</p>
                 `,
+        reviews: `
+          <div class="revList">
+
+            <div class="revCard">
+              <div class="revAvatar">GH</div>
+              <div class="revBody">
+                <p class="revText">"GILA SIH INI. Soft tapi tetep tajem di kamera 😭😭 Mukaku keliatan rapi banget tanpa edit. Serius ini baru bangun aja keliatan kayak habis facial 😭✨. Cahayanya nggak lebay, pantulan stabil, nggak bikin minyak jadi disco ball. Packingnya rapih parah, berasa beli gear mahal. Lokal tapi rasa internasional 👏👏👏"</p>
+                <p class="revAuthor">- @rannn._</p>
+              </div>
+            </div>
+
+            <div class="revCard">
+              <div class="revAvatar">NV</div>
+              <div class="revBody">
+                <p class="revText">"M4 tuh bukan yang rame, tapi classy. Tinggal taruh, nyala, selfie. Udah. Terus orang-orang nanya ‘kok feed lo sekarang keliatan cakep banget?’ padahal gue literally nggak ngapa-ngapain 😂."</p>
+                <p class="revAuthor">- @navnav.nav</p>
+              </div>
+            </div>
+
+          </div>
+          `,
       },
       {
         id: 2,
@@ -169,6 +188,27 @@
                   </ul>
                   <p>Jika ada masalah, silakan hubungi Customer Service Click Click.</p>
                 `,
+        reviews: `
+          <div class="revList">
+
+            <div class="revCard">
+              <div class="revAvatar">NY</div>
+              <div class="revBody">
+                <p class="revText">"INI ENAK BANGET 😭😭 Warnanya warm, muka keliatan glowing tapi masih gue banget bukan filter abal2. Setiap pagi selfie pake T8D langsung mood naik, vibes good day only 💖. Bentuknya gemes, naro di meja aja kamar kosan langsung jadi aesthetic 😭🙏."</p>
+                <p class="revAuthor">- @cimol.siang</p>
+              </div>
+            </div>
+
+            <div class="revCard">
+              <div class="revAvatar">AJ</div>
+              <div class="revBody">
+                <p class="revText">"T8D tuh bukan cuma kaca, ini support system 😌🫶. Kayak ‘iya kamu capek tapi kamu tetep cantik kok’. Thank you for my sanity."</p>
+                <p class="revAuthor">- @ajaa.lah</p>
+              </div>
+            </div>
+
+          </div>
+          `,
       },
       {
         id: 3,
@@ -201,6 +241,28 @@
                   </ul>
                   <p>Jika ada masalah, silakan hubungi Customer Service Click Click.</p>
                 `,
+        reviews: `
+          <div class="revList">
+
+            <div class="revCard">
+              <div class="revAvatar">VV</div>
+              <div class="revBody">
+                <p class="revText">"T3B = TEMAN LEMBUR 😤⚡ Baterai nggak abis-abis, lighting konsisten even sampe jam 2 pagi. Gue revisi konten buat brand 4x dan muka tetep aman nggak pucet 🥲🙏. Layarnya lega, enak cek angle. Ini nyelametin gue banget sumpah."</p>
+                <p class="revAuthor">- @vivi.editforrent</p>
+              </div>
+            </div>
+
+            <div class="revCard">
+              <div class="revAvatar">KS</div>
+              <div class="revBody">
+                <p class="revText">"PENGIRIMAN CEPET, packing aman, langsung kepake buat shooting. Serius kerasa kayak ada 1 crew tambahan yg ga pernah ngeluh capek 😂."</p>
+                <p class="revAuthor">- @kassshoots</p>
+              </div>
+            </div>
+
+          </div>
+          `,
+
       },
       {
         id: 4,
@@ -233,6 +295,27 @@
                   </ul>
                   <p>Jika ada masalah, silakan hubungi Customer Service Click Click.</p>
                 `,
+        reviews: `
+          <div class="revList">
+
+            <div class="revCard">
+              <div class="revAvatar">SL</div>
+              <div class="revBody">
+                <p class="revText">"T1M NIH YA... REAL PARAH 😳✨ Dia nggak nutupin pori, nggak nipu tekstur kulit. Tapi anehnya bikin gue ngerasa pede gila. Kayak ‘iya ini muka gue SO WHAT’ 😌💅. Ini healing banget sumpah."</p>
+                <p class="revAuthor">- @salsadikitserius</p>
+              </div>
+            </div>
+
+            <div class="revCard">
+              <div class="revAvatar">RN</div>
+              <div class="revBody">
+                <p class="revText">"Close-upnya jernih banget, detail keliatan semua. Bukan fake beauty, tapi ‘gue beneran secakep ini dari dekat’. LOKAL TAPI BERASA PREMIUM 👏👏👏."</p>
+                <p class="revAuthor">- @rinrin.rn</p>
+              </div>
+            </div>
+
+          </div>
+          `,
       },
     ];
 
@@ -442,6 +525,21 @@
     margin-bottom: 6px;        /* jarak antar poin */
   }
 
+  .reviewText {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #0f172a;
+    white-space: pre-line;
+  }
+  .reviewAuthor {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #6b7280;
+    font-weight: 500;
+  }
+  
+
   /* ========== CART DRAWER (Luxy airy style) ========== */
   :root{
     --cart-bg:#fff;
@@ -633,6 +731,63 @@
     .cart-row{ grid-template-columns:64px 1fr; }
     .cart-right{ align-items:flex-start; gap:8px; }
   }
+
+  /* ====== REVIEW STYLE ("What Do They Say") ====== */
+  .revList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 4px 0 0;
+  }
+
+  .revCard {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    align-items: flex-start;
+    gap: 12px;
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 16px;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+    color: #0f172a;
+  }
+
+  .revAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: #d1d5db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    user-select: none;
+    line-height: 1;
+  }
+
+  .revBody {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #111;
+    word-break: break-word;
+  }
+
+  .revText {
+    margin: 0 0 8px;
+    font-weight: 400;
+    white-space: pre-line;
+  }
+
+  .revAuthor {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: #6b7280;
+  }
+
 
 
   /* ===== Footer ===== */
