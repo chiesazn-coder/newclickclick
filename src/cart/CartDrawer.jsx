@@ -2,6 +2,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";     // 🔥 WAJIB: import Link
 import { useCart } from "./CartContext";
+import "./cart.css";
 
 const CURRENCY = new Intl.NumberFormat("id-ID");
 

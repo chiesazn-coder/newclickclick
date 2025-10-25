@@ -870,11 +870,19 @@ export default function CheckoutPage() {
               {!shippingOptions.length && !loadingShip ? (
                 <button
                   type="button"
-                  className="w-full h-11 rounded-xl border font-semibold hover:bg-gray-50 text-left px-4"
+                  className="
+                    w-full
+                    rounded-xl border
+                    font-semibold
+                    text-left
+                    px-4 py-3
+                    text-[13px] leading-snug
+                    sm:h-11 sm:py-0 sm:text-[15px]
+                    hover:bg-gray-50
+                  "
                   onClick={fetchShipping}
                 >
-                  Enter your shipping address to view available shipping
-                  methods.
+                  Enter your shipping address to view available shipping methods.
                 </button>
               ) : null}
 

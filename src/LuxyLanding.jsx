@@ -4,19 +4,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "./cart/CartContext";
 
 
-
 const Container = ({ children, className = "" }) => (
   <div className={`container ${className}`}>{children}</div>
 );
 
 const Logo = () => <a className="logo" href="#">CLICKCLICK</a>;
 
-const IconSearch = () => (
-  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="11" cy="11" r="8"></circle>
-    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-  </svg>
-);
+//const IconSearch = () => (
+//  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+//    <circle cx="11" cy="11" r="8"></circle>
+//    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+//  </svg>
+//);
 
 const IconBag = () => (
   <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -113,7 +112,7 @@ export const Navbar = () => {
 
           {/* ... logo-row + menu-row kamu */}
           <div className="actions-right">
-            {/* tombol search kamu */}
+            {/* tombol search kamu 
             <button className="icon-btn" aria-label="Search">
               🔍
             </button>
