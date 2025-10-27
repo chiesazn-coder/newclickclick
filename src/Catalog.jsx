@@ -1093,34 +1093,24 @@ const mobileCss = `
 
 /* MOBILE STACKED LAYOUT ≤ 820px */
 @media (max-width: 820px){
-  /* Tampilkan stack, sembunyikan layout slider */
-  .mobile-stack{ display:block; padding: 8px 0 28px; }
-  .spotlight{ display:none !important; }        /* matikan versi desktop */
-  .catalog-hero{ display:none !important; }     /* hero desktop tidak dipakai */
-
-  .mb-item{ margin-bottom: 28px; }
-  .mb-hero{ margin: 0 0 10px; }
-  .mb-hero img{
-    width: 100%;
-    max-height: 52vh;
-    object-fit: cover;
-    border-radius: 14px;
-    display:block;
+  .mobile-stack .tp-title{
+    font-size: clamp(16px, 4vw, 18px);
+    line-height: 1.2;
   }
-
-  /* Rapiin TextPanel untuk mobile stack */
-  .textpanel{ max-width: 100%; }
-  .tp-title{ font-size: 22px; line-height: 1.25; margin-bottom: 6px; }
-  .tp-meta{ font-size: 14px; line-height: 1.6; color:#374151; margin-bottom: 10px; }
-  .tp-text{ font-size: 15px; line-height: 1.9; color:#1f2937; }
-  .tp-notes, .tp-spec, .tp-dur{ font-size: 14px; }
-  .tp-cta a{
-    display:inline-block; width:auto;
-    text-decoration:none; border:1px solid #111;
-    padding:10px 14px; border-radius:10px; font-weight:600; color:#111;
+  .mobile-stack .tp-meta{
+    font-size: 12px;
   }
-
-  /* Bersihkan efek gradient/arrow dari carousel jika sempat tersisa */
-  .slides, .nav-btn, .nav-dots{ display:none !important; }
+  .mobile-stack .tp-text{
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .mobile-stack .tp-notes,
+  .mobile-stack .tp-spec,
+  .mobile-stack .tp-dur{
+    font-size: 12px;
+  }
+  .mobile-stack .tp-cta a{
+    font-size: 13px;
+  }
 }
 `;
