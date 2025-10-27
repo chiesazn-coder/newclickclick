@@ -30,23 +30,23 @@ const ChevronDown = () => (
   </svg>
 );
 
-const PromoStrip = () => {
-  const promos = [
-    "30% OFF sitewide // Already in your cart",
-    "Upgrade? We've got you covered!",
-    "30% OFF sitewide // No code needed",
-  ];
-  const [index, setIndex] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => setIndex((i) => (i + 1) % promos.length), 3000);
-    return () => clearInterval(id);
-  }, []);
-  return (
-    <div className="promo">
-      <span>{promos[index]}</span>
-    </div>
-  );
-};
+//const PromoStrip = () => {
+//  const promos = [
+//    "30% OFF sitewide // Already in your cart",
+//    "Upgrade? We've got you covered!",
+//    "30% OFF sitewide // No code needed",
+//  ];
+//  const [index, setIndex] = useState(0);
+//  useEffect(() => {
+//    const id = setInterval(() => setIndex((i) => (i + 1) % promos.length), 3000);
+//    return () => clearInterval(id);
+//  }, []);
+//  return (
+//    <div className="promo">
+//      <span>{promos[index]}</span>
+//    </div>
+//  );
+//};
 
 export const Navbar = () => {
   const { openCart, cartCount } = useCart();
@@ -182,7 +182,6 @@ const Hero = () => {
 export default function LuxyLanding() {
   return (
     <>
-      <PromoStrip />
       <Navbar />
       <Hero />
       <ProductsSection />
@@ -283,99 +282,139 @@ const ProductCard = ({ p }) => {
   );
 };
 
-
 /* ======================================================
-   ProductsSection: data + horizontal track
+   ProductsSection: data + horizontal track (with arrows)
    ====================================================== */
-const ProductsSection = () => {
-  // Ganti path gambar sesuai aset kamu
-  const products = [
-    {
-      id: 1,
-      title: "CLICK CLICK M4 MIRROR SELFIE",
-      price: 1990000,
-      isNew: true,
-      colors: ["#5C7EAB", "#E8DAC6", "#F4E98E"],
-      images: [
-        "/assets/selfie/prod-m4.png",
-        "/assets/selfie/product/m4-2.png",
-        "/assets/selfie/product/m4-3.png",
-      ],
-      alt: "Weekly Dashboard planner in pastel yellow",
-    },
-    {
-      id: 2,
-      title: "CLICK CLICK T8D MIRROR SELFIE",
-      price: 1850000,
-      isNew: true,
-      colors: ["#E9E0D4", "#5C7EAB", "#6C846E"],
-      images: [
-        "/assets/selfie/prod-t8d.png",
-        "/assets/selfie/product/t8d-2.png",
-        "/assets/selfie/product/t8d-3.png",
-      ],
-      alt: "Mini Reset Journal in blue",
-    },
-    {
-      id: 3,
-      title: "CLICK CLICK T3B MIRROR SELFIE",
-      price: 1690000,
-      isNew: true,
-      colors: ["#6C846E", "#5C7EAB", "#E9E0D4"],
-      images: [
-        "/assets/selfie/prod-t3b.png",
-        "/assets/selfie/product/t3b-2.png",
-        "/assets/selfie/product/t3b-3.png",
-      ],
-      alt: "Weekly Meal Planner in green",
-    },
-    {
-      id: 4,
-      title: "CLICK CLICK T1M MIRROR SELFIE",
-      price: 1690000,
-      isNew: true,
-      colors: ["#6C846E", "#5C7EAB", "#E9E0D4"],
-      images: [
-        "/assets/selfie/prod-t1m.png",
-        "/assets/selfie/product/t1m-2.png",
-        "/assets/selfie/product/t1m-3.png",
-      ],
-      alt: "Weekly Meal Planner alt set",
-    },
-    {
-      id: 5,
-      title: "CLICK CLICK ROBOTIC MASSAGER",
-      price: 1823695,
-      isNew: true,
-      colors: ["#6C846E", "#5C7EAB", "#E9E0D4"],
-      images: [
-        "/assets/snap/pink-prod.png",
-        "/assets/snap/prod-1.png",
-      ],
-      alt: "Weekly Meal Planner in pink",
-    },
-  ];
-
-  const trackRef = React.useRef(null);
-
-  return (
-    <section className="products">
-      <Container>
-        <h2 className="products-title">ALL PRODUCTS</h2>
-
-        <div className="products-wrap">
-          <div className="swipe-hint swipe-hint--left">‹</div>
-          <div className="track" ref={trackRef}>
-            {products.map((p) => (
-              <ProductCard key={p.id} p={p} />
-            ))}
+   const ProductsSection = () => {
+    // Data produk (tetap sama)
+    const products = [
+      {
+        id: 1,
+        title: "CLICK CLICK M4 MIRROR SELFIE",
+        price: 1990000,
+        isNew: true,
+        colors: ["#5C7EAB", "#E8DAC6", "#F4E98E"],
+        images: [
+          "/assets/selfie/prod-m4.png",
+          "/assets/selfie/product/m4-2.png",
+          "/assets/selfie/product/m4-3.png",
+        ],
+        alt: "Weekly Dashboard planner in pastel yellow",
+      },
+      {
+        id: 2,
+        title: "CLICK CLICK T8D MIRROR SELFIE",
+        price: 1850000,
+        isNew: true,
+        colors: ["#E9E0D4", "#5C7EAB", "#6C846E"],
+        images: [
+          "/assets/selfie/prod-t8d.png",
+          "/assets/selfie/product/t8d-2.png",
+          "/assets/selfie/product/t8d-3.png",
+        ],
+        alt: "Mini Reset Journal in blue",
+      },
+      {
+        id: 3,
+        title: "CLICK CLICK T3B MIRROR SELFIE",
+        price: 1690000,
+        isNew: true,
+        colors: ["#6C846E", "#5C7EAB", "#E9E0D4"],
+        images: [
+          "/assets/selfie/prod-t3b.png",
+          "/assets/selfie/product/t3b-2.png",
+          "/assets/selfie/product/t3b-3.png",
+        ],
+        alt: "Weekly Meal Planner in green",
+      },
+      {
+        id: 4,
+        title: "CLICK CLICK T1M MIRROR SELFIE",
+        price: 1690000,
+        isNew: true,
+        colors: ["#6C846E", "#5C7EAB", "#E9E0D4"],
+        images: [
+          "/assets/selfie/prod-t1m.png",
+          "/assets/selfie/product/t1m-2.png",
+          "/assets/selfie/product/t1m-3.png",
+        ],
+        alt: "Weekly Meal Planner alt set",
+      },
+      {
+        id: 5,
+        title: "CLICK CLICK ROBOTIC MASSAGER",
+        price: 1823695,
+        isNew: true,
+        colors: ["#6C846E", "#5C7EAB", "#E9E0D4"],
+        images: [
+          "/assets/snap/pink-prod.png",
+          "/assets/snap/prod-1.png",
+        ],
+        alt: "Weekly Meal Planner in pink",
+      },
+    ];
+  
+    const trackRef = React.useRef(null);
+  
+    // fungsi scroll kiri/kanan
+    const scrollTrack = (dir = 1) => {
+      const el = trackRef.current;
+      if (!el) return;
+  
+      const firstCard = el.querySelector(".product-card");
+      const cardWidth = firstCard?.getBoundingClientRect().width || 300;
+  
+      // ambil gap antar card dari CSS
+      const gap =
+        parseInt(
+          getComputedStyle(el).columnGap ||
+            getComputedStyle(el).gap ||
+            "32",
+          10
+        ) || 0;
+  
+      const step = cardWidth + gap;
+      el.scrollBy({ left: dir * step, behavior: "smooth" });
+    };
+  
+    return (
+      <section className="products">
+        <Container>
+          <h2 className="products-title">ALL PRODUCTS</h2>
+  
+          <div className="products-wrap">
+            {/* panah kiri */}
+            <button
+              className="swipe-hint swipe-hint--left"
+              onClick={() => scrollTrack(-1)}
+              aria-label="Scroll products left"
+              type="button"
+            >
+              ‹
+            </button>
+  
+            {/* track scrollable */}
+            <div className="track" ref={trackRef}>
+              {products.map((p) => (
+                <ProductCard key={p.id} p={p} />
+              ))}
+            </div>
+  
+            {/* panah kanan */}
+            <button
+              className="swipe-hint swipe-hint--right"
+              onClick={() => scrollTrack(1)}
+              aria-label="Scroll products right"
+              type="button"
+            >
+              ›
+            </button>
           </div>
-          <div className="swipe-hint swipe-hint--right">›</div>
-        </div>
-      </Container>
-    </section>
-  );
-};
+        </Container>
+      </section>
+    );
+  };
+  
 
 
 /* ======================================================
@@ -1099,30 +1138,54 @@ const css = `
   }
   
   /* ====== Panah indikator swipe (mobile only) ====== */
-  .products-wrap { position:relative; }  /* anchor posisi panah */
+  .products-wrap { 
+    position:relative;
+  }
   
+  /* panah kiri/kanan */
   .swipe-hint {
     position:absolute;
-    top:50%; transform:translateY(-50%);
+    top:50%;
+    transform:translateY(-50%);
     font-size:28px;
-    color:rgba(0,0,0,0.3);
-    pointer-events:none; user-select:none;
-    transition:opacity .3s ease;
-    animation:pulseHint 1.8s infinite;
+    line-height:1;
+    color:rgba(0,0,0,0.4);
+    background:#fff;
+    border:1px solid rgba(0,0,0,0.08);
+    box-shadow:0 8px 18px rgba(0,0,0,.12);
+    border-radius:999px;
+  
+    width:40px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  
+    cursor:pointer;
+    user-select:none;
+    transition:opacity .2s ease, transform .2s ease, box-shadow .2s ease;
     z-index:10;
+    /* hilangkan pointer-events:none; sekarang dia tombol beneran */
   }
+  
   .swipe-hint--left { left:10px; }
   .swipe-hint--right { right:10px; }
+  
+  .swipe-hint:hover {
+    opacity:1;
+    transform:translateY(-50%) scale(1.07);
+    box-shadow:0 12px 24px rgba(0,0,0,.18);
+  }
+  
   
   @keyframes pulseHint {
     0%,100% { opacity:0.4; }
     50% { opacity:0.9; }
   }
   
-  /* Panah hanya tampil di mobile */
-  @media (min-width:781px){
+  /* @media (min-width:781px){
     .swipe-hint{ display:none; }
-  }
+  } */
   
   /* ===== Split Feature (image left, copy right) ===== */
   .split-feature{
