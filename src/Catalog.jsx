@@ -1093,34 +1093,89 @@ const mobileCss = `
 
 /* MOBILE STACKED LAYOUT ≤ 820px */
 @media (max-width: 820px){
-  /* Tampilkan stack, sembunyikan layout slider */
-  .mobile-stack{ display:block; padding: 8px 0 28px; }
-  .spotlight{ display:none !important; }        /* matikan versi desktop */
-  .catalog-hero{ display:none !important; }     /* hero desktop tidak dipakai */
+  /* tampilkan layout mobile */
+  .mobile-stack{ display:block; padding: 12px 0 32px; }
+  .spotlight{ display:none !important; }
+  .catalog-hero{ display:none !important; }
 
-  .mb-item{ margin-bottom: 28px; }
-  .mb-hero{ margin: 0 0 10px; }
+  /* setiap produk diberi jarak yang pas */
+  .mb-item{ margin-bottom: 36px; }
+  .mb-hero{ margin: 0 0 14px; }
+
+  /* gambar tampil natural dan tidak terlalu tinggi */
   .mb-hero img{
-    width: 100%;
-    max-height: 52vh;
+    width: 94%;
+    max-height: 42vh;
     object-fit: cover;
     border-radius: 14px;
-    display:block;
+    margin: 0 auto;
+    display: block;
   }
 
-  /* Rapiin TextPanel untuk mobile stack */
-  .textpanel{ max-width: 100%; }
-  .tp-title{ font-size: 22px; line-height: 1.25; margin-bottom: 6px; }
-  .tp-meta{ font-size: 14px; line-height: 1.6; color:#374151; margin-bottom: 10px; }
-  .tp-text{ font-size: 15px; line-height: 1.9; color:#1f2937; }
-  .tp-notes, .tp-spec, .tp-dur{ font-size: 14px; }
+  /* ---- TEKS SECTION ---- */
+  .textpanel{ 
+    max-width: 95%; 
+    margin: 0 auto; 
+    text-align: left;
+  }
+
+  /* Judul: lebih rapi dengan sedikit spasi antarbaris */
+  .tp-title{
+    font-size: clamp(17px, 4.4vw, 19px);
+    line-height: 1.28;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #111;
+  }
+
+  /* Sub-info (meta): tipis & berjarak */
+  .tp-meta{
+    font-size: 13px;
+    line-height: 1.6;
+    color: #4b5563;
+    margin-bottom: 8px;
+  }
+
+  /* Paragraf utama: ritme seimbang dan mudah dibaca */
+  .tp-text{
+    font-size: 14px;
+    line-height: 1.8;
+    color: #1f2937;
+    margin-bottom: 10px;
+  }
+
+  /* Notes, Spec, Durasi: seragam dan rapi */
+  .tp-notes,
+  .tp-spec,
+  .tp-dur{
+    font-size: 13px;
+    line-height: 1.65;
+    color: #374151;
+    margin-bottom: 6px;
+  }
+
+  /* Tombol CTA: rata kiri tapi terasa seperti tombol */
+  .tp-cta{
+    margin-top: 12px;
+  }
   .tp-cta a{
-    display:inline-block; width:auto;
-    text-decoration:none; border:1px solid #111;
-    padding:10px 14px; border-radius:10px; font-weight:600; color:#111;
+    display: inline-block;
+    border: 1px solid #111;
+    padding: 9px 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    color: #111;
+  }
+  .tp-cta a:hover{
+    background: #111;
+    color: #fff;
+    transition: 0.25s ease;
   }
 
-  /* Bersihkan efek gradient/arrow dari carousel jika sempat tersisa */
+  /* Sembunyikan elemen carousel yang tidak dipakai */
   .slides, .nav-btn, .nav-dots{ display:none !important; }
 }
+
 `;
