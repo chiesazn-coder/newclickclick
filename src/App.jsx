@@ -1,10 +1,9 @@
-// App.jsx
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
 import LuxyLanding from "./LuxyLanding";
-import Checkout from "./Checkout";                  // PDP / halaman produk
-import CheckoutPage from "./pages/CheckoutPage";    // FORM isi data diri
-import ThankYouPage from "./pages/ThankYouPage";    // <-- NEW
+import Checkout from "./Checkout";
+import CheckoutPage from "./pages/CheckoutPage";
+import ThankYouPage from "./pages/ThankYouPage";
 import Catalog from "./Catalog";
 import Contact from "./Contact";
 import About from "./About";
@@ -19,10 +18,10 @@ import CartDrawer from "./cart/CartDrawer";
 function App() {
   return (
     <CartProvider>
-      <BrowserRouter>
+      <HashRouter>
         <ScrollToTop />
         <AppInner />
-      </BrowserRouter>
+      </HashRouter>
     </CartProvider>
   );
 }
@@ -30,16 +29,10 @@ function App() {
 function AppInner() {
   const location = useLocation();
 
-  // Drawer cart mau disembunyikan di:
-  // - /checkout                (form checkout)
-  // - /thank-you.html          (halaman selesai bayar)
-  //
-  // Tapi tetap tampil di:
-  // - /checkout/:productId     (PDP / add to cart)
-  //
+  // sembunyikan cart drawer di halaman form checkout & thank you
   const hideDrawerOnThisPage =
     location.pathname === "/checkout" ||
-    location.pathname === "/thank-you.html"; // <-- NEW
+    location.pathname === "/thank-you.html";
 
   return (
     <>
@@ -55,16 +48,13 @@ function AppInner() {
         {/* Halaman checkout FORM alamat, ongkir, midtrans */}
         <Route path="/checkout" element={<CheckoutPage />} />
 
-        {/* PDP per produk (detail produk di mana user bisa pilih qty dll) */}
+        {/* PDP produk */}
         <Route path="/checkout/:productId" element={<Checkout />} />
 
-        {/* Halaman Thank You setelah balik dari Midtrans */}
-        <Route
-          path="/thank-you.html"
-          element={<ThankYouPage />} // <-- NEW
-        />
+        {/* Thank you setelah payment */}
+        <Route path="/thank-you.html" element={<ThankYouPage />} />
 
-        {/* Halaman info lain */}
+        {/* Halaman info */}
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/shipping" element={<Shipping />} />

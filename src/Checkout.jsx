@@ -20,39 +20,70 @@
   /* =======================
     SECTION: ProductDetails
     ======================= */
-  const ProductDetails = ({ product }) => {
-    const [qty, setQty] = useState(1);
-    const { addItem, openCart } = useCart();
-    const inc = () => setQty((q) => Math.min(q + 1, 99));
-    const dec = () => setQty((q) => Math.max(q - 1, 1));
-
-    const buyNow = () => {
-      addItem(
-        { id: product.id, title: product.title, price: product.price, image: product.images?.[0] },
-        qty
-      );
-      openCart(); // tampilkan drawer cart
-    };
-
-    return (
-      <div className="co__details">
-        <h1 className="co__title">{product.title}</h1>
-        <div className="co__price">Rp {product.price.toLocaleString("id-ID")}</div>
-
-        <label className="co__qtylbl">Quantity</label>
-        <div className="co__qty">
-          <button onClick={dec} aria-label="Decrease quantity">–</button>
-          <span aria-live="polite">{qty}</span>
-          <button onClick={inc} aria-label="Increase quantity">+</button>
+    const ProductDetails = ({ product }) => {
+      const [qty, setQty] = useState(1);
+      const { addItem, openCart } = useCart();
+    
+      const inc = () => setQty((q) => Math.min(q + 1, 99));
+      const dec = () => setQty((q) => Math.max(q - 1, 1));
+    
+      // ========== HITUNG HARGA PROMO 50% ==========
+      const originalPrice =
+        typeof product?.price === "number" ? product.price : null;
+    
+      const discountedPrice =
+        originalPrice !== null ? product.price * 0.5 : null;
+    
+      const priceOriginalText =
+        originalPrice !== null
+          ? `Rp ${originalPrice.toLocaleString("id-ID")}`
+          : "";
+    
+      const priceDiscountText =
+        discountedPrice !== null
+          ? `Rp ${Math.round(discountedPrice).toLocaleString("id-ID")}`
+          : "";
+      // ===========================================
+    
+      // Saat user klik BUY NOW kita masukin harga diskon ke cart
+      const buyNow = () => {
+        addItem(
+          {
+            id: product.id,
+            title: product.title,
+            // <-- gunakan harga diskon, bukan harga original
+            price: discountedPrice ?? product.price,
+            image: product.images?.[0],
+          },
+          qty
+        );
+        openCart();
+      };
+    
+      return (
+        <div className="co__details">
+          <h1 className="co__title">{product.title}</h1>
+    
+          {/* HARGA DENGAN DISKON */}
+          <div className="co__price">
+            <span className="co__price-original">{priceOriginalText}</span>
+            <span className="co__price-discount">{priceDiscountText}</span>
+          </div>
+    
+          <label className="co__qtylbl">Quantity</label>
+          <div className="co__qty">
+            <button onClick={dec} aria-label="Decrease quantity">–</button>
+            <span aria-live="polite">{qty}</span>
+            <button onClick={inc} aria-label="Increase quantity">+</button>
+          </div>
+    
+          <button className="co__buy" onClick={buyNow}>
+            BUY NOW <span aria-hidden>＋</span>
+          </button>
         </div>
-
-        <button className="co__buy" onClick={buyNow}>
-          BUY NOW <span aria-hidden>＋</span>
-        </button>
-      </div>  
-    );
-  };
-
+      );
+    };
+    
   /* =======================
     SECTION: AccordionInfo
     ======================= */
@@ -492,7 +523,30 @@
   .co__thumb:hover img{transform:scale(1.04)}
 
   .co__title{margin:0 0 8px;font-size:clamp(22px,3vw,38px);font-weight:500;letter-spacing:.2px}
-  .co__price{font-size:clamp(18px,2.2vw,28px);margin:0 0 22px}
+  .co__price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: clamp(18px,2.2vw,28px);
+    margin: 0 0 22px;
+    line-height: 1.2;
+    font-family: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+  }
+  
+  .co__price-original {
+    font-size: 0.8em;            /* sedikit lebih kecil dari harga promo */
+    font-weight: 400;
+    color: #9ca3af;              /* abu pudar */
+    text-decoration: line-through;
+  }
+  
+  .co__price-discount {
+    font-size: 1em;
+    font-weight: 600;
+    color: #111;                 /* lebih tegas */
+  }
+  
   .co__qtylbl{display:block;color:var(--co-muted);font-size:14px;margin-bottom:6px}
   .co__qty{display:inline-flex;align-items:center;gap:18px;border:1px solid var(--co-border);border-radius:8px;padding:10px 14px;margin-bottom:18px}
   .co__qty button{all:unset;cursor:pointer;font-size:20px;line-height:1;padding:2px 6px}

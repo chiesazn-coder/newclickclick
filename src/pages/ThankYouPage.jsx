@@ -108,8 +108,22 @@ export default function ThankYouPage() {
   // First load: grab snapshot from storage & URL
   // =========================
   useEffect(() => {
-    // ambil query param
-    const params = new URLSearchParams(window.location.search);
+
+    // ambil query param baik dari search (?...) atau dari hash (#/thank-you.html?...)
+    let rawSearch = window.location.search;
+
+    // kalau kosong (kasus Midtrans redirect), coba cari di hash
+    if (!rawSearch || rawSearch === "") {
+      const hash = window.location.hash || "";
+      const idx = hash.indexOf("?");
+      if (idx !== -1) {
+        rawSearch = hash.substring(idx); // ambil mulai dari "?order_id=......"
+      }
+    }
+
+    // sekarang parse paramnya
+    const params = new URLSearchParams(rawSearch);
+
     const qOrderId =
       params.get("order_id") ||
       params.get("orderId") ||
@@ -118,6 +132,7 @@ export default function ThankYouPage() {
       "";
 
     const qMidStat = String(params.get("transaction_status") || "").toLowerCase();
+
 
     setOrderId(qOrderId || "");
 
@@ -585,14 +600,6 @@ export default function ThankYouPage() {
             <div className="rowBtns">
               <a className="btn ghost" href="/">
                 Back to Store
-              </a>
-              <a
-                className="btn"
-                href={invoiceHref}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View in Dashboard (JSON)
               </a>
             </div>
 

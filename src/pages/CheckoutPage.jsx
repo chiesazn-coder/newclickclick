@@ -38,8 +38,8 @@ export default function CheckoutPage() {
   ========================== */
   const [withProtection, setWithProtection] = useState(false);
 
-  const CREATE_URL = "http://localhost:8000/create-transaction.php";
-  const SHIP_URL = "https://clickclick.id/api/shipping-rates.php";
+  const CREATE_URL = "/api/create-transaction.php";
+  const SHIP_URL = "/api/shipping-rates.php";
 
   // Subsidi ongkir Indonesia
   const ID_SUBSIDY_MAX = 50000; // Rp 50.000
@@ -96,7 +96,7 @@ export default function CheckoutPage() {
   /* ==========================
      MIDTRANS CONFIG
   ========================== */
-  const MIDTRANS_CLIENT_KEY = "Mid-client-PrSR529Mau_EpIYA"; // sandbox vs prod
+  const MIDTRANS_CLIENT_KEY = "Mid-client-zm_c7npVzn49Jo5F"; // sandbox vs prod
   const MID_ENV =
     MIDTRANS_CLIENT_KEY.indexOf("SB-") === 0 ? "sandbox" : "production";
 
@@ -506,7 +506,7 @@ export default function CheckoutPage() {
       callbacks: {
         finish:
           window.location.origin +
-          "/thank-you.html?order_id=" +
+          "/#/thank-you.html?order_id=" +
           encodeURIComponent(orderId),
       },
       expiry: { unit: "days", duration: 1 },
@@ -596,8 +596,13 @@ export default function CheckoutPage() {
           "last_checkout_snapshot",
           JSON.stringify(snapshot)
         );
+        localStorage.setItem(
+          "last_checkout_snapshot",
+          JSON.stringify(snapshot)
+        );
         localStorage.setItem("last_order_id", orderId);
       } catch (_) {}
+      
 
       // redirect -> Snap Midtrans
       if (data.redirect_url) {

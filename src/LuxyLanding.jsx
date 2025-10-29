@@ -245,14 +245,32 @@ const ProductCard = ({ p }) => {
       ? p.images[imgIdx]
       : p?.image || "/assets/placeholder.png";
 
-  const priceText =
-    typeof p?.price === "number"
-      ? `Rp ${p.price.toLocaleString("id-ID")}`
-      : "";
+  //const priceText =
+  //  typeof p?.price === "number"
+  //    ? `Rp ${p.price.toLocaleString("id-ID")}`
+  //    : "";
+
+    // ==== BAGIAN HARGA BARU ====
+    const originalPrice =
+    typeof p?.price === "number" ? p.price : null;
+
+    const discountedPrice =
+      originalPrice !== null ? p.price * 0.5 : null; // diskon 50%
+
+    const priceOriginalText =
+      originalPrice !== null
+        ? `Rp ${originalPrice.toLocaleString("id-ID")}`
+        : "";
+
+    const priceDiscountText =
+      discountedPrice !== null
+        ? `Rp ${Math.round(discountedPrice).toLocaleString("id-ID")}`
+        : "";
+    // ===========================
 
   return (
     <article className="product-card">
-      {p?.isNew && <span className="new-badge">NEW</span>}
+      {p?.isNew && <span className="new-badge">-50%</span>}
 
       <a
         href="#"
@@ -276,7 +294,10 @@ const ProductCard = ({ p }) => {
 
       <div className="meta">
         <h3 className="name">{p?.title || "Product"}</h3>
-        <div className="price">{priceText}</div>
+        <div className="price">
+          <span className="price-original">{priceOriginalText}</span>
+          <span className="price-discount">{priceDiscountText}</span>
+        </div>
       </div>
     </article>
   );
@@ -442,9 +463,13 @@ const SplitFeature = () => {
         Soft, balanced lighting and real-time mirroring help you stay focused on your vibe, not your setup.
         Look real. Feel ready. Every single click.
         </p>
-        <a href="/catalog" className="split-btn" aria-label="Shop The Self-Care Planner">
+        <Link
+          to="/catalog"
+          className="split-btn"
+          aria-label="Shop The Self-Care Planner"
+        >
           SHOP NOW
-        </a>
+        </Link>
       </div>
     </section>
   );
@@ -708,10 +733,10 @@ const VideoCarousel = () => {
 
   // Ganti sumber video sesuai asetmu
   const reels = [
-    { id: 1, src: "/assets/snap/reels/reel-1.mp4", poster: "/assets/reels/reel-1.jpg" },
-    { id: 2, src: "/assets/snap/reels/reel-4.mp4", poster: "/assets/reels/reel-2.jpg" },
-    { id: 3, src: "/assets/snap/reels/reel-3.mp4", poster: "/assets/reels/reel-3.jpg" },
-    { id: 4, src: "/assets/snap/reels/reel-2.mp4", poster: "/assets/reels/reel-4.jpg"},
+    { id: 1, src: "/assets/selfie/reels/m4.mp4"},
+    { id: 2, src: "/assets/selfie/reels/t1m.mp4"},
+    { id: 3, src: "/assets/selfie/reels/t3b.mp4"},
+    { id: 4, src: "/assets/selfie/reels/t8d.mp4"},
   ];
 
   return (
@@ -1052,11 +1077,13 @@ const css = `
   
   /* 3 kartu terlihat di desktop */
   .product-card{
-    flex:0 0 calc((100% - 2 * 32px) / 3);
+    flex: 0 0 calc((100% - 3 * 32px) / 4);
     scroll-snap-align:start;
     background:transparent;
-    border:none; box-shadow:none;
-    position:relative; overflow:visible;
+    border:none;
+    box-shadow:none;
+    position:relative;
+    overflow:visible;
   }
   
   /* Meta */
@@ -1072,6 +1099,26 @@ const css = `
     font-family:"Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
     font-size:14px; color:#111;
   }
+
+  /* harga lama dicoret, abu tipis */
+  .product-card .price-original {
+    font-size: 13px;
+    font-weight: 400;
+    color: #9ca3af;            /* abu soft */
+    text-decoration: line-through;
+    margin-right: 8px;
+    display: inline-block;
+    line-height: 1.4;
+  }
+
+  /* harga diskon tebal, hitam */
+  .product-card .price-discount {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111;
+    line-height: 1.4;
+  }
+
   
   /* Badge NEW */
   .product-card .new-badge{
