@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ShoppingCart } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "./cart/CartContext";
+import { Helmet } from "react-helmet";
 
 
 const Container = ({ children, className = "" }) => (
@@ -10,12 +11,6 @@ const Container = ({ children, className = "" }) => (
 
 const Logo = () => <a className="logo" href="#">CLICKCLICK</a>;
 
-//const IconSearch = () => (
-//  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-//    <circle cx="11" cy="11" r="8"></circle>
-//    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-//  </svg>
-//);
 
 const IconBag = () => (
   <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -30,23 +25,7 @@ const ChevronDown = () => (
   </svg>
 );
 
-//const PromoStrip = () => {
-//  const promos = [
-//    "30% OFF sitewide // Already in your cart",
-//    "Upgrade? We've got you covered!",
-//    "30% OFF sitewide // No code needed",
-//  ];
-//  const [index, setIndex] = useState(0);
-//  useEffect(() => {
-//    const id = setInterval(() => setIndex((i) => (i + 1) % promos.length), 3000);
-//    return () => clearInterval(id);
-//  }, []);
-//  return (
-//    <div className="promo">
-//      <span>{promos[index]}</span>
-//    </div>
-//  );
-//};
+
 
 export const Navbar = () => {
   const { openCart, cartCount } = useCart();
@@ -159,6 +138,14 @@ const Hero = () => {
 
   return (
     <section className="hero">
+      <img
+        src={HERO_POSTER}
+        alt="CLICKCLICK hero poster"
+        className="hero-poster"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
       <video
         ref={videoRef}
         className="hero-media"
@@ -167,7 +154,10 @@ const Hero = () => {
         loop
         playsInline
         preload="auto"
-        poster="/assets/hero-poster.jpg"
+        poster={HERO_POSTER}
+        onCanPlayThrough={() => {
+          document.querySelector('.hero-poster')?.classList.add('is-hidden');
+        }}
       >
         <source
           src={isMobile ? "/assets/catalog-mobile.mp4" : "/assets/catalog.mp4"}
@@ -178,10 +168,56 @@ const Hero = () => {
   );
 };
 
+const SITE = "https://clickclick.id";
+const LOGO = `${SITE}/assets/logo-512.png`; // pastikan file ada (512x512)
+const HERO_POSTER = "/assets/hero-poster.png"; // ⬅ path relatif
 
 export default function LuxyLanding() {
   return (
     <>
+      <Helmet>
+        <title>CLICKCLICK — Mirror, Screen & Magnetic Selfie Devices</title>
+        <meta name="description" content="Soft, balanced light. Clean reflection. Magnetic grip. Discover CLICKCLICK devices for creators who keep it real." />
+        <link rel="canonical" href={SITE} />
+        <meta name="robots" content="index,follow" />
+
+        {/* OG / Twitter */}
+        <meta property="og:title" content="CLICKCLICK — Mirror, Screen & Magnetic Selfie Devices" />
+        <meta property="og:description" content="Clean design, balanced light, magnetic grip. See yourself better, record more confidently." />
+        <meta property="og:url" content={SITE} />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content={`${SITE}/assets/og-cover.jpg`} />
+        <meta property="og:site_name" content="CLICKCLICK" />
+        <meta property="og:locale" content="en_US" />
+        <meta name="twitter:card" content="summary_large_image" />
+
+        {/* Preload aset LCP */}
+        <link rel="preload" as="image" href={HERO_POSTER} fetchpriority="high" />
+        {/* Kalau tahu hero mp4 fixed, boleh preload metadata */}
+        {/* <link rel="preload" as="video" href="/assets/catalog.mp4" /> */}
+
+        {/* JSON-LD: Organization */}
+        <script type="application/ld+json">{JSON.stringify({
+          "@context":"https://schema.org",
+          "@type":"Organization",
+          "name":"CLICKCLICK",
+          "url": SITE,
+          "logo": LOGO,
+          "sameAs":[
+            "https://www.instagram.com/clickclickofficial.id/",
+            "https://www.tiktok.com/@clickclick.id"
+          ]
+        })}</script>
+
+        {/* JSON-LD: SiteNavigationElement */}
+        <script type="application/ld+json">{JSON.stringify({
+          "@context":"https://schema.org",
+          "@type":"SiteNavigationElement",
+          "name":["Home","Catalog","Contact","About"],
+          "url":[`${SITE}/`, `${SITE}/catalog`, `${SITE}/contact`, `${SITE}/about`]
+        })}</script>
+      </Helmet>
+
       <Navbar />
       <Hero />
       <ProductsSection />
@@ -517,13 +553,14 @@ const VideoStrip = () => {
   return (
     <section className="video-strip" aria-label="Brand film">
       <video
-        ref={vidRef}
-        className="video-strip_media"
+        ref={videoRef}
+        className="hero-media"
         autoPlay
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="auto"
+        poster={HERO_POSTER}
       >
         {/* pakai webm bila tersedia untuk ukuran lebih kecil */}
         {/* <source src="/assets/video/brand.webm" type="video/webm" /> */}
@@ -850,6 +887,16 @@ const css = `
   *{box-sizing:border-box}
   body{font-family: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; color:var(--text)}
   .container{max-width:1280px;margin:0 auto;padding:0 24px}
+
+  .hero { position:relative; }
+  .hero-poster{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; object-position:center 40%;
+    transition:opacity .25s ease;
+    z-index:0;
+  }
+  .hero-media{ position:absolute; inset:0; z-index:1; }
+  .hero-poster.is-hidden{ opacity:0; pointer-events:none; }
 
   /* Promo */
   .promo{background:#ffeaf5;text-align:center;padding:8px 0;font-weight:700;font-size:13px;}
