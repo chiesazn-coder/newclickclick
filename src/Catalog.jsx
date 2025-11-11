@@ -2,7 +2,10 @@
 import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Navbar, FooterSection } from "./LuxyLanding";
+import { Helmet } from "react-helmet";
 
+
+const SITE = "https://clickclick.id"; 
 
 function ProductSection({
     imageSrc,
@@ -388,6 +391,32 @@ export default function Catalog() {
       dur: "PENGGUNAAN 2.5 JAM | JARAK PAKAI 8–10 METER",
     },
   ];
+
+  const productSchemas = products.map((p) => ({
+    "@context":"https://schema.org",
+    "@type":"Product",
+    name: String(p.title).replace(/<[^>]+>/g,""),
+    image: [`${SITE}${p.imageSrc}`],
+    description: (p.text || "").slice(0,160),
+    brand: {"@type":"Brand","name":"CLICKCLICK"},
+    offers: {
+      "@type":"Offer",
+      priceCurrency:"IDR",
+      price:"0", // isi harga asli kalau sudah ada
+      availability:"https://schema.org/InStock",
+      url: `${SITE}/checkout/${p.checkoutSlug}`
+    }
+  }));
+  
+  const itemListSchema = {
+    "@context":"https://schema.org",
+    "@type":"ItemList",
+    itemListElement: products.map((p,i)=>({
+      "@type":"ListItem", position: i+1,
+      url: `${SITE}/checkout/${p.checkoutSlug}`
+    }))
+  };
+  
     // 1) Pre-measure semua TextPanel “offscreen”
     useEffect(() => {
       if (isMobile) return;
@@ -420,6 +449,29 @@ export default function Catalog() {
 
     return (
       <>
+
+        <Helmet>
+          {/* Basic SEO */}
+          <title>Catalog | CLICKCLICK</title>
+          <meta name="description" content="Explore CLICKCLICK catalog. Mirror, screen, and magnetic selfie devices with clean design and natural light control." />
+          <link rel="canonical" href={`${SITE}/catalog`} />
+          <meta name="robots" content="index,follow" />
+
+          {/* Open Graph / Twitter */}
+          <meta property="og:title" content="Catalog | CLICKCLICK" />
+          <meta property="og:description" content="Clean design, balanced light, magnetic grip. Discover our most loved devices." />
+          <meta property="og:url" content={`${SITE}/catalog`} />
+          <meta property="og:type" content="website" />
+          <meta property="og:image" content={`${SITE}/assets/og-cover.jpg`} />
+          <meta name="twitter:card" content="summary_large_image" />
+
+          <script type="application/ld+json">{JSON.stringify(itemListSchema)}</script>
+          {productSchemas.map((s, i) => (
+            <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
+          ))}
+
+        </Helmet>
+
 
         <Navbar />
     
@@ -476,9 +528,7 @@ export default function Catalog() {
         <FooterSection />
         <style>{css + spotlightCss + mobileCss}</style>
       </>
-    );
-    
-    
+    ); 
 }
 
 const css = `

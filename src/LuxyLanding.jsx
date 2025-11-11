@@ -1285,7 +1285,7 @@ const css = `
     margin:0 0 16px;
     font-size: clamp(24px, 3vw, 40px);
     line-height:1.15;
-    font-weight:100;
+    font-weight:600;
     letter-spacing:.2px;
     font-family: "Poppins", ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;
   }
